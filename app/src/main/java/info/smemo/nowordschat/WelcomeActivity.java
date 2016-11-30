@@ -1,9 +1,10 @@
 package info.smemo.nowordschat;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class WelcomeActivity extends AppCompatActivity {
+import info.smemo.nowordschat.activity.BaseActivity;
+
+public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
