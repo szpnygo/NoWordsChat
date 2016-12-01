@@ -2,7 +2,7 @@ package info.smemo.nowordschat;
 
 import android.os.Bundle;
 
-import info.smemo.nowordschat.activity.BaseActivity;
+import info.smemo.nowordschat.base.BaseActivity;
 
 public class WelcomeActivity extends BaseActivity {
 

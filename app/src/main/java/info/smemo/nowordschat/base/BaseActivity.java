@@ -1,4 +1,4 @@
-package info.smemo.nowordschat.activity;
+package info.smemo.nowordschat.base;
 
 import info.smemo.nbaseaction.base.NBaseCompatActivity;
 
