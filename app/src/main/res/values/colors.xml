@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="mainGreenColor">#4CAF50</color>
+    <color name="mainDarkGreenColor">#115314</color>
+    <color name="tabTextColor">#67ffffff</color>
 </resources>
