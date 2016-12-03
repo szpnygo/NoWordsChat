@@ -23,6 +23,7 @@
         app:menu="@menu/activity_main_drawer"
         app:itemTextColor="@color/drawer_item_color"
         app:itemIconTint="@color/drawer_item_color"
+        app:itemBackground="@drawable/drawer_item_color"
         />
 
 </android.support.v4.widget.DrawerLayout>

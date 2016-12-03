@@ -9,4 +9,5 @@
     <color name="tabTextColor">#67ffffff</color>
 
     <color name="itemMenuColor">#44000000</color>
+    <color name="itemMenuBgSelected">#05000000</color>
 </resources>
