@@ -33,7 +33,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 20;
     }
 
     private class MessageHolder extends RecyclerView.ViewHolder {
