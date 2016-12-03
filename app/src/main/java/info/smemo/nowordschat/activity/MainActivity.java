@@ -3,20 +3,25 @@ package info.smemo.nowordschat.activity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
+import info.smemo.nbaseaction.base.NBaseCompatActivity;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.adapter.IndexFragmentPagerAdapter;
+import info.smemo.nowordschat.fragment.BookFragment;
+import info.smemo.nowordschat.fragment.FindFragment;
+import info.smemo.nowordschat.fragment.IndexFragment;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends NBaseCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -38,11 +43,22 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
 
+        initFragmentAdapter();
+    }
+
+    /**
+     * 初始化fragment
+     */
+    private void initFragmentAdapter() {
+        ArrayList<Fragment> list = new ArrayList<>();
+        list.add(IndexFragment.newInstance());
+        list.add(BookFragment.newInstance());
+        list.add(FindFragment.newInstance());
+
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        IndexFragmentPagerAdapter adapter = new IndexFragmentPagerAdapter(getSupportFragmentManager(),
-                this);
+        IndexFragmentPagerAdapter adapter = new IndexFragmentPagerAdapter(getSupportFragmentManager(), list);
         viewPager.setAdapter(adapter);
 
         tabLayout.addTab(tabLayout.newTab().setText("消息"));
@@ -87,9 +103,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-//        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override

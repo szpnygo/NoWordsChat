@@ -2,8 +2,7 @@
     <string name="app_name">无语</string>
     <string name="title_activity_main">无语</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">打开菜单</string>
+    <string name="navigation_drawer_close">关闭菜单</string>
 
-    <string name="action_settings">Settings</string>
 </resources>
