@@ -14,4 +14,6 @@
     <color name="mainText">#999</color>
 
     <color name="listViewLine">#ccc</color>
+
+    <color name="message_bar">#eee</color>
 </resources>

@@ -21,18 +21,129 @@
 
     </android.support.design.widget.AppBarLayout>
 
+
     <RelativeLayout
         android:id="@+id/content_chat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </RelativeLayout>
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/theme_background" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/chat_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottomPanel"
+            android:layout_margin="8dp"
+            android:scrollbars="none" />
+
+        <LinearLayout
+            android:id="@+id/bottomPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/menuPanel"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="8dp"
+                app:cardMaxElevation="12dp"
+                app:cardPreventCornerOverlap="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/menu_at"
+                        style="@style/MessageBarMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="messageMenuClick"
+                        android:src="@drawable/ic_at_person" />
+
+                    <ImageView
+                        android:id="@+id/menu_shake"
+                        style="@style/MessageBarMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="messageMenuClick"
+                        android:src="@drawable/ic_add_alert_black_24dp" />
+
+
+                    <ImageView
+                        android:id="@+id/menu_location"
+                        style="@style/MessageBarMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="messageMenuClick"
+                        android:src="@drawable/ic_place_black_24dp" />
+
+                    <ImageView
+                        android:id="@+id/menu_emoji"
+                        style="@style/MessageBarMenu"
+                        android:layout_width="54dp"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        android:onClick="messageMenuClick"
+                        android:src="@drawable/ic_stickers_light" />
+
+                    <ImageView
+                        android:id="@+id/menu_voice"
+                        style="@style/MessageBarMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="messageMenuClick"
+                        android:src="@drawable/ic_keyboard_voice_black_24dp" />
+
+                    <ImageView
+                        android:id="@+id/menu_camera"
+                        style="@style/MessageBarMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="messageMenuClick"
+                        android:src="@drawable/ic_photo_camera_black_24dp" />
+
+                    <ImageView
+                        android:id="@+id/menu_photo"
+                        style="@style/MessageBarMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="messageMenuClick"
+                        android:src="@drawable/ic_photo_black_24dp" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/contentPanel"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/message_bar"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

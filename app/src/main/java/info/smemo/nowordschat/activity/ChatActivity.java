@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.base.BaseCompatActivity;
@@ -18,8 +19,26 @@ public class ChatActivity extends BaseCompatActivity {
         toolbar.setTitle("对方正在输入");
         setSupportActionBar(toolbar);
         setToolbarFinish(toolbar);
+    }
 
-
+    public void messageMenuClick(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.menu_emoji:
+                break;
+            case R.id.menu_at:
+                break;
+            case R.id.menu_shake:
+                break;
+            case R.id.menu_location:
+                break;
+            case R.id.menu_voice:
+                break;
+            case R.id.menu_camera:
+                break;
+            case R.id.menu_photo:
+                break;
+        }
     }
 
     @Override
