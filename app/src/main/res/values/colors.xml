@@ -10,4 +10,8 @@
 
     <color name="itemMenuColor">#44000000</color>
     <color name="itemMenuBgSelected">#05000000</color>
+
+    <color name="mainText">#999</color>
+
+    <color name="listViewLine">#ccc</color>
 </resources>

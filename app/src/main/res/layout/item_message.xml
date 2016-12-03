@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/user_logo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        app:placeholderImage="@drawable/user_logo"
+        app:roundAsCircle="true" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/user_logo"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/user_logo"
+        android:text="无语开发"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/username"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/username"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="11月24日"
+        android:textColor="@color/mainText"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/user_logo"
+        android:layout_alignStart="@+id/username"
+        android:layout_marginEnd="8dp"
+        android:layout_toStartOf="@+id/number"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试"
+        android:textColor="@color/mainText"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/user_logo"
+        android:layout_alignEnd="@+id/time"
+        android:background="@drawable/message_number_background"
+        android:gravity="center"
+        android:maxEms="1"
+        android:padding="2dp"
+        android:text="9"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/message"
+        android:layout_marginBottom="1dp"
+        android:background="@color/listViewLine" />
+
+</RelativeLayout>

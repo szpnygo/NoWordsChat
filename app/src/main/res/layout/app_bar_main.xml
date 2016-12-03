@@ -8,6 +8,7 @@
     tools:context="info.smemo.nowordschat.activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -36,12 +37,6 @@
             app:tabTextColor="@color/tabTextColor" />
 
     </android.support.design.widget.AppBarLayout>
-
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <include layout="@layout/content_main" />
 
