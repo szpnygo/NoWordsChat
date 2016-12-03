@@ -17,10 +17,6 @@ public class IndexFragment extends NBaseFragment {
     private MessageAdapter messageAdapter;
     private RecyclerView recyclerView;
 
-    public static IndexFragment newInstance() {
-        return new IndexFragment();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -11,10 +11,6 @@ import info.smemo.nowordschat.R;
 
 public class BookFragment extends NBaseFragment {
 
-    public static BookFragment newInstance() {
-        return new BookFragment();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

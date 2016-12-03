@@ -11,10 +11,6 @@ import info.smemo.nowordschat.R;
 
 public class FindFragment extends NBaseFragment {
 
-    public static FindFragment newInstance() {
-        return new FindFragment();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,5 +21,9 @@ public class FindFragment extends NBaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_find, container, false);
         return view;
+    }
+
+    public void findMenuClick(View view) {
+
     }
 }

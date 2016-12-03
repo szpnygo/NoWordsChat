@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,10 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
+    private IndexFragment indexFragment;
+    private BookFragment bookFragment;
+    private FindFragment findFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +56,12 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
      */
     private void initFragmentAdapter() {
         ArrayList<Fragment> list = new ArrayList<>();
-        list.add(IndexFragment.newInstance());
-        list.add(BookFragment.newInstance());
-        list.add(FindFragment.newInstance());
+        indexFragment = new IndexFragment();
+        bookFragment = new BookFragment();
+        findFragment = new FindFragment();
+        list.add(indexFragment);
+        list.add(bookFragment);
+        list.add(findFragment);
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
@@ -160,5 +168,10 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void findMenuClick(View view) {
+        if (null != findFragment)
+            findFragment.findMenuClick(view);
     }
 }
