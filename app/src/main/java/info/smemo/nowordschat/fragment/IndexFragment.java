@@ -24,7 +24,7 @@ public class IndexFragment extends NBaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        messageAdapter = new MessageAdapter();
+        messageAdapter = new MessageAdapter(getActivity());
     }
 
     @Nullable

@@ -1,16 +1,22 @@
 package info.smemo.nowordschat.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import info.smemo.nowordschat.R;
+import info.smemo.nowordschat.activity.ChatActivity;
 
 public class MessageAdapter extends RecyclerView.Adapter {
 
-    public MessageAdapter() {
+    private Context context;
+
+    public MessageAdapter(Context context) {
         super();
+        this.context = context;
     }
 
     @Override
@@ -26,7 +32,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         messageHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                context.startActivity(new Intent(context, ChatActivity.class));
             }
         });
     }
