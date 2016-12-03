@@ -1,5 +1,6 @@
 package info.smemo.nowordschat.app;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 
@@ -17,5 +18,6 @@ public class AppApplication extends NBaseApplication {
                 .methodCount(2)
                 .methodOffset(1)
                 .logLevel(BuildConfig.MY_DEBUG ? LogLevel.FULL : LogLevel.NONE);
+        Fresco.initialize(this);
     }
 }

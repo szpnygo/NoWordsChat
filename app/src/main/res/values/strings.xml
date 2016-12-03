@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">NoWordsChat</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="app_name">无语</string>
+    <string name="title_activity_main">无语</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

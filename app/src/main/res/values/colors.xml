@@ -7,4 +7,6 @@
     <color name="mainGreenColor">#4CAF50</color>
     <color name="mainDarkGreenColor">#115314</color>
     <color name="tabTextColor">#67ffffff</color>
+
+    <color name="itemMenuColor">#44000000</color>
 </resources>
