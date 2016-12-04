@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NBaseAction</string>
+    <string name="nbase_collapsing_behavior">info.smemo.nbaseaction.behavior.CollapsingViewBehavior</string>
 </resources>

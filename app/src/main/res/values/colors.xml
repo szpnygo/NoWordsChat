@@ -3,4 +3,17 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="mainGreenColor">#4CAF50</color>
+    <color name="mainDarkGreenColor">#115314</color>
+    <color name="tabTextColor">#67ffffff</color>
+
+    <color name="itemMenuColor">#44000000</color>
+    <color name="itemMenuBgSelected">#05000000</color>
+
+    <color name="mainText">#999</color>
+
+    <color name="listViewLine">#ccc</color>
+
+    <color name="message_bar">#eee</color>
 </resources>

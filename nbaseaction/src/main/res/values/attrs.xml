@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ViewBehaviorDependency">
+        <attr name="behaviorHeight" format="dimension" />
+        <attr name="behaviorMultiplier" format="float" />
+    </declare-styleable>
+</resources>
