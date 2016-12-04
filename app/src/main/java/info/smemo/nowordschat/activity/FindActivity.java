@@ -7,14 +7,14 @@ import android.view.View;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.base.BaseCompatActivity;
 
-public class UserActivity extends BaseCompatActivity {
+public class FindActivity extends BaseCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("无语开发");
+        toolbar.setTitle("朋友圈");
         setSupportActionBar(toolbar);
         setToolbarFinish(toolbar);
 

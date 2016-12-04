@@ -1,6 +1,5 @@
 package info.smemo.nowordschat.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -53,7 +52,7 @@ public class ChatActivity extends BaseCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_info) {
-            startActivity(new Intent(this, UserActivity.class));
+
             return true;
         }
 
