@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:menuCategory="container">
+        <item
+            android:id="@+id/nav_set"
+            android:title="设置备注及标签" />
+        <item
+            android:id="@+id/nav_friend"
+            android:title="星标朋友" />
+        <item
+            android:id="@+id/nav_complain"
+            android:title="投诉" />
+        <item
+            android:id="@+id/nav_block"
+            android:title="加入黑名单" />
+        <item
+            android:id="@+id/nav_delete"
+            android:title="删除" />
+        <item
+            android:id="@+id/nav_desktop"
+            android:title="添加到桌面" />
+    </group>
+
+</menu>
