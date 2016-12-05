@@ -45,42 +45,31 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/user_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/user_logo"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_star_border_black_24dp"
-        android:tint="@android:color/white"
         app:behaviorMultiplier="0.8"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+        app:layout_behavior="@string/nbase_collapsing_behavior"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+        app:placeholderImage="@drawable/user_logo"
+        app:roundAsCircle="true" />
 
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:text="@string/large_text" />
-
-    </android.support.v4.widget.NestedScrollView>
+    <include layout="@layout/activity_user_content" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/menu_post"
+        android:onClick="postClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:background="?attr/selectableItemBackground"
-        android:onClick="postClick"
         android:src="@drawable/ic_chat_black_24dp"
         android:tint="@android:color/white"
         app:elevation="6dp"
