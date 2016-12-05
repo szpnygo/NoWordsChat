@@ -167,6 +167,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/ic_photo_camera_black_24dp"
+                android:visibility="invisible"
                 android:tint="@color/mainText" />
 
             <android.support.v7.widget.RecyclerView
@@ -182,8 +183,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/finds"
-                android:layout_toEndOf="@+id/finds"
+                android:layout_alignStart="@+id/finds_list"
+                android:layout_toEndOf="@+id/finds_list"
                 android:background="@color/listViewLine" />
 
         </RelativeLayout>
