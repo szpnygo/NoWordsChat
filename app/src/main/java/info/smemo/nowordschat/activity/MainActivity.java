@@ -22,7 +22,8 @@ import info.smemo.nowordschat.fragment.BookFragment;
 import info.smemo.nowordschat.fragment.FindFragment;
 import info.smemo.nowordschat.fragment.IndexFragment;
 
-public class MainActivity extends NBaseCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends NBaseCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        ViewPager.OnPageChangeListener, TabLayout.OnTabSelectedListener {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -73,43 +74,8 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
         tabLayout.addTab(tabLayout.newTab().setText("联系人"));
         tabLayout.addTab(tabLayout.newTab().setText("发现"));
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (tabLayout != null && tabLayout.getTabAt(position) != null)
-                    tabLayout.getTabAt(position).select();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                if (viewPager.getCurrentItem() != position) {
-                    viewPager.setCurrentItem(position, true);
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+        viewPager.addOnPageChangeListener(this);
+        tabLayout.addOnTabSelectedListener(this);
 
     }
 
@@ -125,22 +91,17 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
+        if (id == R.id.action_add) {
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -148,22 +109,25 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
+        switch (id) {
+            case R.id.nav_user:
+                break;
+            case R.id.nav_photo:
+                break;
+            case R.id.nav_collect:
+                break;
+            case R.id.nav_emoji:
+                break;
+            case R.id.nav_wallet:
+                break;
+            case R.id.nav_setting:
+                break;
+            case R.id.nav_share:
+                break;
+            case R.id.nav_about:
+                break;
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -173,5 +137,39 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
     public void findMenuClick(View view) {
         if (null != findFragment)
             findFragment.findMenuClick(view);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        if (tabLayout != null && tabLayout.getTabAt(position) != null)
+            tabLayout.getTabAt(position).select();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        int position = tab.getPosition();
+        if (viewPager.getCurrentItem() != position) {
+            viewPager.setCurrentItem(position, true);
+        }
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }

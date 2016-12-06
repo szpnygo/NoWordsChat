@@ -62,6 +62,9 @@ public class UserActivity extends BaseCompatActivity {
 
     }
 
+    /**
+     * 发送朋友圈消息
+     */
     public void postClick(View view) {
 
     }
@@ -75,6 +78,22 @@ public class UserActivity extends BaseCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        switch (id) {
+            case R.id.nav_group:
+                break;
+            case R.id.nav_set:
+                break;
+            case R.id.nav_friend:
+                break;
+            case R.id.nav_complain:
+                break;
+            case R.id.nav_block:
+                break;
+            case R.id.nav_delete:
+                break;
+            case R.id.nav_desktop:
+                break;
+        }
 
         return super.onOptionsItemSelected(item);
     }
