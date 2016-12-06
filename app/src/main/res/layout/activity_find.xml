@@ -60,7 +60,19 @@
         app:placeholderImage="@drawable/user_logo"
         app:roundAsCircle="true" />
 
-    <include layout="@layout/activity_user_content" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/large_text" />
+
+    </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/menu_post"
@@ -70,7 +82,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:background="?attr/selectableItemBackground"
-        android:src="@drawable/ic_chat_black_24dp"
+        android:src="@drawable/ic_photo_camera_black_24dp"
         android:tint="@android:color/white"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"

@@ -17,16 +17,27 @@ public class NBaseBindingAdapter<T> extends RecyclerView.Adapter<NBaseViewHolder
 
     private OnAdapterClickListener listener;
 
+    private int width = ViewGroup.LayoutParams.MATCH_PARENT;
+    private int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+
     public NBaseBindingAdapter(ArrayList<T> list, int variable, int layout) {
         this.mList = list;
         this.variable = variable;
         this.layout = layout;
     }
 
+    public NBaseBindingAdapter(ArrayList<T> list, int variable, int layout, int width, int height) {
+        this.mList = list;
+        this.variable = variable;
+        this.layout = layout;
+        this.width = width;
+        this.height = height;
+    }
+
     @Override
     public NBaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(layout, null);
-        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        view.setLayoutParams(new ViewGroup.LayoutParams(width, height));
         return new NBaseViewHolder(view);
     }
 
