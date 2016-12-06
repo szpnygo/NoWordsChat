@@ -67,6 +67,7 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager.setOffscreenPageLimit(3);
         IndexFragmentPagerAdapter adapter = new IndexFragmentPagerAdapter(getSupportFragmentManager(), list);
         viewPager.setAdapter(adapter);
 
