@@ -1,5 +1,6 @@
 package info.smemo.nowordschat.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -113,6 +114,7 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_user:
+                startActivity(new Intent(this,UserActivity.class));
                 break;
             case R.id.nav_photo:
                 break;
