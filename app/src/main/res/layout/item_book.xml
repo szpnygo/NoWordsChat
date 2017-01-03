@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
-        <import type="android.view.View" />
+        <import type="android.view.View"/>
 
         <variable
             name="bean"
-            type="info.smemo.nowordschat.bean.BookBean" />
+            type="info.smemo.nowordschat.bean.BookBean"/>
     </data>
 
     <RelativeLayout
@@ -16,8 +16,8 @@
         android:layout_height="72dp"
         android:background="?attr/selectableItemBackground"
         android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp">
 
         <TextView
             android:id="@+id/item_icon"
@@ -28,7 +28,7 @@
             android:gravity="center"
             android:showText="@{bean.title}"
             android:textColor="@color/mainGreenColor"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/username"
@@ -39,7 +39,7 @@
             android:layout_toEndOf="@+id/item_icon"
             android:text="@{bean.username}"
             android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/user_logo"
@@ -52,7 +52,7 @@
             android:layout_marginTop="12dp"
             android:actualImageUri="@{bean.userLogo}"
             app:placeholderImage="@drawable/user_logo"
-            app:roundAsCircle="true" />
+            app:roundAsCircle="true"/>
 
         <LinearLayout
             android:id="@+id/bottom_line"
@@ -62,7 +62,8 @@
             android:layout_alignStart="@+id/username"
             android:layout_marginBottom="1dp"
             android:background="@color/listViewLine"
-            android:visibility="@{bean.showLine ? View.VISIBLE : View.GONE}" />
+            android:orientation="horizontal"
+            android:visibility="@{bean.showLine ? View.VISIBLE : View.GONE}"/>
 
 
     </RelativeLayout>

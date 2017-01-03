@@ -1,6 +1,7 @@
 package info.smemo.nowordschat.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -22,10 +23,16 @@ public class FindActivity extends BaseCompatActivity {
         setSupportActionBar(toolbar);
         setToolbarFinish(toolbar);
 
+        initAdapter();
+
     }
 
-    private void initAdapter(){
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.find_list);
+    private void initAdapter() {
+        findAdapter = new FindAdapter();
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.find_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(findAdapter);
     }
 
     public void postClick(View view) {
