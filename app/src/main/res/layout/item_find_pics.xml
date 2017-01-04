@@ -48,22 +48,39 @@
             android:textSize="18sp" />
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/finds_list"
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:id="@+id/frame"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignStart="@+id/username"
             android:layout_below="@+id/time"
-            android:layout_marginTop="8dp"
-            android:nestedScrollingEnabled="false"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_marginTop="8dp">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="288dp"
+                android:actualImageUri="@{bean.imgUri[0]}"
+                app:placeholderImage="@drawable/find_bg"
+                app:placeholderImageScaleType="centerCrop" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/finds_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </FrameLayout>
+
 
         <LinearLayout
             android:id="@+id/favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/finds_list"
-            android:layout_below="@+id/finds_list"
+            android:layout_alignStart="@+id/frame"
+            android:layout_below="@+id/frame"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -89,7 +106,7 @@
             android:id="@+id/comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/finds_list"
+            android:layout_below="@+id/frame"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/favorite"

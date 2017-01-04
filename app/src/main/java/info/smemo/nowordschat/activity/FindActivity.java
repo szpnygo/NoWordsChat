@@ -122,10 +122,10 @@ public class FindActivity extends BaseCompatActivity {
         findAdapter = new FindAdapter(this, mFindBeanArrayList);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.find_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(findAdapter);
-
-
     }
 
     public void postClick(View view) {
