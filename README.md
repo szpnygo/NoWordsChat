@@ -14,5 +14,8 @@ Will make a full function IM app like wechat, use Qcloud IM SDK.
 ![](https://github.com/szpnygo/NoWordsChat/blob/master/screen/5.jpg)
 ![](https://github.com/szpnygo/NoWordsChat/blob/master/screen/6.jpg)
 
+#Bug待修复
+1.朋友圈中AppBarLayout遮挡了一部分的RecyclerView
+
 #About Devloper
 Neo (http://blog.smemo.info) 
