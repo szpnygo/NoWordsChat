@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="bean"
-            type="info.smemo.nowordschat.bean.FindBean"/>
+            type="info.smemo.nowordschat.bean.FindBean" />
     </data>
 
     <RelativeLayout
@@ -21,10 +21,9 @@
             android:id="@+id/user_logo"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            app:placeholderImage="@drawable/user_logo"
             android:actualImageUri="@{bean.userLogo}"
-            app:roundAsCircle="true"
-            />
+            app:placeholderImage="@drawable/user_logo"
+            app:roundAsCircle="true" />
 
         <TextView
             android:id="@+id/time"
@@ -35,7 +34,7 @@
             android:layout_alignParentTop="true"
             android:text='@{bean.time+""}'
             android:textColor="@color/mainText"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/username"
@@ -46,17 +45,18 @@
             android:layout_toEndOf="@+id/user_logo"
             android:text="@{bean.username}"
             android:textColor="@color/mainGreenColor"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/finds_list"
             android:layout_width="match_parent"
-            android:layout_height="288dp"
+            android:layout_height="wrap_content"
             android:layout_alignStart="@+id/username"
             android:layout_below="@+id/time"
             android:layout_marginTop="8dp"
-            />
+            android:nestedScrollingEnabled="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <LinearLayout
             android:id="@+id/favorite"
@@ -67,24 +67,21 @@
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="8dp"
-            >
+            android:padding="8dp">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_favorite_black_24dp"
-                android:tint="@android:color/holo_red_light"
-                />
+                android:tint="@android:color/holo_red_light" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/mainText"
                 android:text="@{String.valueOf(bean.favorites)}"
-                android:textSize="18sp"
-                />
+                android:textColor="@color/mainText"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -98,24 +95,21 @@
             android:layout_toEndOf="@+id/favorite"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="8dp"
-            >
+            android:padding="8dp">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_chat_bubble_black_24dp"
-                android:tint="@color/mainGreenColor"
-                />
+                android:tint="@color/mainGreenColor" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/mainText"
                 android:text="@{String.valueOf(bean.comments)}"
-                android:textSize="18sp"
-                />
+                android:textColor="@color/mainText"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -125,8 +119,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="1dp"
             android:background="@color/listViewLine"
-            android:orientation="horizontal"
-            />
+            android:orientation="horizontal" />
 
     </RelativeLayout>
 </layout>
