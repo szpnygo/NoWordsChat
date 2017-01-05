@@ -3,7 +3,6 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/mainGreenColor</item>
         <item name="colorPrimaryDark">@color/mainDarkGreenColor</item>
-        <item name="colorAccent">@color/mainGreenColor</item>
     </style>
 
     <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -27,31 +26,17 @@
         <item name="android:tint">@color/mainText</item>
     </style>
 
-    <style name="LoginEditTextTheme">
-        <item name="colorAccent">#fff</item>
-        <!--EditText hint color-->
-        <item name="android:textColorHint">#eee</item>
-        <!-- TextInputLayout text color-->
+    <style name="LoginTheme" parent="AppTheme.NoActionBar">
+        <item name="android:textColorHint">#fff</item>
         <item name="colorControlActivated">#fff</item>
-        <!-- EditText line color when EditText on-focus-->
-        <item name="colorControlHighlight">#fff</item>
-        <!-- EditText line color when EditText  in un-focus-->
-        <item name="colorControlNormal">#fff</item>
-        <item name="hintTextAppearance">@style/AppTheme.TextFloatLabelAppearance</item>
-        <item name="errorTextAppearance">@style/AppTheme.TextErrorAppearance</item>
+        <item name="colorControlNormal">#ddd</item>
         <item name="counterTextAppearance">@style/TextAppearance.Design.Counter</item>
         <item name="counterOverflowTextAppearance">@style/TextAppearance.Design.Counter.Overflow</item>
+
     </style>
 
-    <style name="AppTheme.TextFloatLabelAppearance" parent="TextAppearance.Design.Hint">
-        <!-- Floating label appearance here -->
-        <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="AppTheme.TextErrorAppearance" parent="TextAppearance.Design.Error">
-        <!-- Error message appearance here -->
-        <item name="android:textColor">#fff</item>
+    <style name="LoginButton" parent="AppTheme">
+        <item name="colorButtonNormal">#009900</item>
     </style>
 
 </resources>

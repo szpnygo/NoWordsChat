@@ -1,5 +1,4 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,79 +7,99 @@
     android:fitsSystemWindows="true"
     tools:context="info.smemo.nowordschat.activity.ChatActivity">
 
-    <RelativeLayout
+
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="64dp"
-            app:srcCompat="@drawable/lanuch_icon"/>
-
-
-        <LinearLayout
-            android:id="@+id/email_login_form"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/icon"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputLayout
-                style="@style/LoginEditTextTheme"
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="64dp"
+                app:srcCompat="@drawable/lanuch_icon" />
+
+
+            <LinearLayout
+                android:id="@+id/email_login_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
-
-                <AutoCompleteTextView
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"/>
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                style="@style/LoginEditTextTheme"
-                android:layout_width="match_parent"
+                android:layout_below="@+id/icon"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
-                android:layout_height="wrap_content"
-                >
+                android:orientation="vertical">
 
-                <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/password"
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_email"
+                        android:inputType="textEmailAddress"
+                        android:textColor="#fff"
+                        android:maxLines="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    />
+                    android:layout_marginTop="8dp">
 
-            </android.support.design.widget.TextInputLayout>
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_password"
+                        android:textColor="#fff"
+                        android:imeActionId="@+id/login"
+                        android:imeActionLabel="@string/action_sign_in_short"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="textPassword"
+                        android:maxLines="1" />
 
-            <Button
-                android:id="@+id/email_sign_in_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
-                android:background="#009900"
-                android:text="@string/action_sign_in"
-                android:textColor="#fff"
-                android:textStyle="bold"/>
+                </android.support.design.widget.TextInputLayout>
 
-        </LinearLayout>
+                <Button
+                    android:id="@+id/email_sign_in_button"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/action_sign_in"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:theme="@style/LoginButton" />
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingTop="16dp"
+                    android:text="注册新用户"
+                    android:textColor="#fff" />
 
-</android.support.design.widget.CoordinatorLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
