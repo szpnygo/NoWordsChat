@@ -22,6 +22,7 @@ import info.smemo.nowordschat.adapter.IndexFragmentPagerAdapter;
 import info.smemo.nowordschat.fragment.BookFragment;
 import info.smemo.nowordschat.fragment.FindFragment;
 import info.smemo.nowordschat.fragment.IndexFragment;
+import info.smemo.nowordschat.leancloud.LeanInitController;
 import info.smemo.nowordschat.presenter.BookPresenter;
 import info.smemo.nowordschat.presenter.IndexPresenter;
 
@@ -53,6 +54,8 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
         navigationView.getMenu().getItem(0).setChecked(true);
 
         initFragmentAdapter();
+
+        LeanInitController.trackAppOpened(getIntent());
     }
 
     /**
