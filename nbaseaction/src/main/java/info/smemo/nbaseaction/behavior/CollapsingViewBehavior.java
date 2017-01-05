@@ -72,6 +72,7 @@ public class CollapsingViewBehavior extends CoordinatorLayout.Behavior<View> {
         }
         if (splitHeight > 0 && dependency instanceof AppBarLayout) {
             if (!isAnimationIng) {
+//                Log.e("Behavior", "dependency.getY:" + dependency.getY() + " totalScrollRange:" + totalScrollRange + " splitHeight:" + splitHeight);
                 if (totalScrollRange + dependency.getY() <= splitHeight && child.getVisibility() == View.VISIBLE) {
                     hide(child);
                 } else if (totalScrollRange + dependency.getY() >= splitHeight && child.getVisibility() == View.GONE) {
@@ -91,6 +92,7 @@ public class CollapsingViewBehavior extends CoordinatorLayout.Behavior<View> {
 
     //隐藏时的动画
     protected void hide(final View view) {
+        isAnimationIng = true;
         ScaleAnimation scaleAnimation = new ScaleAnimation(1.0f, 0.0f, 1.0f, 0.0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setInterpolator(INTERPOLATOR);
@@ -98,7 +100,7 @@ public class CollapsingViewBehavior extends CoordinatorLayout.Behavior<View> {
         scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                isAnimationIng = true;
+
             }
 
             @Override
@@ -113,12 +115,12 @@ public class CollapsingViewBehavior extends CoordinatorLayout.Behavior<View> {
             }
 
         });
-        view.setAnimation(scaleAnimation);
-        scaleAnimation.start();
+        view.startAnimation(scaleAnimation);
     }
 
     //显示时的动画
     protected void show(final View view) {
+        isAnimationIng = true;
         view.setVisibility(View.VISIBLE);
         ScaleAnimation scaleAnimation = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -128,7 +130,7 @@ public class CollapsingViewBehavior extends CoordinatorLayout.Behavior<View> {
         scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                isAnimationIng = true;
+
             }
 
             @Override
@@ -142,8 +144,7 @@ public class CollapsingViewBehavior extends CoordinatorLayout.Behavior<View> {
             }
 
         });
-        view.setAnimation(scaleAnimation);
-        scaleAnimation.start();
+        view.startAnimation(scaleAnimation);
     }
 
     //滑到到顶部

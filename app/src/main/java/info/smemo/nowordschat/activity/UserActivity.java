@@ -52,7 +52,7 @@ public class UserActivity extends BaseCompatActivity {
         mRecyclerView.setAdapter(findAdapter);
 
         FindBean findBean = new FindBean();
-        findBean.imgUri = "res:///" + R.drawable.user_logo;
+        findBean.imgUri.add("res:///" + R.drawable.user_logo);
 
         findBeanArrayList.add(findBean);
         findBeanArrayList.add(findBean);
