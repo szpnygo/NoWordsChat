@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
         android:name=".app.AppApplication"
@@ -66,6 +67,7 @@
             android:name="com.avos.avoscloud.feedback.ThreadActivity" >
         </activity>
         <!-- 反馈组件 END -->
+        <meta-data android:name="leancloud" android:value="App"/>
 
     </application>
 

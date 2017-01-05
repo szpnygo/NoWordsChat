@@ -5,6 +5,7 @@ import android.view.View;
 
 import info.smemo.nbaseaction.base.NBaseCompatActivity;
 import info.smemo.nowordschat.R;
+import info.smemo.nowordschat.leancloud.LeanInitController;
 
 public class BaseCompatActivity extends NBaseCompatActivity {
 
@@ -19,5 +20,17 @@ public class BaseCompatActivity extends NBaseCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LeanInitController.analyticsOnPesume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LeanInitController.analyticsOnPause(this);
     }
 }
