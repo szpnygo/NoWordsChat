@@ -68,6 +68,8 @@ public class LoginActivity extends BaseCompatActivity implements View.OnFocusCha
         mPasswordView.setOnFocusChangeListener(this);
         mPasswordView.addTextChangedListener(textWatcher);
 
+        setPasswordErrorMessage(null);
+        setEmailErrorMessage(null);
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
