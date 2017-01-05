@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -67,6 +69,17 @@ public class LoginActivity extends BaseCompatActivity implements View.OnFocusCha
         mEmailView.addTextChangedListener(textWatcher);
         mPasswordView.setOnFocusChangeListener(this);
         mPasswordView.addTextChangedListener(textWatcher);
+
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                    checkData();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         setPasswordErrorMessage(null);
         setEmailErrorMessage(null);
