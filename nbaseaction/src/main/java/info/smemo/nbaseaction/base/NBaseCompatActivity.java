@@ -18,7 +18,7 @@ import info.smemo.nbaseaction.app.AppManager;
 import info.smemo.nbaseaction.ui.MaterialDialog;
 import info.smemo.nbaseaction.util.view.ViewInjectUtils;
 
-public class NBaseCompatActivity extends AppCompatActivity implements AppConstant {
+public class NBaseCompatActivity extends AppCompatActivity implements AppConstant,NBaseCommonView {
 
     protected ProgressDialog mProgressDialog;
     private MaterialDialog mMessageDialog;
@@ -61,12 +61,18 @@ public class NBaseCompatActivity extends AppCompatActivity implements AppConstan
         return mToolbar;
     }
 
+    @Override
+    public boolean isActive() {
+        return false;
+    }
+
     /**
      * show a progress dialog
      *
      * @param title progress notice message
      */
-    protected void showProgressDialog(String title) {
+    @Override
+    public void showProgressDialog(String title) {
         if (null == mProgressDialog) {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setCancelable(false);
@@ -79,7 +85,8 @@ public class NBaseCompatActivity extends AppCompatActivity implements AppConstan
         }
     }
 
-    protected void showProgressDialogInThread(String title) {
+    @Override
+    public void showProgressDialogInThread(String title) {
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         Message message = new Message();
@@ -91,7 +98,8 @@ public class NBaseCompatActivity extends AppCompatActivity implements AppConstan
     /**
      * dismiss progress dialog
      */
-    protected void dismissProgressDialog() {
+    @Override
+    public void dismissProgressDialog() {
         NBaseCompatActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -100,7 +108,8 @@ public class NBaseCompatActivity extends AppCompatActivity implements AppConstan
         });
     }
 
-    private void destoryProgressDialog() {
+    @Override
+    public void destoryProgressDialog() {
         if (null != mProgressDialog && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
@@ -133,11 +142,13 @@ public class NBaseCompatActivity extends AppCompatActivity implements AppConstan
         }
     }
 
-    protected void showMessage(String title, String message) {
+    @Override
+    public void showMessage(String title, String message) {
         showMessage(title, message, null, null);
     }
 
-    private void showMessage(String title, String message, final View.OnClickListener okClickListener, final View.OnClickListener cancelListener) {
+    @Override
+    public void showMessage(String title, String message, final View.OnClickListener okClickListener, final View.OnClickListener cancelListener) {
         if (null == mMessageDialog)
             mMessageDialog = new MaterialDialog(this);
         mMessageDialog

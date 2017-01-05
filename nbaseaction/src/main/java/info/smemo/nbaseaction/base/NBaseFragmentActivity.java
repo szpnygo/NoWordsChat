@@ -17,7 +17,7 @@ import info.smemo.nbaseaction.app.AppManager;
 import info.smemo.nbaseaction.ui.MaterialDialog;
 import info.smemo.nbaseaction.util.view.ViewInjectUtils;
 
-public class NBaseFragmentActivity extends FragmentActivity implements AppConstant {
+public class NBaseFragmentActivity extends FragmentActivity implements AppConstant,NBaseCommonView {
 
     protected ProgressDialog mProgressDialog;
     private MaterialDialog mMessageDialog;
@@ -50,12 +50,18 @@ public class NBaseFragmentActivity extends FragmentActivity implements AppConsta
         mProgressDialog = null;
     }
 
+    @Override
+    public boolean isActive() {
+        return false;
+    }
+
     /**
      * show a progress dialog
      *
      * @param title progress notice message
      */
-    protected void showProgressDialog(String title) {
+    @Override
+    public void showProgressDialog(String title) {
         if (null == mProgressDialog) {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setCancelable(false);
@@ -68,7 +74,8 @@ public class NBaseFragmentActivity extends FragmentActivity implements AppConsta
         }
     }
 
-    protected void showProgressDialogInThread(String title) {
+    @Override
+    public void showProgressDialogInThread(String title) {
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         Message message = new Message();
@@ -80,7 +87,8 @@ public class NBaseFragmentActivity extends FragmentActivity implements AppConsta
     /**
      * dismiss progress dialog
      */
-    protected void dismissProgressDialog() {
+    @Override
+    public void dismissProgressDialog() {
         NBaseFragmentActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -89,7 +97,8 @@ public class NBaseFragmentActivity extends FragmentActivity implements AppConsta
         });
     }
 
-    private void destoryProgressDialog() {
+    @Override
+    public void destoryProgressDialog() {
         if (null != mProgressDialog && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
@@ -122,11 +131,13 @@ public class NBaseFragmentActivity extends FragmentActivity implements AppConsta
         }
     }
 
-    protected void showMessage(String title, String message) {
+    @Override
+    public void showMessage(String title, String message) {
         showMessage(title, message, null, null);
     }
 
-    private void showMessage(String title, String message, final View.OnClickListener okClickListener, final View.OnClickListener cancelListener) {
+    @Override
+    public void showMessage(String title, String message, final View.OnClickListener okClickListener, final View.OnClickListener cancelListener) {
         if (null == mMessageDialog)
             mMessageDialog = new MaterialDialog(this);
         mMessageDialog

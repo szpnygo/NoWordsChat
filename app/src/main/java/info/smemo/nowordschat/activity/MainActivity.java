@@ -22,6 +22,8 @@ import info.smemo.nowordschat.adapter.IndexFragmentPagerAdapter;
 import info.smemo.nowordschat.fragment.BookFragment;
 import info.smemo.nowordschat.fragment.FindFragment;
 import info.smemo.nowordschat.fragment.IndexFragment;
+import info.smemo.nowordschat.presenter.BookPresenter;
+import info.smemo.nowordschat.presenter.IndexPresenter;
 
 public class MainActivity extends NBaseCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         ViewPager.OnPageChangeListener, TabLayout.OnTabSelectedListener {
@@ -59,7 +61,11 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
     private void initFragmentAdapter() {
         ArrayList<Fragment> list = new ArrayList<>();
         indexFragment = new IndexFragment();
+        new IndexPresenter(indexFragment);
+
         bookFragment = new BookFragment();
+        new BookPresenter(bookFragment);
+
         findFragment = new FindFragment();
         list.add(indexFragment);
         list.add(bookFragment);
@@ -114,7 +120,7 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_user:
-                startActivity(new Intent(this,UserActivity.class));
+                startActivity(new Intent(this, UserActivity.class));
                 break;
             case R.id.nav_photo:
                 break;

@@ -14,7 +14,7 @@ import java.lang.ref.WeakReference;
 import info.smemo.nbaseaction.app.AppConstant;
 import info.smemo.nbaseaction.ui.MaterialDialog;
 
-public class NBaseFragment extends Fragment implements AppConstant {
+public class NBaseFragment extends Fragment implements AppConstant,NBaseCommonView {
 
     protected FragmentManager mFragmentManager;
 
@@ -37,48 +37,6 @@ public class NBaseFragment extends Fragment implements AppConstant {
         super.onDestroy();
         destoryProgressDialog();
         mProgressDialog = null;
-    }
-
-    /**
-     * show a progress dialog
-     *
-     * @param title progress notice message
-     */
-    protected void showProgressDialog(String title) {
-        if (null == mProgressDialog) {
-            mProgressDialog = new ProgressDialog(getContext());
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            mProgressDialog.setMessage(title);
-        }
-        mProgressDialog.setMessage(title);
-        if (!mProgressDialog.isShowing()) {
-            mProgressDialog.show();
-        }
-    }
-
-    protected void showProgressDialogInThread(String title) {
-        Bundle bundle = new Bundle();
-        bundle.putString("title", title);
-        Message message = new Message();
-        message.what = SHOW_PROGRESS_DIALOG;
-        message.setData(bundle);
-        mBaseHandler.sendMessage(message);
-    }
-
-    /**
-     * dismiss progress dialog
-     */
-    protected void dismissProgressDialog() {
-        Message message = new Message();
-        message.what = DISMISS_PROGRESS_DIALOG;
-        mBaseHandler.sendMessage(message);
-    }
-
-    private void destoryProgressDialog() {
-        if (null != mProgressDialog && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
     }
 
     protected void handleMessage(Message msg) {
@@ -111,11 +69,56 @@ public class NBaseFragment extends Fragment implements AppConstant {
         }
     }
 
-    private void showMessage(String title, String message) {
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
+
+    @Override
+    public void showProgressDialog(String title) {
+        if (null == mProgressDialog) {
+            mProgressDialog = new ProgressDialog(getContext());
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            mProgressDialog.setMessage(title);
+        }
+        mProgressDialog.setMessage(title);
+        if (!mProgressDialog.isShowing()) {
+            mProgressDialog.show();
+        }
+    }
+
+    @Override
+    public void showProgressDialogInThread(String title) {
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        Message message = new Message();
+        message.what = SHOW_PROGRESS_DIALOG;
+        message.setData(bundle);
+        mBaseHandler.sendMessage(message);
+    }
+
+    @Override
+    public void dismissProgressDialog() {
+        Message message = new Message();
+        message.what = DISMISS_PROGRESS_DIALOG;
+        mBaseHandler.sendMessage(message);
+    }
+
+    @Override
+    public void destoryProgressDialog() {
+        if (null != mProgressDialog && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void showMessage(String title, String message) {
         showMessage(title, message, null, null);
     }
 
-    private void showMessage(String title, String message, final View.OnClickListener okClickListener, final View.OnClickListener cancelListener) {
+    @Override
+    public void showMessage(String title, String message, final View.OnClickListener okClickListener, final View.OnClickListener cancelListener) {
         if (null == mMessageDialog)
             mMessageDialog = new MaterialDialog(getContext());
         mMessageDialog

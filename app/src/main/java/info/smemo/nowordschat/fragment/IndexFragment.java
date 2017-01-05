@@ -13,12 +13,17 @@ import java.util.ArrayList;
 
 import info.smemo.nbaseaction.adapter.NBaseBindingAdapter;
 import info.smemo.nbaseaction.base.NBaseFragment;
-import info.smemo.nowordschat.BR;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.activity.ChatActivity;
 import info.smemo.nowordschat.bean.MessageBean;
+import info.smemo.nowordschat.contract.IndexContract;
+import info.smemo.nowordschat.BR;
 
-public class IndexFragment extends NBaseFragment {
+import static com.google.common.base.Preconditions.checkNotNull;
+
+public class IndexFragment extends NBaseFragment implements IndexContract.View {
+
+    private IndexContract.Presenter mPresenter;
 
     private NBaseBindingAdapter messageAdapter;
     private ArrayList<MessageBean> messageBeanArrayList;
@@ -38,7 +43,6 @@ public class IndexFragment extends NBaseFragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.message_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(messageAdapter);
-        messageAdapter.notifyDataSetChanged();
 
         initAdapter();
 
@@ -49,34 +53,38 @@ public class IndexFragment extends NBaseFragment {
         messageAdapter.setListener(new NBaseBindingAdapter.OnAdapterClickListener<MessageBean>() {
             @Override
             public void onClick(View view, int position, MessageBean object) {
-                startActivity(new Intent(getActivity(), ChatActivity.class));
+                showChat(object);
             }
         });
+    }
 
-        MessageBean messageBean = new MessageBean();
-        messageBean.username = "无语开发者";
-        messageBean.time = "10:44";
-        messageBean.message = "吃饭了吗？";
-        messageBean.unRead = 2;
-        messageBean.userLogo = "res:///" + R.drawable.user_logo;
-        messageBeanArrayList.add(messageBean);
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
 
-        MessageBean messageBean1 = new MessageBean();
-        messageBean1.username = "陪你去看海";
-        messageBean1.time = "12月3号";
-        messageBean1.message = "你去哪了？来斗图呀";
-        messageBean1.userLogo = "res:///" + R.drawable.user_logo;
-        messageBeanArrayList.add(messageBean1);
+    @Override
+    public void showMessageList(ArrayList<MessageBean> list) {
+        messageBeanArrayList.clear();
+        for (MessageBean messageBean : list) {
+            messageBeanArrayList.add(messageBean);
+        }
+        notifyDataSetChanged();
+    }
 
-        MessageBean messageBean2 = new MessageBean();
-        messageBean2.username = "爱情公寓";
-        messageBean2.time = "11月3号";
-        messageBean2.message = "你的月亮我的新";
-        messageBean2.unRead = 12;
-        messageBean2.userLogo = "res:///" + R.drawable.user_logo;
-        messageBeanArrayList.add(messageBean2);
-
+    @Override
+    public void notifyDataSetChanged() {
         messageAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void showChat(MessageBean object) {
+        startActivity(new Intent(getActivity(), ChatActivity.class));
+    }
+
+    @Override
+    public void setPresenter(IndexContract.Presenter presenter) {
+        this.mPresenter = checkNotNull(presenter);
+    }
 }
