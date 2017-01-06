@@ -1,5 +1,6 @@
 package info.smemo.nowordschat.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
@@ -51,7 +52,7 @@ public class LoginActivity extends BaseCompatActivity implements View.OnFocusCha
         registerButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
             }
         });
 
@@ -92,7 +93,7 @@ public class LoginActivity extends BaseCompatActivity implements View.OnFocusCha
         }
 
         @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
             setPasswordErrorMessage(null);
             setEmailErrorMessage(null);
         }

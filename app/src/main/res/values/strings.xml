@@ -21,6 +21,7 @@
 
 
     <string name="action_sign_in">登录</string>
+    <string name="action_sign_up">注册</string>
     <string name="action_sign_in_short">登录</string>
     <string name="error_invalid_email">无效的邮箱</string>
     <string name="error_invalid_password">密码过短</string>
