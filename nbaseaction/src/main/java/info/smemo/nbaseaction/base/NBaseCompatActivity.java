@@ -185,7 +185,7 @@ public class NBaseCompatActivity extends AppCompatActivity implements AppConstan
         ThreadUtil.newThreadMain(new ThreadUtil.ThreadRunnableMain() {
             @Override
             public void inMain() {
-                Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
             }
         });
 

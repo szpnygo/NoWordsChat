@@ -20,6 +20,11 @@ public class RegisterActivity extends BaseCompatActivity implements RegisterCont
     }
 
     @Override
+    public void showMessage(String message) {
+        showSnackbar(message, binding.rootView);
+    }
+
+    @Override
     public void registerSuccess() {
         toast("注册成功请登录");
         finish();

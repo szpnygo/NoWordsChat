@@ -6,6 +6,8 @@ import android.view.inputmethod.EditorInfo;
 
 import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.R;
+import info.smemo.nowordschat.action.UserAction;
+import info.smemo.nowordschat.base.BaseActionInterface;
 import info.smemo.nowordschat.contract.RegisterContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -44,7 +46,30 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     @Override
     public void register(@NonNull String nickname, @NonNull String email, @NonNull String password) {
         if (!checkData(nickname, email, password)) return;
-        mView.registerSuccess();
+        mView.showProgressDialog("注册中......");
+        UserAction.createUser(email, nickname, password, new BaseActionInterface.BaseComplete() {
+            @Override
+            public void success() {
+                mView.dismissProgressDialog();
+                mView.registerSuccess();
+            }
+
+            @Override
+            public void error(int code, String message) {
+                mView.dismissProgressDialog();
+                if (code == 125 || code == 200 || code == 202 || code == 203 || code == 204 || code == 217) {
+                    mView.setEmailErrorMessage(message);
+                } else if (code == 201 || code == 218) {
+                    mView.setPasswordErrorMessage(message);
+                } else if (code == 137) {
+                    mView.setNicknameErrorMessage("该昵称已被占用");
+                } else {
+                    mView.showMessage(message);
+                }
+
+            }
+        });
+
     }
 
     @Override

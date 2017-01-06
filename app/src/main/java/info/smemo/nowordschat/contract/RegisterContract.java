@@ -9,6 +9,8 @@ public interface RegisterContract {
 
     interface View extends NBaseView<Presenter> {
 
+        void showMessage(String message);
+
         void registerSuccess();
 
         void scrollToBottom();

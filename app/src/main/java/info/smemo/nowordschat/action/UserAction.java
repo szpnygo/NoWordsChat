@@ -14,15 +14,12 @@ public class UserAction extends BaseAction {
      * 注册用户
      *
      * @param nickname 用户昵称
-     * @param username 用户名
      * @param password 密码
      * @param email    邮箱
-     * @param sex      性别
      */
-    public static void createUser(@NonNull String nickname, @NonNull String username, @NonNull String password,
-                                  @NonNull String email, @NonNull int sex,
+    public static void createUser(@NonNull String email, @NonNull String nickname, @NonNull String password,
                                   @Nullable final BaseActionInterface.BaseComplete complete) {
-        LeanUserController.createUser(nickname, username, password, email, sex, new LeanActionInterface.LeanBaseComplete() {
+        LeanUserController.createUser(nickname, email, password, new LeanActionInterface.LeanBaseComplete() {
             @Override
             public void success() {
                 if (null != complete)
