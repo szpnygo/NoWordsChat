@@ -4,13 +4,15 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 
+import info.smemo.nbaseaction.util.LogHelper;
 import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.action.UserAction;
-import info.smemo.nowordschat.base.BaseActionInterface;
+import info.smemo.nowordschat.appaction.UserController;
 import info.smemo.nowordschat.contract.RegisterContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static info.smemo.nowordschat.app.AppConstant.LOG_TAG;
 
 public class RegisterPresenter implements RegisterContract.Presenter {
 
@@ -47,7 +49,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     public void register(@NonNull String nickname, @NonNull String email, @NonNull String password) {
         if (!checkData(nickname, email, password)) return;
         mView.showProgressDialog("注册中......");
-        UserAction.createUser(email, nickname, password, new BaseActionInterface.BaseComplete() {
+        UserAction.createUser(email, nickname, password, new UserController.RegisterSuccessListener() {
             @Override
             public void success() {
                 mView.dismissProgressDialog();
@@ -56,17 +58,9 @@ public class RegisterPresenter implements RegisterContract.Presenter {
 
             @Override
             public void error(int code, String message) {
+                LogHelper.e(LOG_TAG);
                 mView.dismissProgressDialog();
-                if (code == 125 || code == 200 || code == 202 || code == 203 || code == 204 || code == 217) {
-                    mView.setEmailErrorMessage(message);
-                } else if (code == 201 || code == 218) {
-                    mView.setPasswordErrorMessage(message);
-                } else if (code == 137) {
-                    mView.setNicknameErrorMessage("该昵称已被占用");
-                } else {
-                    mView.showMessage(message);
-                }
-
+                mView.showMessage(message);
             }
         });
 
@@ -94,11 +88,11 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             mView.setEmailErrorMessage("请输入正确的邮箱格式");
             return false;
         }
-        if (password.length() < 6) {
+        if (password.length() < 8) {
             mView.setPasswordErrorMessage("密码不能小于6位");
             return false;
         }
-        if (password.length() > 15) {
+        if (password.length() > 16) {
             mView.setPasswordErrorMessage("密码不能大于15位");
             return false;
         }

@@ -3,8 +3,8 @@ package info.smemo.nowordschat.action;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import info.smemo.nowordschat.appaction.UserController;
 import info.smemo.nowordschat.base.BaseAction;
-import info.smemo.nowordschat.base.BaseActionInterface;
 
 public class UserAction extends BaseAction {
 
@@ -16,9 +16,10 @@ public class UserAction extends BaseAction {
      * @param email    邮箱
      */
     public static void createUser(@NonNull String email, @NonNull String nickname, @NonNull String password,
-                                  @Nullable final BaseActionInterface.BaseComplete complete) {
-
+                                  @Nullable UserController.RegisterSuccessListener listener) {
+        UserController.getInstance().register(email, password, nickname, listener);
     }
+
     /**
      * 用户是否登录
      */

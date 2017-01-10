@@ -1,6 +1,6 @@
-package info.smemo.nowordschat.base;
+package info.smemo.nowordschat.appaction;
 
-public interface BaseActionInterface {
+public interface ActionInterface {
 
     interface BaseComplete {
 
