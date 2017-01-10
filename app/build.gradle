@@ -43,7 +43,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':nbaseaction')
-    compile project(':leancloud')
+    compile project(':appaction')
     compile 'com.android.support:multidex:1.0.1'
     provided 'com.android.support:appcompat-v7:24.2.1'
     provided 'com.android.support:support-v4:24.1.1'

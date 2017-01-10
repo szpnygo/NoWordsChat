@@ -5,8 +5,6 @@ import android.support.annotation.Nullable;
 
 import info.smemo.nowordschat.base.BaseAction;
 import info.smemo.nowordschat.base.BaseActionInterface;
-import info.smemo.nowordschat.leancloud.LeanActionInterface;
-import info.smemo.nowordschat.leancloud.LeanUserController;
 
 public class UserAction extends BaseAction {
 
@@ -19,21 +17,8 @@ public class UserAction extends BaseAction {
      */
     public static void createUser(@NonNull String email, @NonNull String nickname, @NonNull String password,
                                   @Nullable final BaseActionInterface.BaseComplete complete) {
-        LeanUserController.createUser(nickname, email, password, new LeanActionInterface.LeanBaseComplete() {
-            @Override
-            public void success() {
-                if (null != complete)
-                    complete.success();
-            }
 
-            @Override
-            public void error(int code, String message) {
-                if (null != complete)
-                    complete.error(code, message);
-            }
-        });
     }
-
     /**
      * 用户是否登录
      */
@@ -42,6 +27,6 @@ public class UserAction extends BaseAction {
     }
 
     public static void getCurrentUser() {
-        LeanUserController.getCurrentUser();
+
     }
 }
