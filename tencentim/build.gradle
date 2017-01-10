@@ -19,6 +19,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    provided 'com.android.support:support-v4:24.1.1'
+    compile files('libs/mobilepb.jar')
+    compile files('libs/wup-1.0.0-SNAPSHOT.jar')
+    compile files('libs/qalsdk.jar')
+    compile files('libs/tls_sdk.jar')
+    compile files('libs/bugly_1.3.0_imsdk_release.jar')
+    compile files('libs/imsdk.jar')
+    compile files('libs/soload.jar')
 }
