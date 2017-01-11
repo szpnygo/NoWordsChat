@@ -10,7 +10,7 @@ import com.orhanobut.logger.Logger;
 import info.smemo.nbaseaction.BuildConfig;
 import info.smemo.nbaseaction.app.AppConstant;
 import info.smemo.nbaseaction.base.NBaseApplication;
-import info.smemo.nowordschat.appaction.ImController;
+import info.smemo.nowordschat.appaction.controller.ImController;
 
 
 public class AppApplication extends NBaseApplication {

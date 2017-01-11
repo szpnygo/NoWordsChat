@@ -3,7 +3,7 @@ package info.smemo.nowordschat.action;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import info.smemo.nowordschat.appaction.UserController;
+import info.smemo.nowordschat.appaction.controller.UserController;
 import info.smemo.nowordschat.base.BaseAction;
 
 public class UserAction extends BaseAction {
@@ -29,6 +29,20 @@ public class UserAction extends BaseAction {
      */
     public static boolean needLogin() {
         return UserController.getInstance().needLogin();
+    }
+
+    /**
+     * 获取登录用户信息
+     */
+    public static void getUser(UserController.LoadUserProfileSuccessListener listener) {
+        UserController.getInstance().getUser(listener);
+    }
+
+    /**
+     * 用户退出
+     */
+    public static void logout() {
+        UserController.getInstance().logout();
     }
 
 }

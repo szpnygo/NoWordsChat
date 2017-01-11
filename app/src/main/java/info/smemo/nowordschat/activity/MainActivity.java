@@ -19,15 +19,17 @@ import java.util.ArrayList;
 import info.smemo.nbaseaction.base.NBaseCompatActivity;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.adapter.IndexFragmentPagerAdapter;
-import info.smemo.nowordschat.appaction.ImController;
+import info.smemo.nowordschat.appaction.controller.ImController;
+import info.smemo.nowordschat.contract.MainContract;
 import info.smemo.nowordschat.fragment.BookFragment;
 import info.smemo.nowordschat.fragment.FindFragment;
 import info.smemo.nowordschat.fragment.IndexFragment;
 import info.smemo.nowordschat.presenter.BookPresenter;
 import info.smemo.nowordschat.presenter.IndexPresenter;
+import info.smemo.nowordschat.presenter.MainPresenter;
 
 public class MainActivity extends NBaseCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        ViewPager.OnPageChangeListener, TabLayout.OnTabSelectedListener {
+        ViewPager.OnPageChangeListener, TabLayout.OnTabSelectedListener, MainContract.View {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -36,14 +38,16 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
     private BookFragment bookFragment;
     private FindFragment findFragment;
 
+    private MainPresenter mPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         ImController.init(this);
+        mPresenter = new MainPresenter(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -56,6 +60,12 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
         navigationView.getMenu().getItem(0).setChecked(true);
 
         initFragmentAdapter();
+        mPresenter.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     /**
@@ -183,5 +193,16 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    @Override
+    public void setPresenter(MainContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void reLogin() {
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 }

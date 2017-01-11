@@ -1,6 +1,8 @@
 package info.smemo.nbaseaction.base;
 
+import android.app.Application;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 
@@ -17,7 +20,7 @@ import info.smemo.nbaseaction.app.AppManager;
 import info.smemo.nbaseaction.ui.MaterialDialog;
 import info.smemo.nbaseaction.util.view.ViewInjectUtils;
 
-public class NBaseFragmentActivity extends FragmentActivity implements AppConstant,NBaseCommonView {
+public class NBaseFragmentActivity extends FragmentActivity implements AppConstant, NBaseCommonView {
 
     protected ProgressDialog mProgressDialog;
     private MaterialDialog mMessageDialog;
@@ -160,6 +163,26 @@ public class NBaseFragmentActivity extends FragmentActivity implements AppConsta
                 .setTitle(title)
                 .setMessage(message);
         mMessageDialog.show();
+    }
+
+    @Override
+    public void showToastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public Context getVContext() {
+        return this;
+    }
+
+    @Override
+    public Context getVApplicationContext() {
+        return getApplicationContext();
+    }
+
+    @Override
+    public Application getVApplication() {
+        return getApplication();
     }
 
     protected void injectView() {

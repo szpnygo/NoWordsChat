@@ -3,6 +3,10 @@ package info.smemo.library.tencetim;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.tencent.TIMFriendshipManager;
+import com.tencent.TIMUserProfile;
+import com.tencent.TIMValueCallBack;
+
 import tencent.tls.platform.TLSAccountHelper;
 import tencent.tls.platform.TLSErrInfo;
 import tencent.tls.platform.TLSStrAccRegListener;
@@ -41,7 +45,7 @@ public class IMUserController implements IMConstant {
             @Override
             public void OnStrAccRegSuccess(TLSUserInfo tlsUserInfo) {
                 if (null != mContext)
-                    IMUserInfoAction.saveSpString(mContext, "my_nickname", nickname);
+                    IMSP.saveSpString(mContext, "my_nickname", nickname);
                 listener.success();
             }
 
@@ -60,4 +64,26 @@ public class IMUserController implements IMConstant {
         }
     }
 
+    public void getSelfProfile(@NonNull final IMInterface.SelfProfileListener listener) {
+        TIMFriendshipManager.getInstance().getSelfProfile(new TIMValueCallBack<TIMUserProfile>() {
+            @Override
+            public void onError(int i, String s) {
+                listener.error(i, s);
+            }
+
+            @Override
+            public void onSuccess(TIMUserProfile timUserProfile) {
+                listener.success(timUserProfile);
+            }
+        });
+    }
+
+    public String getTmpNickname(Context context) {
+        return IMSP.getSpString(mContext, "my_nickname", "NULL");
+    }
+
+
+    public TIMFriendshipManager getFriendshipManager(){
+        return TIMFriendshipManager.getInstance();
+    }
 }

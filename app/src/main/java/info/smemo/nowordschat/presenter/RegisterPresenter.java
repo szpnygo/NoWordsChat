@@ -8,7 +8,7 @@ import info.smemo.nbaseaction.util.LogHelper;
 import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.action.UserAction;
-import info.smemo.nowordschat.appaction.UserController;
+import info.smemo.nowordschat.appaction.controller.UserController;
 import info.smemo.nowordschat.contract.RegisterContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;

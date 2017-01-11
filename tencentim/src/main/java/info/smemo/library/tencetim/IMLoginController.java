@@ -2,11 +2,15 @@ package info.smemo.library.tencetim;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
+import com.tencent.TIMCallBack;
+import com.tencent.TIMManager;
+import com.tencent.TIMUser;
 
 import tencent.tls.platform.TLSErrInfo;
 import tencent.tls.platform.TLSLoginHelper;
 import tencent.tls.platform.TLSPwdLoginListener;
-import tencent.tls.platform.TLSRefreshUserSigListener;
 import tencent.tls.platform.TLSUserInfo;
 
 public class IMLoginController implements IMConstant {
@@ -35,7 +39,23 @@ public class IMLoginController implements IMConstant {
         mTLSLoginHelper.TLSPwdLogin(account, password.getBytes(), new TLSPwdLoginListener() {
             @Override
             public void OnPwdLoginSuccess(TLSUserInfo tlsUserInfo) {
-                listener.success();
+
+                TIMUser user = new TIMUser();
+                user.setAccountType(String.valueOf(ACCOUNT_TYPE));
+                user.setIdentifier(tlsUserInfo.identifier);
+
+                TIMManager.getInstance().login((int) APP_ID, user,
+                        mTLSLoginHelper.getUserSig(tlsUserInfo.identifier), new TIMCallBack() {
+                            @Override
+                            public void onError(int i, String s) {
+                                listener.error(i, s);
+                            }
+
+                            @Override
+                            public void onSuccess() {
+                                listener.success();
+                            }
+                        });
             }
 
             @Override
@@ -65,41 +85,31 @@ public class IMLoginController implements IMConstant {
     }
 
     public boolean needLogin() {
-        return needLogin(getLastUser());
+        return needLogin(getLastUser()) || TIMManager.getInstance().getLoginUser().isEmpty();
     }
 
     public boolean needLogin(TLSUserInfo userInfo) {
-        return userInfo == null || needLogin(userInfo.identifier);
+        return userInfo == null || needLogin(userInfo.identifier) || TIMManager.getInstance().getLoginUser().isEmpty();
     }
 
     public boolean needLogin(@NonNull String identifier) {
-        return mTLSLoginHelper.needLogin(identifier);
+        return mTLSLoginHelper.needLogin(identifier) || TIMManager.getInstance().getLoginUser().isEmpty();
     }
 
-    public boolean hasLogin() {
-        return !needLogin();
+    public void logout() {
+        TIMManager.getInstance().logout(new TIMCallBack() {
+            @Override
+            public void onError(int i, String s) {
+                Log.e("imsdk", i + ":" + s);
+            }
+
+            @Override
+            public void onSuccess() {
+                Log.e("imsdk", "logout success");
+            }
+        });
     }
 
-    public void refreshUserSig(String identifier) {
-        if (!needLogin(identifier)) {
-            mTLSLoginHelper.TLSRefreshUserSig(identifier, new TLSRefreshUserSigListener() {
-                @Override
-                public void OnRefreshUserSigSuccess(TLSUserInfo tlsUserInfo) {
-
-                }
-
-                @Override
-                public void OnRefreshUserSigFail(TLSErrInfo tlsErrInfo) {
-//                    tlsErrInfo.ErrCode == TLSErrInfo. LOGIN_WRONG_PWD
-                }
-
-                @Override
-                public void OnRefreshUserSigTimeout(TLSErrInfo tlsErrInfo) {
-
-                }
-            });
-        }
-    }
 }
 
 

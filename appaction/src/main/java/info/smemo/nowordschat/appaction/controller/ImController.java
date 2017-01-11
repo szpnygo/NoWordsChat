@@ -1,4 +1,4 @@
-package info.smemo.nowordschat.appaction;
+package info.smemo.nowordschat.appaction.controller;
 
 import android.content.Context;
 

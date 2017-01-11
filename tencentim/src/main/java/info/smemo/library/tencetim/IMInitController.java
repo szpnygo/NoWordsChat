@@ -9,7 +9,7 @@ import com.tencent.TIMManager;
  * Created by neo on 17/1/10.
  */
 
-public class IMInitController {
+public class IMInitController implements IMConstant {
 
     public static void init(Context context) {
         TIMManager.getInstance().init(context);

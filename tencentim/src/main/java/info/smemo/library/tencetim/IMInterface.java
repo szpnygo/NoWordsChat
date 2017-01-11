@@ -1,5 +1,7 @@
 package info.smemo.library.tencetim;
 
+import com.tencent.TIMUserProfile;
+
 public interface IMInterface {
 
     interface BaseInterface{
@@ -17,6 +19,11 @@ public interface IMInterface {
 
         void success();
 
+    }
+
+    interface SelfProfileListener extends BaseInterface{
+
+        void success(TIMUserProfile userProfile);
     }
 
 }
