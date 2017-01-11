@@ -46,10 +46,10 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     }
 
     @Override
-    public void register(@NonNull String nickname, @NonNull String email, @NonNull String password) {
-        if (!checkData(nickname, email, password)) return;
+    public void register(@NonNull String nickname, @NonNull String account, @NonNull String password) {
+        if (!checkData(nickname, account, password)) return;
         mView.showProgressDialog("注册中......");
-        UserAction.createUser(email, nickname, password, new UserController.RegisterSuccessListener() {
+        UserAction.createUser(account, nickname, password, new UserController.RegisterSuccessListener() {
             @Override
             public void success() {
                 mView.dismissProgressDialog();
@@ -67,13 +67,13 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     }
 
     @Override
-    public boolean checkData(String nickname, String email, String password) {
+    public boolean checkData(String nickname, String account, String password) {
         if (StringUtil.isEmpty(nickname)) {
             mView.setNicknameErrorMessage("昵称不能为空");
             return false;
         }
-        if (StringUtil.isEmpty(email)) {
-            mView.setEmailErrorMessage("邮箱不能为空");
+        if (StringUtil.isEmpty(account)) {
+            mView.setEmailErrorMessage("账号不能为空");
             return false;
         }
         if (StringUtil.isEmpty(password)) {
@@ -84,16 +84,16 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             mView.setNicknameErrorMessage("昵称请在2-20个字符之间");
             return false;
         }
-        if (!StringUtil.checkEmail(email)) {
-            mView.setEmailErrorMessage("请输入正确的邮箱格式");
+        if (account.length() < 4 || account.length() > 24) {
+            mView.setEmailErrorMessage("账号请在2-20个字符之间");
             return false;
         }
         if (password.length() < 8) {
-            mView.setPasswordErrorMessage("密码不能小于6位");
+            mView.setPasswordErrorMessage("密码不能小于8位");
             return false;
         }
-        if (password.length() > 16) {
-            mView.setPasswordErrorMessage("密码不能大于15位");
+        if (password.length() >= 30) {
+            mView.setPasswordErrorMessage("密码不能大于30位");
             return false;
         }
         return true;

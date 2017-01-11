@@ -3,8 +3,6 @@ package info.smemo.library.tencetim;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.tencent.TIMCallBack;
-
 import tencent.tls.platform.TLSAccountHelper;
 import tencent.tls.platform.TLSErrInfo;
 import tencent.tls.platform.TLSPwdLoginListener;
@@ -20,6 +18,7 @@ public class IMUserController implements IMConstant {
     private static IMUserController instance;
 
     private TLSAccountHelper mAccountHelper;
+    private Context mContext;
 
     private static class Single {
         private static IMUserController instance = new IMUserController();
@@ -35,6 +34,7 @@ public class IMUserController implements IMConstant {
     public void init(@NonNull Context context) {
         mAccountHelper = TLSAccountHelper.getInstance()
                 .init(context, APP_ID, ACCOUNT_TYPE, LIBRARY_VER);
+        mContext = context;
     }
 
     public void register(@NonNull final String email, @NonNull final String password, @NonNull final String nickname, @NonNull final IMInterface.RegisterListener listener) {
@@ -44,17 +44,9 @@ public class IMUserController implements IMConstant {
                 IMLoginController.getInstance().login(email, password, new TLSPwdLoginListener() {
                     @Override
                     public void OnPwdLoginSuccess(TLSUserInfo tlsUserInfo) {
-                        IMUserInfoAction.setNickname(nickname, new TIMCallBack() {
-                            @Override
-                            public void onError(int i, String s) {
-                                listener.error(i, s);
-                            }
-
-                            @Override
-                            public void onSuccess() {
-                                listener.success();
-                            }
-                        });
+                        if (null != mContext)
+                            IMUserInfoAction.saveSpString(mContext, "my_nickname", nickname);
+                        listener.success();
                     }
 
                     @Override

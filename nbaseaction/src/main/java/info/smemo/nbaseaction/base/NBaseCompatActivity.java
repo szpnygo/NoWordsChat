@@ -80,7 +80,7 @@ public class NBaseCompatActivity extends AppCompatActivity implements AppConstan
         if (null == mProgressDialog) {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setCancelable(false);
-            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             mProgressDialog.setMessage(title);
         }
         mProgressDialog.setMessage(title);

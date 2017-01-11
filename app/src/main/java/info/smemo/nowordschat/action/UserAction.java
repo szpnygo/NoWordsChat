@@ -13,11 +13,11 @@ public class UserAction extends BaseAction {
      *
      * @param nickname 用户昵称
      * @param password 密码
-     * @param email    邮箱
+     * @param account    邮箱
      */
-    public static void createUser(@NonNull String email, @NonNull String nickname, @NonNull String password,
+    public static void createUser(@NonNull String account, @NonNull String nickname, @NonNull String password,
                                   @Nullable UserController.RegisterSuccessListener listener) {
-        UserController.getInstance().register(email, password, nickname, listener);
+        UserController.getInstance().register(account, password, nickname, listener);
     }
 
     /**

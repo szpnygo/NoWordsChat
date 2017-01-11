@@ -3,6 +3,7 @@ package info.smemo.nowordschat.activity;
 import android.content.Intent;
 
 import info.smemo.nowordschat.R;
+import info.smemo.nowordschat.appaction.ImController;
 import info.smemo.nowordschat.base.BaseCompatActivity;
 import info.smemo.nowordschat.contract.LoginContract;
 import info.smemo.nowordschat.databinding.ActivityLoginBinding;
@@ -19,7 +20,7 @@ public class LoginActivity extends BaseCompatActivity implements LoginContract.V
         binding = createContentView(R.layout.activity_login);
         LoginPresenter presenter = new LoginPresenter(this);
         binding.setPresenter(presenter);
-
+        ImController.init(this);
     }
 
     @Override

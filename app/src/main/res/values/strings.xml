@@ -16,17 +16,17 @@
 
     <!-- Strings related to login -->
     <string name="prompt_nickname">昵称</string>
-    <string name="prompt_email">邮箱</string>
+    <string name="prompt_email">账号</string>
     <string name="prompt_password">密码</string>
 
 
     <string name="action_sign_in">登录</string>
     <string name="action_sign_up">注册</string>
     <string name="action_sign_in_short">登录</string>
-    <string name="error_invalid_email">无效的邮箱</string>
+    <string name="error_invalid_email">无效的账号</string>
     <string name="error_invalid_password">密码过短</string>
     <string name="error_incorrect_password">密码不正确</string>
-    <string name="error_field_required">必须填写ci字段</string>
+    <string name="error_field_required">必须填写此字段</string>
     <string name="permission_rationale">需要联系人权限来自动完成</string>
 
 </resources>
