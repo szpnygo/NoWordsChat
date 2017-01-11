@@ -1,13 +1,16 @@
 package info.smemo.nbaseaction.base;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 
@@ -160,6 +163,26 @@ public class NBaseActivity extends Activity implements AppConstant, NBaseCommonV
                 .setTitle(title)
                 .setMessage(message);
         mMessageDialog.show();
+    }
+
+    @Override
+    public void showToastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public Context getVContext() {
+        return this;
+    }
+
+    @Override
+    public Context getVApplicationContext() {
+        return getApplicationContext();
+    }
+
+    @Override
+    public Application getVApplication() {
+        return getApplication();
     }
 
     protected void injectView() {

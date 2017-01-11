@@ -1,5 +1,8 @@
 package info.smemo.nowordschat.app;
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
@@ -7,6 +10,7 @@ import com.orhanobut.logger.Logger;
 import info.smemo.nbaseaction.BuildConfig;
 import info.smemo.nbaseaction.app.AppConstant;
 import info.smemo.nbaseaction.base.NBaseApplication;
+import info.smemo.nowordschat.appaction.controller.ImController;
 
 
 public class AppApplication extends NBaseApplication {
@@ -19,5 +23,11 @@ public class AppApplication extends NBaseApplication {
                 .methodOffset(1)
                 .logLevel(BuildConfig.MY_DEBUG ? LogLevel.FULL : LogLevel.NONE);
         Fresco.initialize(this);
+        ImController.init(this);
+    }
+
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }

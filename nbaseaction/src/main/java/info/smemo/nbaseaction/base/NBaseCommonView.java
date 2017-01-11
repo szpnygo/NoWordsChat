@@ -1,5 +1,7 @@
 package info.smemo.nbaseaction.base;
 
+import android.app.Application;
+import android.content.Context;
 import android.view.View;
 
 public interface NBaseCommonView {
@@ -17,5 +19,14 @@ public interface NBaseCommonView {
     void showMessage(String title, String message);
 
     void showMessage(String title, String message, final View.OnClickListener okClickListener, final View.OnClickListener cancelListener);
+
+    void showToastMessage(String message);
+
+    Context getVContext();
+
+    Context getVApplicationContext();
+
+    Application getVApplication();
+
 
 }

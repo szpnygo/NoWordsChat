@@ -1,24 +1,30 @@
 package info.smemo.nbaseaction.base;
 
+import android.app.Application;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 
 import info.smemo.nbaseaction.app.AppConstant;
 import info.smemo.nbaseaction.app.AppManager;
 import info.smemo.nbaseaction.ui.MaterialDialog;
+import info.smemo.nbaseaction.util.ThreadUtil;
 import info.smemo.nbaseaction.util.view.ViewInjectUtils;
 
-public class NBaseCompatActivity extends AppCompatActivity implements AppConstant,NBaseCommonView {
+public class NBaseCompatActivity extends AppCompatActivity implements AppConstant, NBaseCommonView {
 
     protected ProgressDialog mProgressDialog;
     private MaterialDialog mMessageDialog;
@@ -76,7 +82,7 @@ public class NBaseCompatActivity extends AppCompatActivity implements AppConstan
         if (null == mProgressDialog) {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setCancelable(false);
-            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             mProgressDialog.setMessage(title);
         }
         mProgressDialog.setMessage(title);
@@ -173,7 +179,41 @@ public class NBaseCompatActivity extends AppCompatActivity implements AppConstan
         mMessageDialog.show();
     }
 
+    @Override
+    public void showToastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public Context getVContext() {
+        return this;
+    }
+
+    @Override
+    public Context getVApplicationContext() {
+        return getApplicationContext();
+    }
+
+    @Override
+    public Application getVApplication() {
+        return getApplication();
+    }
+
     protected void injectView() {
         ViewInjectUtils.inject(this);
+    }
+
+    protected void showSnackbar(final String message, @NonNull final View view) {
+        ThreadUtil.newThreadMain(new ThreadUtil.ThreadRunnableMain() {
+            @Override
+            public void inMain() {
+                Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    protected void toast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }

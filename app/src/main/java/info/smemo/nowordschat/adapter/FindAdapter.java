@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -29,13 +30,16 @@ public class FindAdapter extends RecyclerView.Adapter {
 
     private ArrayList<FindBean> findBeanList;
 
-    public FindAdapter(Context context) {
-        this.mContext = context;
-    }
+    private int newMessageNum = 0;
 
     public FindAdapter(Context context, ArrayList<FindBean> findBeanList) {
         mContext = context;
         this.findBeanList = findBeanList;
+    }
+
+    public void setNewMessage(int message) {
+        this.newMessageNum = message;
+        this.notifyItemChanged(0);
     }
 
     @Override
@@ -67,9 +71,8 @@ public class FindAdapter extends RecyclerView.Adapter {
             headerHolder.setVisibility(false);
 
         } else if (getItemViewType(position) == FIND_TYPE_HEADER) {
-
             HeaderHolder headerHolder = (HeaderHolder) holder;
-//            headerHolder.setVisibility(false);
+            headerHolder.setNewsMessage(newMessageNum);
 
         } else if (getItemViewType(position) == FIND_TYPE_MORE_PICS) {
 
@@ -103,10 +106,19 @@ public class FindAdapter extends RecyclerView.Adapter {
     class HeaderHolder extends NBaseViewHolder {
 
         public SimpleDraweeView logo;
-        public String message;
+        public TextView messageTv;
 
         public HeaderHolder(View itemView) {
             super(itemView);
+            messageTv = (TextView) itemView.findViewById(R.id.message);
+        }
+
+        public void setNewsMessage(int message) {
+            if (message > 0) {
+                messageTv.setText(mContext.getResources().getString(R.string.new_message_toast, message));
+            } else {
+                setVisibility(false);
+            }
         }
     }
 

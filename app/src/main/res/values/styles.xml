@@ -3,7 +3,6 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/mainGreenColor</item>
         <item name="colorPrimaryDark">@color/mainDarkGreenColor</item>
-        <item name="colorAccent">@color/mainGreenColor</item>
     </style>
 
     <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -14,6 +13,7 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorAccent">#fff</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -25,4 +25,18 @@
         <item name="android:padding">12dp</item>
         <item name="android:tint">@color/mainText</item>
     </style>
+
+    <style name="LoginTheme" parent="AppTheme.NoActionBar">
+        <item name="android:textColorHint">#fff</item>
+        <item name="colorControlActivated">#fff</item>
+        <item name="colorControlNormal">#ddd</item>
+        <item name="counterTextAppearance">@style/TextAppearance.Design.Counter</item>
+        <item name="counterOverflowTextAppearance">@style/TextAppearance.Design.Counter.Overflow</item>
+
+    </style>
+
+    <style name="LoginButton" parent="AppTheme">
+        <item name="colorButtonNormal">#009900</item>
+    </style>
+
 </resources>

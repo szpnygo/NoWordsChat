@@ -1,1 +1,1 @@
-include ':app', ':nbaseaction'
+include ':app', ':nbaseaction', ':leancloud', ':appaction', ':tencentim'

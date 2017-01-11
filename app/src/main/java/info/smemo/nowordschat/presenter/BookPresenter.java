@@ -15,7 +15,7 @@ public class BookPresenter implements BookContract.Presenter {
     private BookContract.View mView;
 
     public BookPresenter(@NonNull BookContract.View view) {
-        mView = checkNotNull(view);
+        mView = checkNotNull(view,"BookContract.View cannot be null");
         mView.setPresenter(this);
     }
 
