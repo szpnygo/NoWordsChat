@@ -13,14 +13,21 @@ import info.smemo.nowordschat.presenter.LoginPresenter;
 public class LoginActivity extends BaseCompatActivity implements LoginContract.View {
 
     private ActivityLoginBinding binding;
+    private LoginPresenter presenter;
 
     @Override
     protected void onCreateDataBinding() {
         super.onCreateDataBinding();
         binding = createContentView(R.layout.activity_login);
-        LoginPresenter presenter = new LoginPresenter(this);
+        presenter = new LoginPresenter(this);
         binding.setPresenter(presenter);
         ImController.init(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.start();
     }
 
     @Override
@@ -30,7 +37,8 @@ public class LoginActivity extends BaseCompatActivity implements LoginContract.V
 
     @Override
     public void loginSuccess() {
-
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     @Override

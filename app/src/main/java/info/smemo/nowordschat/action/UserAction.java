@@ -13,21 +13,22 @@ public class UserAction extends BaseAction {
      *
      * @param nickname 用户昵称
      * @param password 密码
-     * @param account    邮箱
+     * @param account  邮箱
      */
     public static void createUser(@NonNull String account, @NonNull String nickname, @NonNull String password,
                                   @Nullable UserController.RegisterSuccessListener listener) {
         UserController.getInstance().register(account, password, nickname, listener);
     }
 
+    public static void loginUser(@NonNull String account, @NonNull String password, @NonNull UserController.LoginSuccessListener listener) {
+        UserController.getInstance().login(account, password, listener);
+    }
+
     /**
      * 用户是否登录
      */
-    public static boolean isUserLogin() {
-        return false;
+    public static boolean needLogin() {
+        return UserController.getInstance().needLogin();
     }
 
-    public static void getCurrentUser() {
-
-    }
 }

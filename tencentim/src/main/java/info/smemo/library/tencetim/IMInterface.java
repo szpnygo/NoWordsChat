@@ -13,4 +13,10 @@ public interface IMInterface {
 
     }
 
+    interface LoginListener extends BaseInterface{
+
+        void success();
+
+    }
+
 }

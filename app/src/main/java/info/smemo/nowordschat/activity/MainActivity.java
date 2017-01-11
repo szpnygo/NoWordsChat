@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import info.smemo.nbaseaction.base.NBaseCompatActivity;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.adapter.IndexFragmentPagerAdapter;
+import info.smemo.nowordschat.appaction.ImController;
 import info.smemo.nowordschat.fragment.BookFragment;
 import info.smemo.nowordschat.fragment.FindFragment;
 import info.smemo.nowordschat.fragment.IndexFragment;
@@ -42,10 +43,12 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ImController.init(this);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);

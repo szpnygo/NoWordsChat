@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 
 import tencent.tls.platform.TLSAccountHelper;
 import tencent.tls.platform.TLSErrInfo;
-import tencent.tls.platform.TLSPwdLoginListener;
 import tencent.tls.platform.TLSStrAccRegListener;
 import tencent.tls.platform.TLSUserInfo;
 
@@ -41,35 +40,9 @@ public class IMUserController implements IMConstant {
         int result = mAccountHelper.TLSStrAccReg(email, password, new TLSStrAccRegListener() {
             @Override
             public void OnStrAccRegSuccess(TLSUserInfo tlsUserInfo) {
-                IMLoginController.getInstance().login(email, password, new TLSPwdLoginListener() {
-                    @Override
-                    public void OnPwdLoginSuccess(TLSUserInfo tlsUserInfo) {
-                        if (null != mContext)
-                            IMUserInfoAction.saveSpString(mContext, "my_nickname", nickname);
-                        listener.success();
-                    }
-
-                    @Override
-                    public void OnPwdLoginReaskImgcodeSuccess(byte[] bytes) {
-
-                    }
-
-                    @Override
-                    public void OnPwdLoginNeedImgcode(byte[] bytes, TLSErrInfo tlsErrInfo) {
-
-                    }
-
-                    @Override
-                    public void OnPwdLoginFail(TLSErrInfo tlsErrInfo) {
-                        listener.error(tlsErrInfo.ErrCode, tlsErrInfo.Msg);
-                    }
-
-                    @Override
-                    public void OnPwdLoginTimeout(TLSErrInfo tlsErrInfo) {
-                        listener.error(NETWORK_TIMEOUT, "网络失败，请求超时");
-                    }
-                });
-
+                if (null != mContext)
+                    IMUserInfoAction.saveSpString(mContext, "my_nickname", nickname);
+                listener.success();
             }
 
             @Override

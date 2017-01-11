@@ -58,7 +58,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
 
             @Override
             public void error(int code, String message) {
-                LogHelper.e(LOG_TAG);
+                LogHelper.e(LOG_TAG,message);
                 mView.dismissProgressDialog();
                 mView.showMessage(message);
             }

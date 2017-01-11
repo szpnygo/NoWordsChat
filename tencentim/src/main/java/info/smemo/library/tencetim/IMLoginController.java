@@ -31,11 +31,11 @@ public class IMLoginController implements IMConstant {
                 .init(context, APP_ID, ACCOUNT_TYPE, LIBRARY_VER);
     }
 
-    public void login(@NonNull String email, @NonNull String password) {
-        mTLSLoginHelper.TLSPwdLogin(email, password.getBytes(), new TLSPwdLoginListener() {
+    public void login(@NonNull String account, @NonNull String password, @NonNull final IMInterface.LoginListener listener) {
+        mTLSLoginHelper.TLSPwdLogin(account, password.getBytes(), new TLSPwdLoginListener() {
             @Override
             public void OnPwdLoginSuccess(TLSUserInfo tlsUserInfo) {
-
+                listener.success();
             }
 
             @Override
@@ -50,20 +50,15 @@ public class IMLoginController implements IMConstant {
 
             @Override
             public void OnPwdLoginFail(TLSErrInfo tlsErrInfo) {
-
+                listener.error(tlsErrInfo.ErrCode, tlsErrInfo.Msg);
             }
 
             @Override
             public void OnPwdLoginTimeout(TLSErrInfo tlsErrInfo) {
-
+                listener.error(NETWORK_TIMEOUT, "网络失败，请求超时");
             }
         });
     }
-
-    public void login(@NonNull String email, @NonNull String password, TLSPwdLoginListener listener) {
-        mTLSLoginHelper.TLSPwdLogin(email, password.getBytes(), listener);
-    }
-
 
     public TLSUserInfo getLastUser() {
         return mTLSLoginHelper.getLastUserInfo();
@@ -74,7 +69,7 @@ public class IMLoginController implements IMConstant {
     }
 
     public boolean needLogin(TLSUserInfo userInfo) {
-        return userInfo != null && needLogin(userInfo.identifier);
+        return userInfo == null || needLogin(userInfo.identifier);
     }
 
     public boolean needLogin(@NonNull String identifier) {
