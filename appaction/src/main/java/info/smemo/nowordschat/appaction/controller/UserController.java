@@ -11,6 +11,7 @@ import info.smemo.library.tencetim.IMLoginController;
 import info.smemo.library.tencetim.IMUserController;
 import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.appaction.ActionInterface;
+import info.smemo.nowordschat.appaction.BR;
 import info.smemo.nowordschat.appaction.bean.UserBean;
 import info.smemo.nowordschat.appaction.enums.IMFriendAllowType;
 import info.smemo.nowordschat.appaction.enums.IMFriendGenderType;
@@ -22,7 +23,7 @@ public class UserController {
     private IMLoginController mLoginController = IMLoginController.getInstance();
     private IMUserController mUserController = IMUserController.getInstance();
 
-    private UserBean mUserBean = null;
+    private UserBean mUserBean = new UserBean();
 
     private static class Single {
         private static UserController instance = new UserController();
@@ -75,6 +76,20 @@ public class UserController {
         });
     }
 
+    public void autoLogin(final ActionInterface.BaseComplete complete) {
+        mLoginController.autoLogin(new TIMCallBack() {
+            @Override
+            public void onError(int i, String s) {
+                complete.error(i, s);
+            }
+
+            @Override
+            public void onSuccess() {
+                complete.success();
+            }
+        });
+    }
+
     //是否需要登录
     public boolean needLogin() {
         return mLoginController.needLogin();
@@ -105,10 +120,8 @@ public class UserController {
 
     //生成用户信息
     private void toUserInfo(TIMUserProfile userProfile) {
-        if (null == mUserBean)
-            mUserBean = new UserBean(userProfile.getIdentifier());
-        mUserBean.identifier = userProfile.getIdentifier();
-        mUserBean.nickname = userProfile.getNickName();
+        mUserBean.setIdentifier(userProfile.getIdentifier());
+        mUserBean.setNickname(userProfile.getNickName());
         mUserBean.faceurl = userProfile.getFaceUrl();
         mUserBean.selfSignature = userProfile.getSelfSignature();
         if (null != userProfile.getAllowType()) {
@@ -144,6 +157,7 @@ public class UserController {
         mUserBean.birthday = userProfile.getBirthday();
         mUserBean.language = userProfile.getLanguage();
         mUserBean.location = userProfile.getLocation();
+        mUserBean.notifyPropertyChanged(BR._all);
     }
 
     //获取用户信息

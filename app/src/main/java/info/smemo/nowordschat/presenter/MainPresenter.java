@@ -28,6 +28,7 @@ public class MainPresenter implements MainContract.Presenter {
         UserAction.getUser(new UserController.LoadUserProfileSuccessListener() {
             @Override
             public void success() {
+                LogHelper.e(LOG_TAG, UserInfoAction.getUserInfo().toString());
                 //如果用户昵称为空，把他注册的时候放进去的昵称修改进去
                 if (StringUtil.isEmpty(UserInfoAction.getUserInfo().nickname)) {
                     String tmpNick = UserInfoAction.getTmpNickname(mView.getVApplicationContext());

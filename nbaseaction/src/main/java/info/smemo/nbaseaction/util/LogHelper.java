@@ -7,7 +7,7 @@ import info.smemo.nbaseaction.app.AppConstant;
 
 public class LogHelper implements AppConstant {
 
-    public static boolean isPrintLog = true;
+    public static boolean isPrintLog = false;
     public static int METHOD_COUNT = 5;
     public static int METHOD_OFFSET = 1;
 

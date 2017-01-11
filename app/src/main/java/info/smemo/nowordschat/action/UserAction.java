@@ -3,6 +3,7 @@ package info.smemo.nowordschat.action;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import info.smemo.nowordschat.appaction.ActionInterface;
 import info.smemo.nowordschat.appaction.controller.UserController;
 import info.smemo.nowordschat.base.BaseAction;
 
@@ -22,6 +23,10 @@ public class UserAction extends BaseAction {
 
     public static void loginUser(@NonNull String account, @NonNull String password, @NonNull UserController.LoginSuccessListener listener) {
         UserController.getInstance().login(account, password, listener);
+    }
+
+    public static void autoLogin(@NonNull ActionInterface.BaseComplete complete) {
+        UserController.getInstance().autoLogin(complete);
     }
 
     /**

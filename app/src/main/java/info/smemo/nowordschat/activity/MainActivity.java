@@ -1,6 +1,7 @@
 package info.smemo.nowordschat.activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -18,9 +19,11 @@ import java.util.ArrayList;
 
 import info.smemo.nbaseaction.base.NBaseCompatActivity;
 import info.smemo.nowordschat.R;
+import info.smemo.nowordschat.action.UserInfoAction;
 import info.smemo.nowordschat.adapter.IndexFragmentPagerAdapter;
 import info.smemo.nowordschat.appaction.controller.ImController;
 import info.smemo.nowordschat.contract.MainContract;
+import info.smemo.nowordschat.databinding.NavHeaderMainBinding;
 import info.smemo.nowordschat.fragment.BookFragment;
 import info.smemo.nowordschat.fragment.FindFragment;
 import info.smemo.nowordschat.fragment.IndexFragment;
@@ -58,6 +61,10 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
+
+        NavHeaderMainBinding navHeaderMainBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.nav_header_main, navigationView, false);
+        navHeaderMainBinding.setUserBean(UserInfoAction.getUserInfo());
+        navigationView.addHeaderView(navHeaderMainBinding.getRoot());
 
         initFragmentAdapter();
         mPresenter.start();

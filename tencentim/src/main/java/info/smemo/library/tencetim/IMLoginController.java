@@ -80,20 +80,21 @@ public class IMLoginController implements IMConstant {
         });
     }
 
-    public TLSUserInfo getLastUser() {
-        return mTLSLoginHelper.getLastUserInfo();
+    public void autoLogin(TIMCallBack callBack) {
+        if (mTLSLoginHelper.getLastUserInfo() == null || mTLSLoginHelper.getLastUserInfo().identifier.isEmpty() ||
+                mTLSLoginHelper.needLogin(mTLSLoginHelper.getLastUserInfo().identifier)) {
+            callBack.onError(-1, "need login");
+        } else {
+            TIMUser user = new TIMUser();
+            user.setAccountType(String.valueOf(ACCOUNT_TYPE));
+            user.setIdentifier(mTLSLoginHelper.getLastUserInfo().identifier);
+            TIMManager.getInstance().login((int) APP_ID, user, mTLSLoginHelper.getUserSig(mTLSLoginHelper.getLastUserInfo().identifier), callBack);
+        }
+
     }
 
     public boolean needLogin() {
-        return needLogin(getLastUser()) || TIMManager.getInstance().getLoginUser().isEmpty();
-    }
-
-    public boolean needLogin(TLSUserInfo userInfo) {
-        return userInfo == null || needLogin(userInfo.identifier) || TIMManager.getInstance().getLoginUser().isEmpty();
-    }
-
-    public boolean needLogin(@NonNull String identifier) {
-        return mTLSLoginHelper.needLogin(identifier) || TIMManager.getInstance().getLoginUser().isEmpty();
+        return TIMManager.getInstance().getLoginUser().isEmpty();
     }
 
     public void logout() {
