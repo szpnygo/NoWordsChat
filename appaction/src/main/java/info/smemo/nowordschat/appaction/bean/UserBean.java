@@ -3,7 +3,9 @@ package info.smemo.nowordschat.appaction.bean;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.appaction.BR;
+import info.smemo.nowordschat.appaction.R;
 import info.smemo.nowordschat.appaction.enums.IMFriendAllowType;
 import info.smemo.nowordschat.appaction.enums.IMFriendGenderType;
 
@@ -51,7 +53,7 @@ public class UserBean extends BaseObservable {
 
     @Bindable
     public String getFaceurl() {
-        return faceurl;
+        return StringUtil.isEmpty(faceurl) ? "res:///" + R.drawable.anonymous : faceurl;
     }
 
     public void setFaceurl(String faceurl) {
@@ -90,8 +92,16 @@ public class UserBean extends BaseObservable {
     }
 
     @Bindable
-    public IMFriendGenderType getGender() {
-        return gender;
+    public String getGender() {
+        switch (gender) {
+            case Unknow:
+                return "未知";
+            case Female:
+                return "女";
+            case Male:
+                return "男";
+        }
+        return "未知";
     }
 
     public void setGender(IMFriendGenderType gender) {

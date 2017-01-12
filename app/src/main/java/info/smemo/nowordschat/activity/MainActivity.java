@@ -140,7 +140,7 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_user:
-                startActivity(new Intent(this, UserActivity.class));
+                startActivity(new Intent(this, MyUserActivity.class));
                 break;
             case R.id.nav_photo:
                 break;
