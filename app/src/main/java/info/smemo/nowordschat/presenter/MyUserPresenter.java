@@ -27,4 +27,14 @@ public class MyUserPresenter implements MyUserContract.Presenter {
     public UserBean getUserInfo() {
         return UserInfoAction.getUserInfo();
     }
+
+    @Override
+    public void editNickname() {
+        mView.startEditNickNamePage();
+    }
+
+    @Override
+    public void editSignature() {
+        mView.startEditSignaturePage();
+    }
 }

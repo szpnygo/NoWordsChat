@@ -16,11 +16,14 @@
         <item name="colorAccent">#fff</item>
         <item name="colorPrimary">@color/mainGreenColor</item>
         <item name="colorPrimaryDark">@color/mainDarkGreenColor</item>
+        <item name="android:textColorHint">@color/mainGreenColor</item>
+        <item name="colorControlActivated">@color/mainGreenColor</item>
+        <item name="colorControlNormal">@color/mainGreenColor</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="MessageBarMenu">
         <item name="android:background">?attr/selectableItemBackground</item>
@@ -33,7 +36,8 @@
         <item name="colorControlActivated">#fff</item>
         <item name="colorControlNormal">#ddd</item>
         <item name="counterTextAppearance">@style/TextAppearance.Design.Counter</item>
-        <item name="counterOverflowTextAppearance">@style/TextAppearance.Design.Counter.Overflow</item>
+        <item name="counterOverflowTextAppearance">@style/TextAppearance.Design.Counter.Overflow
+        </item>
 
     </style>
 

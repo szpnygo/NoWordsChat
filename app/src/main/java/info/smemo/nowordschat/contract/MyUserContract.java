@@ -8,11 +8,19 @@ public interface MyUserContract {
 
     interface View extends NBaseView<Presenter> {
 
+        void startEditNickNamePage();
+
+        void startEditSignaturePage();
+
     }
 
     interface Presenter extends NBasePresenter {
 
         UserBean getUserInfo();
+
+        void editNickname();
+
+        void editSignature();
 
     }
 

@@ -40,6 +40,7 @@
             android:layout_marginTop="8dp"
             android:text="@{userBean.nickname}"
             android:textColor="@android:color/white"
+            android:lines="1"
             android:textSize="18sp"/>
 
         <TextView
