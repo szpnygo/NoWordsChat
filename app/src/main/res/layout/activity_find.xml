@@ -77,6 +77,7 @@
         android:onClick="postClick"
         android:src="@drawable/ic_photo_camera_black_24dp"
         android:tint="@android:color/white"
+        app:backgroundTint="@color/mainGreenColor"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
         app:rippleColor="#33728dff"/>

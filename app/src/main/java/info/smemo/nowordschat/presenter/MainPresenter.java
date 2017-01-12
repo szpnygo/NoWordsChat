@@ -49,7 +49,7 @@ public class MainPresenter implements MainContract.Presenter {
             @Override
             public void error(int code, String message) {
                 UserAction.logout();
-                LogHelper.e(LOG_TAG, message);
+                LogHelper.e(LOG_TAG, "get user info error:" + message);
                 mView.showToastMessage("用户信息获取异常,请重新登录");
                 mView.reLogin();
             }

@@ -14,6 +14,8 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorAccent">#fff</item>
+        <item name="colorPrimary">@color/mainGreenColor</item>
+        <item name="colorPrimaryDark">@color/mainDarkGreenColor</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
