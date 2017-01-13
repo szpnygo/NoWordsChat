@@ -8,6 +8,7 @@ import info.smemo.nowordschat.base.BaseCompatActivity;
 import info.smemo.nowordschat.contract.MyUserContract;
 import info.smemo.nowordschat.databinding.ActivityMyuserBinding;
 import info.smemo.nowordschat.presenter.EditNickPresenter;
+import info.smemo.nowordschat.presenter.EditSignaturePresenter;
 import info.smemo.nowordschat.presenter.MyUserPresenter;
 
 /**
@@ -48,6 +49,8 @@ public class MyUserActivity extends BaseCompatActivity implements MyUserContract
 
     @Override
     public void startEditSignaturePage() {
-
+        Intent intent = new Intent(this, CommonEditActivity.class);
+        intent.putExtra("presenter", EditSignaturePresenter.class);
+        startActivity(intent);
     }
 }
