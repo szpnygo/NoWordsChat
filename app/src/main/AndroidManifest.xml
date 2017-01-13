@@ -74,7 +74,7 @@
             android:label="@string/title_activity_user"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".activity.userinfo.EditNameActivity"
+            android:name=".activity.CommonEditActivity"
             android:theme="@style/AppTheme.NoActionBar"
             />
     </application>

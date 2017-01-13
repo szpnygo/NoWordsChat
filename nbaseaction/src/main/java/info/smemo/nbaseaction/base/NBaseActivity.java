@@ -185,6 +185,11 @@ public class NBaseActivity extends Activity implements AppConstant, NBaseCommonV
         return getApplication();
     }
 
+    @Override
+    public void finishSelf() {
+        finish();
+    }
+
     protected void injectView() {
         ViewInjectUtils.inject(this);
     }

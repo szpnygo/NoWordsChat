@@ -165,4 +165,9 @@ public class NBaseFragment extends Fragment implements AppConstant, NBaseCommonV
         return getActivity().getApplication();
     }
 
+    @Override
+    public void finishSelf() {
+
+    }
+
 }

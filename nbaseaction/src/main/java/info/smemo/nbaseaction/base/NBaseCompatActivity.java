@@ -199,6 +199,11 @@ public class NBaseCompatActivity extends AppCompatActivity implements AppConstan
         return getApplication();
     }
 
+    @Override
+    public void finishSelf() {
+        finish();
+    }
+
     protected void injectView() {
         ViewInjectUtils.inject(this);
     }

@@ -185,6 +185,11 @@ public class NBaseFragmentActivity extends FragmentActivity implements AppConsta
         return getApplication();
     }
 
+    @Override
+    public void finishSelf() {
+        finish();
+    }
+
     protected void injectView() {
         ViewInjectUtils.inject(this);
     }

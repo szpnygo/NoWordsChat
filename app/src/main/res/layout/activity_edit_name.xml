@@ -5,7 +5,7 @@
 
         <variable
             name="editBean"
-            type="info.smemo.nowordschat.activity.userinfo.EditNameActivity.EditBean"/>
+            type="info.smemo.nowordschat.activity.CommonEditActivity.EditBean"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="info.smemo.nowordschat.activity.userinfo.EditNameActivity">
+        tools:context="info.smemo.nowordschat.activity.CommonEditActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,8 +41,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                app:counterEnabled="true"
-                app:counterMaxLength="20"
                 >
 
                 <android.support.v7.widget.AppCompatEditText

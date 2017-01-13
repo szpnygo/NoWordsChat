@@ -28,5 +28,7 @@ public interface NBaseCommonView {
 
     Application getVApplication();
 
+    void finishSelf();
+
 
 }
