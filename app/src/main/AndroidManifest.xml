@@ -77,6 +77,11 @@
             android:name=".activity.CommonEditActivity"
             android:theme="@style/AppTheme.NoActionBar"
             />
+        <activity
+            android:name=".activity.SearchActivity"
+            android:launchMode="standard"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>

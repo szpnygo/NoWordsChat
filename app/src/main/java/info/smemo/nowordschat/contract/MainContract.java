@@ -9,10 +9,11 @@ public interface MainContract {
 
         void reLogin();
 
+        void startSearchActivity(String query);
+
     }
 
     interface Presenter extends NBasePresenter {
-
 
     }
 
