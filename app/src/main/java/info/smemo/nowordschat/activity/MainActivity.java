@@ -133,9 +133,9 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_add) {
-            return true;
-        }
+//        if (id == R.id.action_add) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
