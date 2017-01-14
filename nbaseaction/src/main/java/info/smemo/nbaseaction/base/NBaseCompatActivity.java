@@ -121,6 +121,11 @@ public class NBaseCompatActivity extends AppCompatActivity implements AppConstan
         }
     }
 
+    @Override
+    public void showSnackbarMessage(String message) {
+
+    }
+
     protected void handleMessage(Message msg) {
         switch (msg.what) {
             case SHOW_PROGRESS_DIALOG:

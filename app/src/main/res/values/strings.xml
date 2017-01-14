@@ -28,5 +28,6 @@
     <string name="error_incorrect_password">密码不正确</string>
     <string name="error_field_required">必须填写此字段</string>
     <string name="permission_rationale">需要联系人权限来自动完成</string>
+    <string name="title_activity_login2">Sign in</string>
 
 </resources>

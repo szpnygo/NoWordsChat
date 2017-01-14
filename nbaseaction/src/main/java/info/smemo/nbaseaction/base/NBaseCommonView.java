@@ -16,6 +16,8 @@ public interface NBaseCommonView {
 
     void destoryProgressDialog();
 
+    void showSnackbarMessage(String message);
+
     void showMessage(String title, String message);
 
     void showMessage(String title, String message, final View.OnClickListener okClickListener, final View.OnClickListener cancelListener);

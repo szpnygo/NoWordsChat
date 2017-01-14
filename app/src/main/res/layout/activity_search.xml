@@ -5,21 +5,19 @@
 
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/rootView"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.design.widget.CoordinatorLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         tools:context="info.smemo.nowordschat.activity.SearchActivity">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -30,16 +28,27 @@
                 app:itemIconTint="@android:color/white"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                />
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/friend_list"
+                android:id="@+id/search_list"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:scrollbars="none"/>
+                android:layout_below="@+id/toolbar"
+                android:scrollbars="none" />
 
-        </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progress"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="8dp"
+
+                />
+
+        </RelativeLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

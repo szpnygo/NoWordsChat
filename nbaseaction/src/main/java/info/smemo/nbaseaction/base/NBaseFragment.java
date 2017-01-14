@@ -115,6 +115,11 @@ public class NBaseFragment extends Fragment implements AppConstant, NBaseCommonV
     }
 
     @Override
+    public void showSnackbarMessage(String message) {
+
+    }
+
+    @Override
     public void showMessage(String title, String message) {
         showMessage(title, message, null, null);
     }

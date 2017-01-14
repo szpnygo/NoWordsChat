@@ -18,7 +18,7 @@ public class FriendController {
 
     public static final int PAGE_SIZE = 20;
 
-    interface SearchUserListener {
+    public interface SearchUserListener {
 
         void error(int code, String message);
 

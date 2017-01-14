@@ -107,6 +107,11 @@ public class NBaseActivity extends Activity implements AppConstant, NBaseCommonV
         }
     }
 
+    @Override
+    public void showSnackbarMessage(String message) {
+
+    }
+
     protected void handleMessage(Message msg) {
         switch (msg.what) {
             case SHOW_PROGRESS_DIALOG:

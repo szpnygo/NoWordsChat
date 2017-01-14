@@ -46,4 +46,5 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.google.guava:guava:18.0'
     compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
 }
