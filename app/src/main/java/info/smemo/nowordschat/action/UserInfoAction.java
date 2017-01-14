@@ -21,4 +21,8 @@ public class UserInfoAction extends BaseAction {
         UserController.getInstance().setNickname(nickname, complete);
     }
 
+    public static void setSignature(String signature, ActionInterface.BaseComplete complete) {
+        UserController.getInstance().setSignature(signature, complete);
+    }
+
 }

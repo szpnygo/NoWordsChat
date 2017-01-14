@@ -1,5 +1,7 @@
 package info.smemo.nowordschat.activity;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -10,14 +12,17 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 
 import java.util.ArrayList;
 
 import info.smemo.nbaseaction.base.NBaseCompatActivity;
+import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.action.UserInfoAction;
 import info.smemo.nowordschat.adapter.IndexFragmentPagerAdapter;
@@ -126,6 +131,23 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint("搜索好友");
+        searchView.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                startSearchActivity(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return true;
     }
 
@@ -133,9 +155,9 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_add) {
-            return true;
-        }
+//        if (id == R.id.action_add) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -217,5 +239,14 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
     public void reLogin() {
         startActivity(new Intent(this, LoginActivity.class));
         finish();
+    }
+
+    @Override
+    public void startSearchActivity(String query) {
+        if (!StringUtil.isEmpty(query)) {
+            Intent intent = new Intent(this, SearchActivity.class);
+            intent.putExtra("query", query);
+            startActivity(intent);
+        }
     }
 }

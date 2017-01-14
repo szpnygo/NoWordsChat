@@ -15,6 +15,26 @@
         android:icon="@drawable/ic_add_black_24dp"
         android:orderInCategory="1"
         android:title="添加"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom">
+        <menu>
+            <group android:menuCategory="container">
+                <item
+                    android:id="@+id/nav_group"
+                    android:title="发起群聊"/>
+                <item
+                    android:id="@+id/nav_add"
+                    android:title="添加朋友"/>
+                <item
+                    android:id="@+id/nav_scan"
+                    android:title="扫一扫"/>
+                <item
+                    android:id="@+id/nav_help"
+                    android:title="帮助与反馈"/>
+            </group>
+        </menu>
+
+
+    </item>
+
 
 </menu>

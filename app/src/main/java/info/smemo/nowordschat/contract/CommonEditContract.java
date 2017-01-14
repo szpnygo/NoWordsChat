@@ -32,7 +32,7 @@ public interface CommonEditContract {
 
         void editDone();
 
-        void updateNickname();
+        void updateText();
 
     }
 

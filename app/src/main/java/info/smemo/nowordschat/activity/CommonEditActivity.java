@@ -18,20 +18,20 @@ import info.smemo.nowordschat.BR;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.base.BaseCompatActivity;
 import info.smemo.nowordschat.contract.CommonEditContract;
-import info.smemo.nowordschat.databinding.ActivityEditNameBinding;
+import info.smemo.nowordschat.databinding.ActivityCommonEditBinding;
 
 public class CommonEditActivity extends BaseCompatActivity implements CommonEditContract.View {
 
     public EditBean mEditBean = new EditBean("");
 
-    private ActivityEditNameBinding binding;
+    private ActivityCommonEditBinding binding;
 
     private CommonEditContract.EditDoneListener doneListener;
 
     @Override
     protected void onCreateDataBinding() {
         super.onCreateDataBinding();
-        binding = createContentView(R.layout.activity_edit_name);
+        binding = createContentView(R.layout.activity_common_edit);
         binding.setEditBean(mEditBean);
         binding.textInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

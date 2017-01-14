@@ -189,4 +189,18 @@ public class UserController {
         });
     }
 
+    public void setSignature(String selfSignature, final ActionInterface.BaseComplete complete) {
+        mUserController.getFriendshipManager().setSelfSignature(selfSignature, new TIMCallBack() {
+            @Override
+            public void onError(int i, String s) {
+                complete.error(i, s);
+            }
+
+            @Override
+            public void onSuccess() {
+                complete.success();
+            }
+        });
+    }
+
 }
