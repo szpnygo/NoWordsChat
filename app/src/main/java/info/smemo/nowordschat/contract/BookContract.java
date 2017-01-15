@@ -4,13 +4,11 @@ import java.util.ArrayList;
 
 import info.smemo.nbaseaction.base.NBasePresenter;
 import info.smemo.nbaseaction.base.NBaseView;
-import info.smemo.nowordschat.bean.BookBean;
+import info.smemo.nowordschat.appaction.bean.BookBean;
 
 public interface BookContract {
 
     interface View extends NBaseView<Presenter> {
-
-        void showBooks(ArrayList<BookBean> list);
 
         void notifyDataSetChanged();
 
@@ -20,7 +18,8 @@ public interface BookContract {
 
     interface Presenter extends NBasePresenter {
 
-        void loadBookData();
+        void onRefresh();
 
+        ArrayList<BookBean> getData();
     }
 }

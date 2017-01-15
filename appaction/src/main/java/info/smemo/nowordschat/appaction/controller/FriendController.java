@@ -2,6 +2,7 @@ package info.smemo.nowordschat.appaction.controller;
 
 import android.support.annotation.NonNull;
 
+import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMUserSearchSucc;
 import com.tencent.TIMValueCallBack;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import info.smemo.library.tencetim.IMFriendController;
+import info.smemo.nowordschat.appaction.bean.BookBean;
 import info.smemo.nowordschat.appaction.bean.FriendBean;
 import info.smemo.nowordschat.appaction.enums.IMFriendAllowType;
 import info.smemo.nowordschat.appaction.enums.IMFriendGenderType;
@@ -25,10 +27,19 @@ public class FriendController {
         void success(ArrayList<FriendBean> list);
     }
 
+    public interface GetFriendListener {
+
+        void success(ArrayList<BookBean> list);
+
+        void error(int code, String message);
+
+    }
+
     public static void searchUser(@NonNull String nickname, int page, @NonNull final SearchUserListener listener) {
         searchUser(nickname, page, PAGE_SIZE, listener);
     }
 
+    //搜索用户
     public static void searchUser(@NonNull String nickname, int page, int pageSize, @NonNull final SearchUserListener listener) {
         IMFriendController.searchUser(nickname, page, pageSize, new TIMValueCallBack<TIMUserSearchSucc>() {
             @Override
@@ -48,9 +59,72 @@ public class FriendController {
         });
     }
 
+    //获取好友列表
+    public static void getFriendList(@NonNull final GetFriendListener listener) {
+        TIMFriendshipManager.getInstance().getFriendList(new TIMValueCallBack<List<TIMUserProfile>>() {
+            @Override
+            public void onError(int i, String s) {
+                listener.error(i, s);
+            }
+
+            @Override
+            public void onSuccess(List<TIMUserProfile> timUserProfiles) {
+                ArrayList<BookBean> list = new ArrayList<>();
+                for (TIMUserProfile profile : timUserProfiles) {
+                    list.add(toBookBean(profile));
+                }
+                listener.success(list);
+            }
+        });
+    }
+
     //生成用户信息
     private static FriendBean toUserInfo(TIMUserProfile userProfile) {
         FriendBean mUserBean = new FriendBean();
+        mUserBean.setIdentifier(userProfile.getIdentifier());
+        mUserBean.setNickname(userProfile.getNickName());
+        mUserBean.faceurl = userProfile.getFaceUrl();
+        mUserBean.selfSignature = userProfile.getSelfSignature();
+        if (null != userProfile.getAllowType()) {
+            switch (userProfile.getAllowType()) {
+                case TIM_FRIEND_ALLOW_ANY:
+                    mUserBean.allowType = IMFriendAllowType.IM_FRIEND_ALLOW_ANY;
+                    break;
+                case TIM_FRIEND_INVALID:
+                    mUserBean.allowType = IMFriendAllowType.IM_FRIEND_INVALID;
+                    break;
+                case TIM_FRIEND_NEED_CONFIRM:
+                    mUserBean.allowType = IMFriendAllowType.IM_FRIEND_NEED_CONFIRM;
+                    break;
+                case TIM_FRIEND_DENY_ANY:
+                    mUserBean.allowType = IMFriendAllowType.IM_FRIEND_DENY_ANY;
+                    break;
+            }
+        }
+        mUserBean.remark = userProfile.getRemark();
+        if (null != userProfile.getGender()) {
+            switch (userProfile.getGender()) {
+                case Unknow:
+                    mUserBean.gender = IMFriendGenderType.Unknow;
+                    break;
+                case Female:
+                    mUserBean.gender = IMFriendGenderType.Female;
+                    break;
+                case Male:
+                    mUserBean.gender = IMFriendGenderType.Male;
+                    break;
+            }
+        }
+        mUserBean.birthday = userProfile.getBirthday();
+        mUserBean.language = userProfile.getLanguage();
+        mUserBean.location = userProfile.getLocation();
+
+        return mUserBean;
+    }
+
+    //生成用户信息
+    private static BookBean toBookBean(TIMUserProfile userProfile) {
+        BookBean mUserBean = new BookBean();
         mUserBean.setIdentifier(userProfile.getIdentifier());
         mUserBean.setNickname(userProfile.getNickName());
         mUserBean.faceurl = userProfile.getFaceUrl();

@@ -11,4 +11,8 @@ public class FriendAction extends BaseAction {
         FriendController.searchUser(nickname, page, listener);
     }
 
+    public static void getFriendList(@NonNull FriendController.GetFriendListener listener) {
+        FriendController.getFriendList(listener);
+    }
+
 }

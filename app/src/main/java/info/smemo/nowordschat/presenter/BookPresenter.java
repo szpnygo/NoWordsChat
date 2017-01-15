@@ -3,10 +3,13 @@ package info.smemo.nowordschat.presenter;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-import info.smemo.nowordschat.R;
-import info.smemo.nowordschat.bean.BookBean;
+import info.smemo.nowordschat.action.FriendAction;
+import info.smemo.nowordschat.appaction.bean.BookBean;
+import info.smemo.nowordschat.appaction.controller.FriendController;
 import info.smemo.nowordschat.contract.BookContract;
+import info.smemo.nowordschat.util.PinyinSortComparator;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -14,97 +17,65 @@ public class BookPresenter implements BookContract.Presenter {
 
     private BookContract.View mView;
 
+    private ArrayList<BookBean> list;
+
     public BookPresenter(@NonNull BookContract.View view) {
-        mView = checkNotNull(view,"BookContract.View cannot be null");
+        mView = checkNotNull(view, "BookContract.View cannot be null");
         mView.setPresenter(this);
     }
 
     @Override
-    public void loadBookData() {
-        ArrayList<BookBean> bookBeanArrayList = new ArrayList<>();
-
-        BookBean bookBean1 = new BookBean();
-        bookBean1.title = "star";
-        bookBean1.username = "无语开发者";
-        bookBean1.userLogo = "res:///" + R.drawable.user_logo;
-        bookBean1.showLine = false;
-
-        bookBeanArrayList.add(bookBean1);
-        BookBean bookBean2 = new BookBean();
-        bookBean2.title = "";
-        bookBean2.username = "陪你去看海";
-        bookBean2.userLogo = "res:///" + R.drawable.user_logo;
-        bookBean2.showLine = false;
-
-        bookBeanArrayList.add(bookBean2);
-        BookBean bookBean3 = new BookBean();
-        bookBean3.title = "";
-        bookBean3.username = "一个人的狂欢";
-        bookBean3.userLogo = "res:///" + R.drawable.user_logo;
-        bookBean3.showLine = true;
-
-        bookBeanArrayList.add(bookBean3);
-        BookBean bookBean4 = new BookBean();
-        bookBean4.title = "A";
-        bookBean4.username = "爱情公寓";
-        bookBean4.userLogo = "res:///" + R.drawable.user_logo;
-        bookBean4.showLine = false;
-
-        bookBeanArrayList.add(bookBean4);
-        BookBean bookBean5 = new BookBean();
-        bookBean5.title = "";
-        bookBean5.username = "阿凡达";
-        bookBean5.userLogo = "res:///" + R.drawable.user_logo;
-        bookBean5.showLine = false;
-
-        bookBeanArrayList.add(bookBean5);
-        BookBean bookBean6 = new BookBean();
-        bookBean6.title = "";
-        bookBean6.username = "吖吖吖吖";
-        bookBean6.userLogo = "res:///" + R.drawable.user_logo;
-        bookBean6.showLine = true;
-
-        bookBeanArrayList.add(bookBean6);
-        BookBean bookBean7 = new BookBean();
-        bookBean7.title = "B";
-        bookBean7.username = "宝宝";
-        bookBean7.userLogo = "res:///" + R.drawable.user_logo;
-        bookBean7.showLine = false;
-
-        bookBeanArrayList.add(bookBean7);
-        BookBean bookBean8 = new BookBean();
-        bookBean8.title = "";
-        bookBean8.username = "不愿放弃";
-        bookBean8.userLogo = "res:///" + R.drawable.user_logo;
-        bookBean8.showLine = true;
-
-        bookBeanArrayList.add(bookBean8);
-        BookBean bookBean9 = new BookBean();
-        bookBean9.title = "C";
-        bookBean9.username = "从未出现";
-        bookBean9.userLogo = "res:///" + R.drawable.user_logo;
-        bookBean9.showLine = false;
-
-        bookBeanArrayList.add(bookBean9);
-        BookBean bookBean10 = new BookBean();
-        bookBean10.title = "";
-        bookBean10.username = "丑女无敌";
-        bookBean10.userLogo = "res:///" + R.drawable.user_logo;
-        bookBean10.showLine = false;
-
-        bookBeanArrayList.add(bookBean10);
-        BookBean bookBean11 = new BookBean();
-        bookBean11.title = "";
-        bookBean11.username = "草上飞";
-        bookBean11.userLogo = "res:///" + R.drawable.user_logo;
-        bookBean11.showLine = true;
-        bookBeanArrayList.add(bookBean11);
-
-        mView.showBooks(bookBeanArrayList);
+    public ArrayList<BookBean> getData() {
+        if (null == list)
+            list = new ArrayList<>();
+        return list;
     }
 
     @Override
+    synchronized public void onRefresh() {
+        FriendAction.getFriendList(new FriendController.GetFriendListener() {
+            @Override
+            public void success(ArrayList<BookBean> bookBeanArrayList) {
+                PinyinSortComparator sortComparator = new PinyinSortComparator();
+                Collections.sort(bookBeanArrayList, sortComparator);
+                list.clear();
+                int size = bookBeanArrayList.size();
+                for (int i = 0; i < size; i++) {
+                    BookBean bean = bookBeanArrayList.get(i);
+                    //如果是第一个
+                    if (i == 0) {
+                        //如果有第二个
+                        if (size > 1) {
+                            //如果第二个的标题不等于第一个，显示下划线
+                            if (!bean.firstChar.equals(bookBeanArrayList.get(i + 1).getFirstChar())) {
+                                bean.setShowLine(true);
+                            }
+                        }
+                    } else {
+                        //如果等于上一个，隐藏
+                        if (bean.firstChar.equals(bookBeanArrayList.get(i - 1).getFirstChar())) {
+                            bean.setTitle("");
+                        }
+                        //如果是最后一个，或者不等于下一个，显示线
+                        if (i == size - 1 || !bean.firstChar.equals(bookBeanArrayList.get(i + 1).getFirstChar())) {
+                            bean.setShowLine(true);
+                        }
+                    }
+                    list.add(bean);
+                }
+                mView.notifyDataSetChanged();
+            }
+
+            @Override
+            public void error(int code, String message) {
+                mView.showSnackbarMessage(message);
+            }
+        });
+    }
+
+
+    @Override
     public void start() {
-        loadBookData();
+        onRefresh();
     }
 }

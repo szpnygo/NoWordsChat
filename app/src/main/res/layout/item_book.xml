@@ -8,7 +8,7 @@
 
         <variable
             name="bean"
-            type="info.smemo.nowordschat.bean.BookBean"/>
+            type="info.smemo.nowordschat.appaction.bean.BookBean"/>
     </data>
 
     <RelativeLayout
@@ -37,7 +37,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="32dp"
             android:layout_toEndOf="@+id/item_icon"
-            android:text="@{bean.username}"
+            android:text="@{bean.nickname}"
             android:textColor="@android:color/black"
             android:textSize="18sp"/>
 
@@ -50,7 +50,7 @@
             android:layout_marginBottom="12dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="12dp"
-            android:actualImageUri="@{bean.userLogo}"
+            android:actualImageUri="@{bean.faceurl}"
             app:placeholderImage="@drawable/user_logo"
             app:roundAsCircle="true"/>
 
