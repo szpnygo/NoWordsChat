@@ -15,4 +15,7 @@ public class FriendAction extends BaseAction {
         FriendController.getFriendList(listener);
     }
 
+    public static boolean isFriend(String identifier) {
+        return FriendController.isFriend(identifier);
+    }
 }

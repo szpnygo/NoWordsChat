@@ -11,10 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import info.smemo.library.tencetim.IMFriendController;
+import info.smemo.nowordschat.appaction.action.DataBeanAction;
 import info.smemo.nowordschat.appaction.bean.BookBean;
 import info.smemo.nowordschat.appaction.bean.FriendBean;
-import info.smemo.nowordschat.appaction.enums.IMFriendAllowType;
-import info.smemo.nowordschat.appaction.enums.IMFriendGenderType;
 
 public class FriendController {
 
@@ -52,7 +51,7 @@ public class FriendController {
                 List<TIMUserProfile> list = timUserSearchSucc.getInfoList();
                 ArrayList<FriendBean> friendBeans = new ArrayList<>();
                 for (TIMUserProfile profile : list) {
-                    friendBeans.add(toUserInfo(profile));
+                    friendBeans.add(DataBeanAction.toFriendBean(profile));
                 }
                 listener.success(friendBeans);
             }
@@ -71,99 +70,29 @@ public class FriendController {
             public void onSuccess(List<TIMUserProfile> timUserProfiles) {
                 ArrayList<BookBean> list = new ArrayList<>();
                 for (TIMUserProfile profile : timUserProfiles) {
-                    list.add(toBookBean(profile));
+                    list.add(DataBeanAction.toBookBean(profile));
                 }
                 listener.success(list);
             }
         });
     }
 
-    //生成用户信息
-    private static FriendBean toUserInfo(TIMUserProfile userProfile) {
-        FriendBean mUserBean = new FriendBean();
-        mUserBean.setIdentifier(userProfile.getIdentifier());
-        mUserBean.setNickname(userProfile.getNickName());
-        mUserBean.faceurl = userProfile.getFaceUrl();
-        mUserBean.selfSignature = userProfile.getSelfSignature();
-        if (null != userProfile.getAllowType()) {
-            switch (userProfile.getAllowType()) {
-                case TIM_FRIEND_ALLOW_ANY:
-                    mUserBean.allowType = IMFriendAllowType.IM_FRIEND_ALLOW_ANY;
-                    break;
-                case TIM_FRIEND_INVALID:
-                    mUserBean.allowType = IMFriendAllowType.IM_FRIEND_INVALID;
-                    break;
-                case TIM_FRIEND_NEED_CONFIRM:
-                    mUserBean.allowType = IMFriendAllowType.IM_FRIEND_NEED_CONFIRM;
-                    break;
-                case TIM_FRIEND_DENY_ANY:
-                    mUserBean.allowType = IMFriendAllowType.IM_FRIEND_DENY_ANY;
-                    break;
-            }
-        }
-        mUserBean.remark = userProfile.getRemark();
-        if (null != userProfile.getGender()) {
-            switch (userProfile.getGender()) {
-                case Unknow:
-                    mUserBean.gender = IMFriendGenderType.Unknow;
-                    break;
-                case Female:
-                    mUserBean.gender = IMFriendGenderType.Female;
-                    break;
-                case Male:
-                    mUserBean.gender = IMFriendGenderType.Male;
-                    break;
-            }
-        }
-        mUserBean.birthday = userProfile.getBirthday();
-        mUserBean.language = userProfile.getLanguage();
-        mUserBean.location = userProfile.getLocation();
-
-        return mUserBean;
+    //是否是朋友
+    public static boolean isFriend(String identifier) {
+        List<String> list = new ArrayList<>();
+        list.add(identifier);
+        List<TIMUserProfile> identifiers = IMFriendController.getLocalFriendsById(list);
+        return identifiers != null && identifiers.size() > 0;
     }
 
-    //生成用户信息
-    private static BookBean toBookBean(TIMUserProfile userProfile) {
-        BookBean mUserBean = new BookBean();
-        mUserBean.setIdentifier(userProfile.getIdentifier());
-        mUserBean.setNickname(userProfile.getNickName());
-        mUserBean.faceurl = userProfile.getFaceUrl();
-        mUserBean.selfSignature = userProfile.getSelfSignature();
-        if (null != userProfile.getAllowType()) {
-            switch (userProfile.getAllowType()) {
-                case TIM_FRIEND_ALLOW_ANY:
-                    mUserBean.allowType = IMFriendAllowType.IM_FRIEND_ALLOW_ANY;
-                    break;
-                case TIM_FRIEND_INVALID:
-                    mUserBean.allowType = IMFriendAllowType.IM_FRIEND_INVALID;
-                    break;
-                case TIM_FRIEND_NEED_CONFIRM:
-                    mUserBean.allowType = IMFriendAllowType.IM_FRIEND_NEED_CONFIRM;
-                    break;
-                case TIM_FRIEND_DENY_ANY:
-                    mUserBean.allowType = IMFriendAllowType.IM_FRIEND_DENY_ANY;
-                    break;
-            }
+    //获取本地好友列表
+    public static ArrayList<FriendBean> getLocalFriends() {
+        List<TIMUserProfile> timUserProfiles = IMFriendController.getLocalFriends();
+        ArrayList<FriendBean> friendBeanArrayList = new ArrayList<>();
+        for (TIMUserProfile profile : timUserProfiles) {
+            friendBeanArrayList.add(DataBeanAction.toFriendBean(profile));
         }
-        mUserBean.remark = userProfile.getRemark();
-        if (null != userProfile.getGender()) {
-            switch (userProfile.getGender()) {
-                case Unknow:
-                    mUserBean.gender = IMFriendGenderType.Unknow;
-                    break;
-                case Female:
-                    mUserBean.gender = IMFriendGenderType.Female;
-                    break;
-                case Male:
-                    mUserBean.gender = IMFriendGenderType.Male;
-                    break;
-            }
-        }
-        mUserBean.birthday = userProfile.getBirthday();
-        mUserBean.language = userProfile.getLanguage();
-        mUserBean.location = userProfile.getLocation();
-
-        return mUserBean;
+        return friendBeanArrayList;
     }
 
 }
