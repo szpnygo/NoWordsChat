@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -15,6 +17,7 @@ import java.lang.ref.WeakReference;
 
 import info.smemo.nbaseaction.app.AppConstant;
 import info.smemo.nbaseaction.ui.MaterialDialog;
+import info.smemo.nbaseaction.util.ThreadUtil;
 
 public class NBaseFragment extends Fragment implements AppConstant, NBaseCommonView {
 
@@ -116,6 +119,16 @@ public class NBaseFragment extends Fragment implements AppConstant, NBaseCommonV
 
     @Override
     public void showSnackbarMessage(String message) {
+
+    }
+
+    protected void showSnackbar(final String message, @NonNull final View view) {
+        ThreadUtil.newThreadMain(new ThreadUtil.ThreadRunnableMain() {
+            @Override
+            public void inMain() {
+                Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+            }
+        });
 
     }
 

@@ -3,20 +3,19 @@ package info.smemo.nowordschat.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
 import info.smemo.nbaseaction.adapter.NBaseBindingAdapter;
 import info.smemo.nbaseaction.base.NBaseFragment;
 import info.smemo.nowordschat.BR;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.activity.UserActivity;
-import info.smemo.nowordschat.bean.BookBean;
+import info.smemo.nowordschat.appaction.bean.BookBean;
 import info.smemo.nowordschat.contract.BookContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -25,22 +24,21 @@ public class BookFragment extends NBaseFragment implements BookContract.View {
 
     private NBaseBindingAdapter bookAdapter;
 
-    private ArrayList<BookBean> bookBeanArrayList;
-
     private BookContract.Presenter mPresenter;
+
+    private CoordinatorLayout rootView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bookBeanArrayList = new ArrayList<>();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book, container, false);
-        bookAdapter = new NBaseBindingAdapter<>(bookBeanArrayList, BR.bean, R.layout.item_book);
-
+        bookAdapter = new NBaseBindingAdapter<>(mPresenter.getData(), BR.bean, R.layout.item_book);
+        rootView = (CoordinatorLayout) view.findViewById(R.id.rootView);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.book_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(bookAdapter);
@@ -48,6 +46,12 @@ public class BookFragment extends NBaseFragment implements BookContract.View {
         initAdapter();
 
         return view;
+    }
+
+    @Override
+    public void showSnackbarMessage(String message) {
+        super.showSnackbarMessage(message);
+        showSnackbar(message, rootView);
     }
 
     @Override
@@ -64,15 +68,6 @@ public class BookFragment extends NBaseFragment implements BookContract.View {
                 startUser(object);
             }
         });
-    }
-
-    @Override
-    public void showBooks(ArrayList<BookBean> list) {
-        bookBeanArrayList.clear();
-        for (BookBean bookBean : list) {
-            bookBeanArrayList.add(bookBean);
-        }
-        notifyDataSetChanged();
     }
 
     @Override
