@@ -25,4 +25,8 @@ public class UserInfoAction extends BaseAction {
         UserController.getInstance().setSignature(signature, complete);
     }
 
+    public static void setDefaultAllowType(){
+        UserController.getInstance().setDefaultAllowType();
+    }
+
 }

@@ -4,11 +4,13 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.tencent.TIMCallBack;
+import com.tencent.TIMFriendAllowType;
 import com.tencent.TIMUserProfile;
 
 import info.smemo.library.tencetim.IMInterface;
 import info.smemo.library.tencetim.IMLoginController;
 import info.smemo.library.tencetim.IMUserController;
+import info.smemo.nbaseaction.util.LogHelper;
 import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.appaction.ActionInterface;
 import info.smemo.nowordschat.appaction.BR;
@@ -174,7 +176,6 @@ public class UserController {
         return mUserController.getTmpNickname(context);
     }
 
-
     public void setNickname(String nickname, final ActionInterface.BaseComplete complete) {
         mUserController.getFriendshipManager().setNickName(nickname, new TIMCallBack() {
             @Override
@@ -203,4 +204,17 @@ public class UserController {
         });
     }
 
+    public void setDefaultAllowType() {
+        mUserController.getFriendshipManager().setAllowType(TIMFriendAllowType.TIM_FRIEND_NEED_CONFIRM, new TIMCallBack() {
+            @Override
+            public void onError(int i, String s) {
+                LogHelper.e("AppAction", "setDefaultAllType Code:" + i + " Message:" + s);
+            }
+
+            @Override
+            public void onSuccess() {
+
+            }
+        });
+    }
 }
