@@ -30,7 +30,7 @@ public class BookPresenter implements BookContract.Presenter {
     }
 
     @Override
-    public void loadBookData() {
+    public void onRefresh() {
         FriendAction.getFriendList(new FriendController.GetFriendListener() {
             @Override
             public void success(ArrayList<BookBean> bookBeanArrayList) {
@@ -51,6 +51,6 @@ public class BookPresenter implements BookContract.Presenter {
 
     @Override
     public void start() {
-        loadBookData();
+        onRefresh();
     }
 }

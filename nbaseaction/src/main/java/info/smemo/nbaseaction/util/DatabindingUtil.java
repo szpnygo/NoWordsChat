@@ -1,6 +1,9 @@
 package info.smemo.nbaseaction.util;
 
 import android.databinding.BindingAdapter;
+import android.databinding.BindingMethod;
+import android.databinding.BindingMethods;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -8,7 +11,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-
+@BindingMethods({
+        @BindingMethod(type = SwipeRefreshLayout.class, attribute = "android:onRefresh", method = "setOnRefreshListener"),
+})
 public class DatabindingUtil {
 
     @BindingAdapter({"android:actualImageUri"})

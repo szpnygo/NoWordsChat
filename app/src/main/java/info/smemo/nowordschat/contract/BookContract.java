@@ -18,7 +18,7 @@ public interface BookContract {
 
     interface Presenter extends NBasePresenter {
 
-        void loadBookData();
+        void onRefresh();
 
         ArrayList<BookBean> getData();
     }

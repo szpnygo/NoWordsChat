@@ -1,11 +1,10 @@
 package info.smemo.nowordschat.fragment;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +16,16 @@ import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.activity.UserActivity;
 import info.smemo.nowordschat.appaction.bean.BookBean;
 import info.smemo.nowordschat.contract.BookContract;
+import info.smemo.nowordschat.databinding.FragmentBookBinding;
+import info.smemo.nowordschat.presenter.BookPresenter;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class BookFragment extends NBaseFragment implements BookContract.View {
 
     private NBaseBindingAdapter bookAdapter;
-
-    private BookContract.Presenter mPresenter;
-
-    private CoordinatorLayout rootView;
+    private BookPresenter mPresenter;
+    private FragmentBookBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,22 +35,22 @@ public class BookFragment extends NBaseFragment implements BookContract.View {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_book, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_book, container, false);
+        binding.setPresenter(mPresenter);
+
         bookAdapter = new NBaseBindingAdapter<>(mPresenter.getData(), BR.bean, R.layout.item_book);
-        rootView = (CoordinatorLayout) view.findViewById(R.id.rootView);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.book_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(bookAdapter);
+        binding.bookList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        binding.bookList.setAdapter(bookAdapter);
 
         initAdapter();
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override
     public void showSnackbarMessage(String message) {
         super.showSnackbarMessage(message);
-        showSnackbar(message, rootView);
+        showSnackbar(message, binding.rootView);
     }
 
     @Override
@@ -73,6 +72,7 @@ public class BookFragment extends NBaseFragment implements BookContract.View {
     @Override
     public void notifyDataSetChanged() {
         bookAdapter.notifyDataSetChanged();
+        binding.refresh.setRefreshing(false);
     }
 
     @Override
@@ -82,6 +82,6 @@ public class BookFragment extends NBaseFragment implements BookContract.View {
 
     @Override
     public void setPresenter(BookContract.Presenter presenter) {
-        this.mPresenter = checkNotNull(presenter);
+        this.mPresenter = (BookPresenter) checkNotNull(presenter);
     }
 }
