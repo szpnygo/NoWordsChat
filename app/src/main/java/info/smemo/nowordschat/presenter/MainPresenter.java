@@ -31,13 +31,13 @@ public class MainPresenter implements MainContract.Presenter {
                 LogHelper.e(LOG_TAG, UserInfoAction.getUserInfo().toString());
                 //如果用户昵称为空，把他注册的时候放进去的昵称修改进去
                 if (StringUtil.isEmpty(UserInfoAction.getUserInfo().nickname)) {
-                    String tmpNick = UserInfoAction.getTmpNickname(mView.getVApplicationContext());
+                    final String tmpNick = UserInfoAction.getTmpNickname(mView.getVApplicationContext());
                     //设置默认需要通过好友验证加好友
                     UserInfoAction.setDefaultAllowType();
                     UserInfoAction.setNickname(tmpNick, new ActionInterface.BaseComplete() {
                         @Override
                         public void success() {
-
+                            UserInfoAction.getUserInfo().setNickname(tmpNick);
                         }
 
                         @Override
