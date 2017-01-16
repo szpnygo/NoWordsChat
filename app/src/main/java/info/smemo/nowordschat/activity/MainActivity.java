@@ -21,11 +21,11 @@ import android.view.inputmethod.EditorInfo;
 
 import java.util.ArrayList;
 
+import info.smemo.nbaseaction.adapter.NFragmentPagerAdapter;
 import info.smemo.nbaseaction.base.NBaseCompatActivity;
 import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.action.UserInfoAction;
-import info.smemo.nowordschat.adapter.IndexFragmentPagerAdapter;
 import info.smemo.nowordschat.appaction.controller.ImController;
 import info.smemo.nowordschat.contract.MainContract;
 import info.smemo.nowordschat.databinding.NavHeaderMainBinding;
@@ -106,7 +106,7 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setOffscreenPageLimit(3);
-        IndexFragmentPagerAdapter adapter = new IndexFragmentPagerAdapter(getSupportFragmentManager(), list);
+        NFragmentPagerAdapter adapter = new NFragmentPagerAdapter(getSupportFragmentManager(), list);
         viewPager.setAdapter(adapter);
 
         tabLayout.addTab(tabLayout.newTab().setText("消息"));
