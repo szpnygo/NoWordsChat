@@ -18,4 +18,8 @@ public class FriendAction extends BaseAction {
     public static boolean isFriend(String identifier) {
         return FriendController.isFriend(identifier);
     }
+
+    public static void getUserInfo(String identifier, FriendController.GetUserListener listener) {
+        FriendController.getUserInfo(identifier, listener);
+    }
 }

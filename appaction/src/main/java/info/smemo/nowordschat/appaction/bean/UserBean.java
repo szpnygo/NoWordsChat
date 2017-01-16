@@ -3,6 +3,8 @@ package info.smemo.nowordschat.appaction.bean;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import java.io.Serializable;
+
 import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.appaction.BR;
 import info.smemo.nowordschat.appaction.R;
@@ -14,7 +16,7 @@ import info.smemo.nowordschat.appaction.enums.IMFriendGenderType;
  * Created by neo on 17/1/11.
  */
 
-public class UserBean extends BaseObservable {
+public class UserBean extends BaseObservable implements Serializable{
 
     public String identifier;
     public String nickname;
