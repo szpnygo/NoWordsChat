@@ -28,7 +28,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
-            app:placeholderImage="@drawable/user_logo"
+            android:actualImageUri="@{userBean.faceurl}"
             app:roundAsCircle="true"/>
 
         <TextView

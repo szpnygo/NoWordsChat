@@ -4,11 +4,20 @@
     <data>
 
         <variable
+            name="presenter"
+            type="info.smemo.nowordschat.presenter.UserPresenter"/>
+
+        <variable
+            name="isFriend"
+            type="java.lang.Boolean"/>
+
+        <variable
             name="userInfo"
             type="info.smemo.nowordschat.appaction.bean.UserBean"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/rootView"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -46,6 +55,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:title="@{userInfo.nickname}"
                     app:layout_collapseMode="pin"
                     app:layout_scrollFlags="scroll|enterAlways"
                     app:popupTheme="@style/AppTheme.PopupOverlay"/>
@@ -61,6 +71,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="16dp"
+            android:actualImageUri="@{userInfo.faceurl}"
             app:behaviorMultiplier="0.8"
             app:layout_anchor="@id/app_bar"
             app:layout_anchorGravity="bottom|end"
@@ -106,7 +117,7 @@
                         android:layout_alignTop="@+id/menu_account_icon"
                         android:layout_marginStart="32dp"
                         android:layout_toEndOf="@+id/menu_account_icon"
-                        android:text="szpnygo"
+                        android:text="@{userInfo.identifier}"
                         android:textColor="@android:color/black"
                         android:textSize="16sp"/>
 
@@ -145,7 +156,7 @@
                         android:layout_alignTop="@+id/menu_username_icon"
                         android:layout_marginStart="32dp"
                         android:layout_toEndOf="@+id/menu_username_icon"
-                        android:text="\@无语开发者"
+                        android:text='@{"@"+userInfo.nickname}'
                         android:textColor="@android:color/black"
                         android:textSize="16sp"/>
 
@@ -160,15 +171,53 @@
                         android:textColor="@color/mainText"
                         android:textSize="12sp"/>
 
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/menu_signature_icon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:visibility="invisible"/>
+
+
+                    <TextView
+                        android:id="@+id/signature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/menu_signature_icon"
+                        android:layout_marginStart="32dp"
+                        android:layout_toEndOf="@+id/menu_signature_icon"
+                        android:text="@{userInfo.selfSignature}"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/signature_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/signature"
+                        android:layout_below="@+id/signature"
+                        android:paddingTop="4dp"
+                        android:text="个性签名"
+                        android:textColor="@color/mainText"
+                        android:textSize="12sp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_alignParentBottom="true"
-                        android:layout_alignStart="@+id/username"
-                        android:layout_toEndOf="@+id/username"
+                        android:layout_alignStart="@+id/signature"
+                        android:layout_toEndOf="@+id/signature"
                         android:background="@color/listViewLine"/>
-
 
                 </RelativeLayout>
 
@@ -195,7 +244,7 @@
                         android:layout_alignTop="@+id/menu_location_icon"
                         android:layout_marginStart="32dp"
                         android:layout_toEndOf="@+id/menu_location_icon"
-                        android:text="上海市徐汇区"
+                        android:text="@{userInfo.location}"
                         android:textColor="@android:color/black"
                         android:textSize="16sp"/>
 
@@ -267,8 +316,8 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/fab_margin"
             android:background="?attr/selectableItemBackground"
-            android:onClick="postClick"
-            android:src="@drawable/ic_chat_black_24dp"
+            android:onClick="@{(v)->presenter.floatingButtonClick(isFriend)}"
+            android:src="@{isFriend ? @drawable/ic_chat_black_24dp : @drawable/ic_add_black_24dp}"
             android:tint="@android:color/white"
             app:backgroundTint="@color/mainGreenColor"
             app:elevation="6dp"

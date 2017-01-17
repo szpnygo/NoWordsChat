@@ -17,6 +17,7 @@ import info.smemo.nbaseaction.R;
 /**
  * CoordinatorLayout滑动控制器
  */
+//TODO 如果是滑动ToolBar，发现无效果，等待添加对ToolBar滑动的支持
 public class CollapsingViewBehavior extends CoordinatorLayout.Behavior<View> {
 
     private static final Interpolator INTERPOLATOR = new FastOutSlowInInterpolator();

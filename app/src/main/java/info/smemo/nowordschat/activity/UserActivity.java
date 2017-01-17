@@ -1,73 +1,74 @@
 package info.smemo.nowordschat.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
 
 import info.smemo.nbaseaction.adapter.NBaseBindingAdapter;
 import info.smemo.nowordschat.BR;
 import info.smemo.nowordschat.R;
+import info.smemo.nowordschat.action.FriendAction;
+import info.smemo.nowordschat.appaction.bean.UserBean;
 import info.smemo.nowordschat.base.BaseCompatActivity;
-import info.smemo.nowordschat.bean.FindBean;
+import info.smemo.nowordschat.contract.UserContract;
+import info.smemo.nowordschat.databinding.ActivityUserBinding;
+import info.smemo.nowordschat.presenter.UserPresenter;
 
-public class UserActivity extends BaseCompatActivity {
+public class UserActivity extends BaseCompatActivity implements UserContract.View {
 
-    private RecyclerView mRecyclerView;
-    private ArrayList<FindBean> findBeanArrayList;
+
     private NBaseBindingAdapter findAdapter;
+
+    private ActivityUserBinding binding;
+    private UserPresenter presenter;
+
+    private UserBean mUserBean;
+
+    @Override
+    protected void onCreateDataBinding() {
+        super.onCreateDataBinding();
+        mUserBean = (UserBean) getIntent().getSerializableExtra("user");
+        binding = createContentView(R.layout.activity_user);
+        binding.setUserInfo(mUserBean);
+        binding.setIsFriend(FriendAction.isFriend(mUserBean.identifier));
+        setSupportActionBar(binding.toolbar);
+        setToolbarFinish(binding.toolbar);
+
+        presenter = new UserPresenter(this);
+        binding.setPresenter(presenter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("无语开发者");
-        setSupportActionBar(toolbar);
-        setToolbarFinish(toolbar);
-
-        initView();
-
         initFindAdapter();
     }
 
-    private void initView() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.finds_list);
+    @Override
+    public void showSnackbarMessage(String message) {
+        super.showSnackbarMessage(message);
+        showSnackbar(message, binding.rootView);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.start();
     }
 
     private void initFindAdapter() {
-
-        findBeanArrayList = new ArrayList<>();
-        findAdapter = new NBaseBindingAdapter<>(findBeanArrayList, BR.bean, R.layout.item_user_finds,
+        findAdapter = new NBaseBindingAdapter<>(presenter.getData(), BR.bean, R.layout.item_user_finds,
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(findAdapter);
-
-        FindBean findBean = new FindBean();
-        findBean.imgUri.add("res:///" + R.drawable.user_logo);
-
-        findBeanArrayList.add(findBean);
-        findBeanArrayList.add(findBean);
-        findBeanArrayList.add(findBean);
-
-        findAdapter.notifyDataSetChanged();
+        binding.findsList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        binding.findsList.setHasFixedSize(true);
+        binding.findsList.setAdapter(findAdapter);
 
     }
 
-    /**
-     * 发送朋友圈消息
-     */
-    public void postClick(View view) {
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,5 +97,34 @@ public class UserActivity extends BaseCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void setPresenter(UserContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void startChat() {
+        Intent intent = new Intent(this, ChatActivity.class);
+        intent.putExtra("user", mUserBean);
+        startActivity(intent);
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        findAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void addFriendSuccess() {
+        binding.setIsFriend(true);
+        binding.notifyPropertyChanged(BR.isFriend);
+        binding.menuPost.setImageResource(R.drawable.ic_chat_black_24dp);
+    }
+
+    @Override
+    public UserBean getUser() {
+        return mUserBean;
     }
 }
