@@ -139,7 +139,7 @@ public class FriendController {
         List<TIMAddFriendRequest> reqList = new ArrayList<>();
 
         final TIMAddFriendRequest req = new TIMAddFriendRequest();
-        req.setAddrSource("AndroidApp");
+        req.setAddrSource("AddSource_Type_Android");
         req.setAddWording(word);
         req.setIdentifier(identifier);
         reqList.add(req);
@@ -162,7 +162,7 @@ public class FriendController {
                             listener.success(true, "好友添加成功");
                             break;
                         case TIM_ADD_FRIEND_STATUS_PENDING:
-                            listener.success(true, "等待好友审核同意");
+                            listener.success(false, "等待好友审核同意");
                             break;
                         case TIM_ADD_FRIEND_STATUS_ALREADY_FRIEND:
                             listener.success(true, "对方已经是您的好友");

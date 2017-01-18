@@ -28,6 +28,7 @@ public class AddFriendActivity extends BaseCompatActivity {
         binding.searchView.requestFocusFromTouch();
         binding.searchView.onActionViewExpanded();
         binding.searchView.setSubmitButtonEnabled(true);
+        binding.searchView.setIconifiedByDefault(false);
         binding.searchView.setIconified(false);
         binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

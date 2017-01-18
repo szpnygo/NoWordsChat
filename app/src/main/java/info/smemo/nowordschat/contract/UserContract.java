@@ -31,7 +31,6 @@ public interface UserContract {
 
         void addFriend();
 
-        void sendMessage();
     }
 
 }

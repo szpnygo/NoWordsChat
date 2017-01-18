@@ -3,6 +3,8 @@ package info.smemo.nowordschat.presenter;
 import java.util.ArrayList;
 
 import info.smemo.nowordschat.R;
+import info.smemo.nowordschat.action.FriendAction;
+import info.smemo.nowordschat.appaction.controller.FriendController;
 import info.smemo.nowordschat.bean.FindBean;
 import info.smemo.nowordschat.contract.UserContract;
 
@@ -28,7 +30,7 @@ public class UserPresenter implements UserContract.Presenter {
     @Override
     public void floatingButtonClick(boolean isFriend) {
         if (isFriend) {
-            sendMessage();
+            mView.startChat();
         } else {
             addFriend();
         }
@@ -55,12 +57,25 @@ public class UserPresenter implements UserContract.Presenter {
 
     @Override
     public void addFriend() {
-        mView.showSnackbarMessage("好友添加成功");
-        mView.addFriendSuccess();
+        mView.showProgressDialog("添加好友...");
+        FriendAction.addFriend(mView.getUser().identifier, new FriendController.AddFriendListener() {
+            @Override
+            public void success(boolean success, String message) {
+                mView.dismissProgressDialog();
+                mView.showSnackbarMessage(message);
+                if (success) {
+                    mView.addFriendSuccess();
+                }
+            }
+
+            @Override
+            public void error(int code, String message) {
+                mView.dismissProgressDialog();
+                mView.showSnackbarMessage(message);
+            }
+        });
+
+
     }
 
-    @Override
-    public void sendMessage() {
-
-    }
 }
