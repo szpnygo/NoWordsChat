@@ -30,4 +30,8 @@ public class FriendAction extends BaseAction {
     public static void addFriend(String identifier, String words, FriendController.AddFriendListener listener) {
         FriendController.addFriend(identifier, words, listener);
     }
+
+    public static void getFuture(final FriendController.GetFutureFriendListener listener) {
+        FriendController.getFutureFriend(listener);
+    }
 }

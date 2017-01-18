@@ -3,8 +3,12 @@ package info.smemo.nowordschat.appaction.controller;
 import android.support.annotation.NonNull;
 
 import com.tencent.TIMAddFriendRequest;
+import com.tencent.TIMFriendFutureItem;
+import com.tencent.TIMFriendFutureMeta;
 import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendshipManager;
+import com.tencent.TIMGetFriendFutureListSucc;
+import com.tencent.TIMPageDirectionType;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMUserSearchSucc;
 import com.tencent.TIMValueCallBack;
@@ -52,6 +56,15 @@ public class FriendController {
 
     }
 
+    public interface GetFutureFriendListener {
+
+        void success(ArrayList<BookBean> list);
+
+        void error(int code, String message);
+    }
+
+
+    //搜索用户，作废
     public static void searchUser(@NonNull String nickname, int page, @NonNull final SearchUserListener listener) {
         searchUser(nickname, page, PAGE_SIZE, listener);
     }
@@ -189,6 +202,37 @@ public class FriendController {
             }
         });
 
+    }
+
+    //获取为决请求
+    public static void getFutureFriend(final GetFutureFriendListener listener) {
+        TIMFriendFutureMeta meta = new TIMFriendFutureMeta();
+        meta.setReqNum(10);
+        meta.setDirectionType(TIMPageDirectionType.TIM_PAGE_DIRECTION_DOWN_TYPE);
+
+        long reqFlag = 0, futureFlags = 0;
+        reqFlag |= TIMFriendshipManager.TIM_PROFILE_FLAG_NICK;
+        reqFlag |= TIMFriendshipManager.TIM_PROFILE_FLAG_REMARK;
+        reqFlag |= TIMFriendshipManager.TIM_PROFILE_FLAG_FACE_URL;
+        reqFlag |= TIMFriendshipManager.TIM_PROFILE_FLAG_ALLOW_TYPE;
+        futureFlags |= TIMFriendshipManager.TIM_FUTURE_FRIEND_PENDENCY_IN_TYPE;
+        futureFlags |= TIMFriendshipManager.TIM_FUTURE_FRIEND_RECOMMEND_TYPE;
+
+        TIMFriendshipManager.getInstance().getFutureFriends(reqFlag, futureFlags, null, meta, new TIMValueCallBack<TIMGetFriendFutureListSucc>() {
+            @Override
+            public void onError(int i, String s) {
+                listener.error(i, s);
+            }
+
+            @Override
+            public void onSuccess(TIMGetFriendFutureListSucc timGetFriendFutureListSucc) {
+                ArrayList<BookBean> list = new ArrayList<>();
+                for (TIMFriendFutureItem item : timGetFriendFutureListSucc.getItems()) {
+                    list.add(DataBeanAction.toFriendFutureBean(item));
+                }
+                listener.success(list);
+            }
+        });
     }
 
 }

@@ -31,6 +31,10 @@ public class UserActivity extends BaseCompatActivity implements UserContract.Vie
     protected void onCreateDataBinding() {
         super.onCreateDataBinding();
         mUserBean = (UserBean) getIntent().getSerializableExtra("user");
+        if (null == mUserBean) {
+            finish();
+            return;
+        }
         binding = createContentView(R.layout.activity_user);
         binding.setUserInfo(mUserBean);
         binding.setIsFriend(FriendAction.isFriend(mUserBean.identifier));
