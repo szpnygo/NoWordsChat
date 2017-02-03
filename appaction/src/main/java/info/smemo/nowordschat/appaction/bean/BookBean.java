@@ -4,12 +4,18 @@ import android.databinding.Bindable;
 
 import info.smemo.nbaseaction.util.PinyinUtil;
 import info.smemo.nowordschat.appaction.BR;
+import info.smemo.nowordschat.appaction.enums.IMFutureFriendType;
 
 public class BookBean extends UserBean {
 
     public String firstChar = "";
     public String title = "";
     public boolean showLine = false;
+
+    public String addSource;
+    public long addTime;
+    public String addWording;
+    public IMFutureFriendType type;
 
     @Bindable
     public String getTitle() {

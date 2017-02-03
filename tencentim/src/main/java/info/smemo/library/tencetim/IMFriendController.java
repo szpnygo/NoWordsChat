@@ -21,4 +21,5 @@ public class IMFriendController {
     public static List<TIMUserProfile> getLocalFriends() {
         return TIMFriendshipProxy.getInstance().getFriends();
     }
+
 }

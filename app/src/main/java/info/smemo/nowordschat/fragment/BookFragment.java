@@ -15,6 +15,7 @@ import info.smemo.nowordschat.BR;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.activity.UserActivity;
 import info.smemo.nowordschat.appaction.bean.BookBean;
+import info.smemo.nowordschat.appaction.enums.IMFutureFriendType;
 import info.smemo.nowordschat.contract.BookContract;
 import info.smemo.nowordschat.databinding.FragmentBookBinding;
 import info.smemo.nowordschat.presenter.BookPresenter;
@@ -64,7 +65,12 @@ public class BookFragment extends NBaseFragment implements BookContract.View {
 
             @Override
             public void onClick(View view, int position, BookBean object) {
-                startUser(object);
+                if (object.type != IMFutureFriendType.IM_FUTURE_FRIEND_DECIDE_TYPE) {
+                    startNewFriend();
+                } else {
+                    startUser(object);
+                }
+
             }
         });
     }
@@ -77,7 +83,14 @@ public class BookFragment extends NBaseFragment implements BookContract.View {
 
     @Override
     public void startUser(BookBean bean) {
-        startActivity(new Intent(getActivity(), UserActivity.class));
+        Intent intent = new Intent(getActivity(), UserActivity.class);
+        intent.putExtra("user", bean);
+        startActivity(intent);
+    }
+
+    @Override
+    public void startNewFriend() {
+
     }
 
     @Override

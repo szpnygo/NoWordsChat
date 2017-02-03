@@ -1,80 +1,328 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="info.smemo.nowordschat.activity.FindActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+        <variable
+            name="presenter"
+            type="info.smemo.nowordschat.presenter.UserPresenter"/>
+
+        <variable
+            name="isFriend"
+            type="java.lang.Boolean"/>
+
+        <variable
+            name="userInfo"
+            type="info.smemo.nowordschat.appaction.bean.UserBean"/>
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/rootView"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
+        android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        tools:context="info.smemo.nowordschat.activity.FindActivity">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/app_bar_height"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minHeight="72dp"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.7"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-                app:placeholderImage="@drawable/find_bg"
-                app:placeholderImageScaleType="centerCrop" />
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="72dp"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.7"
+                    app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+                    app:placeholderImage="@drawable/find_bg"
+                    app:placeholderImageScaleType="centerCrop"/>
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:title="@{userInfo.nickname}"
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/user_logo"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="16dp"
+            android:actualImageUri="@{userInfo.faceurl}"
+            app:behaviorMultiplier="0.8"
+            app:layout_anchor="@id/app_bar"
+            app:layout_anchorGravity="bottom|end"
+            app:layout_behavior="@string/nbase_collapsing_behavior"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:placeholderImage="@drawable/user_logo"
+            app:roundAsCircle="true"/>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="32dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/menu_account_icon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_phone_iphone_black_24dp"
+                        android:tint="@color/mainText"/>
 
 
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
+                    <TextView
+                        android:id="@+id/account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/menu_account_icon"
+                        android:layout_marginStart="32dp"
+                        android:layout_toEndOf="@+id/menu_account_icon"
+                        android:text="@{userInfo.identifier}"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"/>
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/user_logo"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="16dp"
-        app:behaviorMultiplier="0.8"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:layout_behavior="@string/nbase_collapsing_behavior"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed"
-        app:placeholderImage="@drawable/user_logo"
-        app:roundAsCircle="true" />
+                    <TextView
+                        android:id="@+id/account_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/account"
+                        android:layout_below="@+id/account"
+                        android:paddingTop="4dp"
+                        android:text="账号"
+                        android:textColor="@color/mainText"
+                        android:textSize="12sp"/>
 
-    <include layout="@layout/activity_user_content" />
+                </RelativeLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/menu_post"
-        android:onClick="postClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        android:background="?attr/selectableItemBackground"
-        android:src="@drawable/ic_chat_black_24dp"
-        android:tint="@android:color/white"
-        app:backgroundTint="@color/mainGreenColor"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        app:rippleColor="#33728dff" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:orientation="vertical">
 
-</android.support.design.widget.CoordinatorLayout>
+                    <ImageView
+                        android:id="@+id/menu_username_icon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:visibility="invisible"/>
+
+
+                    <TextView
+                        android:id="@+id/username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/menu_username_icon"
+                        android:layout_marginStart="32dp"
+                        android:layout_toEndOf="@+id/menu_username_icon"
+                        android:text='@{"@"+userInfo.nickname}'
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/username_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/username"
+                        android:layout_below="@+id/username"
+                        android:paddingTop="4dp"
+                        android:text="昵称"
+                        android:textColor="@color/mainText"
+                        android:textSize="12sp"/>
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/menu_signature_icon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:visibility="invisible"/>
+
+
+                    <TextView
+                        android:id="@+id/signature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/menu_signature_icon"
+                        android:layout_marginStart="32dp"
+                        android:layout_toEndOf="@+id/menu_signature_icon"
+                        android:text="@{userInfo.selfSignature}"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/signature_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/signature"
+                        android:layout_below="@+id/signature"
+                        android:paddingTop="4dp"
+                        android:text="个性签名"
+                        android:textColor="@color/mainText"
+                        android:textSize="12sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignStart="@+id/signature"
+                        android:layout_toEndOf="@+id/signature"
+                        android:background="@color/listViewLine"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/menu_location_icon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_person_pin_circle_black_24dp"
+                        android:tint="@color/mainText"/>
+
+
+                    <TextView
+                        android:id="@+id/location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/menu_location_icon"
+                        android:layout_marginStart="32dp"
+                        android:layout_toEndOf="@+id/menu_location_icon"
+                        android:text="@{userInfo.location}"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/location_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/location"
+                        android:layout_below="@+id/location"
+                        android:paddingTop="4dp"
+                        android:text="地区"
+                        android:textColor="@color/mainText"
+                        android:textSize="12sp"/>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignStart="@+id/location"
+                        android:layout_toEndOf="@+id/location"
+                        android:background="@color/listViewLine"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="96dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/menu_photo_icon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/ic_photo_camera_black_24dp"
+                        android:tint="@color/mainText"
+                        android:visibility="invisible"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/finds_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_toEndOf="@+id/menu_photo_icon"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignStart="@+id/finds_list"
+                        android:layout_toEndOf="@+id/finds_list"
+                        android:background="@color/listViewLine"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/menu_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/fab_margin"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="@{(v)->presenter.floatingButtonClick(isFriend)}"
+            android:src="@{isFriend ? @drawable/ic_chat_black_24dp : @drawable/ic_add_black_24dp}"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/mainGreenColor"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="#33728dff"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

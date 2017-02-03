@@ -72,7 +72,9 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
         navHeaderMainBinding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, UserActivity.class));
+                Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                intent.putExtra("user",UserInfoAction.getUserInfo());
+                startActivity(intent);
             }
         });
         navigationView.addHeaderView(navHeaderMainBinding.getRoot());
