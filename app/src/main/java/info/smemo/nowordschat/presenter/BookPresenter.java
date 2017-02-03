@@ -8,6 +8,7 @@ import java.util.Collections;
 import info.smemo.nowordschat.action.FriendAction;
 import info.smemo.nowordschat.appaction.bean.BookBean;
 import info.smemo.nowordschat.appaction.controller.FriendController;
+import info.smemo.nowordschat.appaction.enums.IMFutureFriendType;
 import info.smemo.nowordschat.contract.BookContract;
 import info.smemo.nowordschat.util.PinyinSortComparator;
 
@@ -64,10 +65,33 @@ public class BookPresenter implements BookContract.Presenter {
                     list.add(bean);
                 }
                 mView.notifyDataSetChanged();
+                loadFutureData();
             }
 
             @Override
             public void error(int code, String message) {
+                mView.showSnackbarMessage(message);
+            }
+        });
+    }
+
+    @Override
+    synchronized public void loadFutureData() {
+        FriendAction.getFuture(new FriendController.GetFutureFriendListener() {
+            @Override
+            public void success(ArrayList<BookBean> bookBeanArrayList) {
+                for (BookBean bookBean : bookBeanArrayList) {
+                    if (bookBean.type == IMFutureFriendType.IM_FUTURE_FRIEND_PENDENCY_IN_TYPE) {
+                        bookBean.setTitle("ADD");
+                    }
+                    list.add(0, bookBean);
+                }
+                mView.notifyDataSetChanged();
+            }
+
+            @Override
+            public void error(int code, String message) {
+                mView.notifyDataSetChanged();
                 mView.showSnackbarMessage(message);
             }
         });

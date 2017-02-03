@@ -12,7 +12,10 @@ public class DataBingUtils {
         if (text.toUpperCase().equals("STAR")) {
             view.setText("");
             view.setBackgroundResource(R.drawable.ic_star_green_24dp);
-        } else {
+        } if(text.toUpperCase().equals("ADD")){
+            view.setText("");
+            view.setBackgroundResource(R.drawable.ic_error_green_24dp);
+        }else {
             view.setBackground(null);
             view.setText(text.toUpperCase());
         }

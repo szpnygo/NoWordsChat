@@ -10,19 +10,18 @@ import java.io.InputStream;
 
 import info.smemo.nbaseaction.util.LogHelper;
 import info.smemo.nbaseaction.util.StringUtil;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.exceptions.Exceptions;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.Response;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.exceptions.Exceptions;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-
-import static info.smemo.nbaseaction.app.AppConstant.TAG_HTTP;
 
 public class DownloadUtil extends HttpUtil {
 
@@ -31,10 +30,10 @@ public class DownloadUtil extends HttpUtil {
     }
 
     public static void download(@NonNull final String url, @NonNull final String path, @NonNull final String fileName, @NonNull final boolean cover, @NonNull final HttpDownloadListener listener) {
-        Observable.create(new Observable.OnSubscribe<Request>() {
+        Observable.create(new ObservableOnSubscribe<Request>() {
 
             @Override
-            public void call(Subscriber<? super Request> subscriber) {
+            public void subscribe(ObservableEmitter<Request> subscriber) throws Exception {
                 //url can't be empty
                 if (StringUtil.isEmpty(url)) {
                     listener.failure("Http url is empty");
@@ -51,13 +50,13 @@ public class DownloadUtil extends HttpUtil {
                 Request request = new Request.Builder().url(url).build();
 
                 subscriber.onNext(request);
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .map(new Func1<Request, File>() {
+                .map(new Function<Request, File>() {
                     @Override
-                    public File call(Request request) {
+                    public File apply(Request request) throws Exception {
                         Response response;
                         try {
 
@@ -119,20 +118,20 @@ public class DownloadUtil extends HttpUtil {
                         }
                     }
                 })
-                .onErrorReturn(new Func1<Throwable, File>() {
+                .onErrorReturn(new Function<Throwable, File>() {
 
                     @Override
-                    public File call(Throwable throwable) {
+                    public File apply(Throwable throwable) throws Exception {
                         throwable.printStackTrace();
                         listener.failure(throwable.getMessage());
                         return null;
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(new Action1<File>() {
+                .doOnNext(new Consumer<File>() {
 
                     @Override
-                    public void call(File file) {
+                    public void accept(File file) throws Exception {
                         if (file == null || !file.exists()) {
                             listener.failure("on next : file is null");
                         } else {
@@ -141,15 +140,15 @@ public class DownloadUtil extends HttpUtil {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnCompleted(new Action0() {
+                .doOnComplete(new Action() {
                     @Override
-                    public void call() {
+                    public void run() throws Exception {
                         LogHelper.i(TAG_HTTP, "Http Download Request[" + url + "] Completed");
                     }
                 })
-                .doOnError(new Action1<Throwable>() {
+                .doOnError(new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) throws Exception {
                         throwable.printStackTrace();
                         listener.failure(throwable.getMessage());
                     }

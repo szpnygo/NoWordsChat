@@ -14,11 +14,15 @@ public interface BookContract {
 
         void startUser(BookBean bean);
 
+        void startNewFriend();
+
     }
 
     interface Presenter extends NBasePresenter {
 
         void onRefresh();
+
+        void loadFutureData();
 
         ArrayList<BookBean> getData();
     }

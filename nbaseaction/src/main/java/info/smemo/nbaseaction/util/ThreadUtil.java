@@ -3,33 +3,35 @@ package info.smemo.nbaseaction.util;
 import java.util.List;
 
 import info.smemo.nbaseaction.app.AppConstant;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.exceptions.Exceptions;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.exceptions.Exceptions;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class ThreadUtil {
 
     public static <T> void newThreadWithMainObj(final ThreadRunnable<T> runnable) {
-        Observable.create(new Observable.OnSubscribe<T>() {
+        Observable.create(new ObservableOnSubscribe<T>() {
             @Override
-            public void call(Subscriber<? super T> subscriber) {
+            public void subscribe(ObservableEmitter<T> subscriber) throws Exception {
                 subscriber.onNext(runnable.inThread());
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         }).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(new Action1<T>() {
+                .doOnNext(new Consumer<T>() {
+
                     @Override
-                    public void call(T t) {
+                    public void accept(T t) throws Exception {
                         runnable.inMain(t);
                     }
                 })
-                .doOnError(new Action1<Throwable>() {
+                .doOnError(new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) throws Exception {
                         LogHelper.e(AppConstant.TAG, "ThreadUtil:" + throwable.getMessage());
                         throw Exceptions.propagate(throwable);
                     }
@@ -38,23 +40,23 @@ public class ThreadUtil {
     }
 
     public static <T> void newThreadWithMainList(final ThreadRunnableList<T> runnable) {
-        Observable.create(new Observable.OnSubscribe<List<T>>() {
+        Observable.create(new ObservableOnSubscribe<List<T>>() {
             @Override
-            public void call(Subscriber<? super List<T>> subscriber) {
+            public void subscribe(ObservableEmitter<List<T>> subscriber) throws Exception {
                 subscriber.onNext(runnable.inThread());
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         }).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(new Action1<List<T>>() {
+                .doOnNext(new Consumer<List<T>>() {
                     @Override
-                    public void call(List<T> t) {
-                        runnable.inMain(t);
+                    public void accept(List<T> ts) throws Exception {
+                        runnable.inMain(ts);
                     }
                 })
-                .doOnError(new Action1<Throwable>() {
+                .doOnError(new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) throws Exception {
                         LogHelper.e(AppConstant.TAG, "ThreadUtil:" + throwable.getMessage());
                         throw Exceptions.propagate(throwable);
                     }
@@ -63,24 +65,24 @@ public class ThreadUtil {
     }
 
     public static void newThreadWithMain(final ThreadRunnableVoid runnable) {
-        Observable.create(new Observable.OnSubscribe<String>() {
+        Observable.create(new ObservableOnSubscribe<String>() {
 
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void subscribe(ObservableEmitter<String> subscriber) throws Exception {
                 runnable.inThread();
                 subscriber.onNext("next");
             }
         }).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(new Action1<String>() {
+                .doOnNext(new Consumer<String>() {
                     @Override
-                    public void call(String s) {
+                    public void accept(String s) throws Exception {
                         runnable.inMain();
                     }
                 })
-                .doOnError(new Action1<Throwable>() {
+                .doOnError(new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) throws Exception {
                         LogHelper.e(AppConstant.TAG, "ThreadUtil:" + throwable.getMessage());
                         throw Exceptions.propagate(throwable);
                     }
@@ -92,15 +94,15 @@ public class ThreadUtil {
     public static void newThreadMain(final ThreadRunnableMain runnableMain) {
         Observable.just("newx").subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(new Action1<String>() {
+                .doOnNext(new Consumer<String>() {
                     @Override
-                    public void call(String s) {
+                    public void accept(String s) throws Exception {
                         runnableMain.inMain();
                     }
                 })
-                .doOnError(new Action1<Throwable>() {
+                .doOnError(new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) throws Exception {
                         LogHelper.e(AppConstant.TAG, "ThreadUtil:" + throwable.getMessage());
                         throw Exceptions.propagate(throwable);
                     }
