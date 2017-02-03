@@ -19,6 +19,16 @@ import info.smemo.nbaseaction.app.AppConstant;
 import info.smemo.nbaseaction.base.NBaseApplication;
 import info.smemo.nbaseaction.util.LogHelper;
 import info.smemo.nbaseaction.util.StringUtil;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.exceptions.Exceptions;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.HttpUrl;
@@ -28,15 +38,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import rx.Observable;
-import rx.Scheduler;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.exceptions.Exceptions;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 public class HttpUtil implements AppConstant {
 
@@ -131,9 +132,9 @@ public class HttpUtil implements AppConstant {
                                final boolean isCookie, final @Nullable CacheControl cacheControl,
                                final @NonNull ThreadType returnThread,
                                final @NonNull HttpResponseListener listener) {
-        Observable.create(new Observable.OnSubscribe<Request>() {
+        Observable.create(new ObservableOnSubscribe<Request>() {
             @Override
-            public void call(Subscriber<? super Request> subscriber) {
+            public void subscribe(ObservableEmitter<Request> subscriber) throws Exception {
                 HttpUrl httpUrl = HttpUrl.parse(url);
                 if (null == httpUrl) {
                     throw Exceptions.propagate(new Throwable("HttpUrl[" + (type == HttpType.POST ? "POST" : "GET") + "][" + url + "] has error"));
@@ -141,13 +142,13 @@ public class HttpUtil implements AppConstant {
                 Request request = getRequest(type, httpUrl, postMap, getMap, headerMap, isCookie, cacheControl);
                 LogHelper.i(TAG_HTTP, "Http[" + (type == HttpType.POST ? "POST" : "GET") + "] Request url[" + request.url() + "]");
                 subscriber.onNext(request);
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .map(new Func1<Request, String>() {
+                .map(new Function<Request, String>() {
                     @Override
-                    public String call(Request request) {
+                    public String apply(Request request) throws Exception {
                         Response response;
                         try {
                             response = client.newCall(request).execute();
@@ -161,36 +162,36 @@ public class HttpUtil implements AppConstant {
                         } catch (IOException e) {
                             throw Exceptions.propagate(e);
                         }
-
                     }
                 })
                 .observeOn(getThread(ThreadType.MAIN))
-                .onErrorReturn(new Func1<Throwable, String>() {
+                .onErrorReturn(new Function<Throwable, String>() {
                     @Override
-                    public String call(Throwable throwable) {
+                    public String apply(Throwable throwable) throws Exception {
                         throwable.printStackTrace();
                         listener.failure(throwable.getMessage());
                         return "NBaseAndroidError:" + throwable.getMessage();
                     }
                 })
                 .observeOn(getThread(returnThread))
-                .doOnNext(new Action1<String>() {
+                .doOnNext(new Consumer<String>() {
                     @Override
-                    public void call(String response) {
+                    public void accept(String response) throws Exception {
                         if (!response.startsWith("NBaseAndroidError:")) {
                             LogHelper.i(TAG_HTTP, "Http Request[" + url + "] doOnCompleted");
                             listener.success(response);
                         }
                     }
                 })
-                .doOnCompleted(new Action0() {
+                .doOnComplete(new Action() {
                     @Override
-                    public void call() {
+                    public void run() throws Exception {
+
                     }
                 })
-                .doOnError(new Action1<Throwable>() {
+                .doOnError(new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) throws Exception {
                         throw Exceptions.propagate(throwable);
                     }
                 })
