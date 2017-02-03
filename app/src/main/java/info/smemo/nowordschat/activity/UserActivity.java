@@ -43,11 +43,7 @@ public class UserActivity extends BaseCompatActivity implements UserContract.Vie
 
         presenter = new UserPresenter(this);
         binding.setPresenter(presenter);
-    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         initFindAdapter();
     }
 
