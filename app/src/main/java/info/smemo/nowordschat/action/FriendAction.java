@@ -2,6 +2,7 @@ package info.smemo.nowordschat.action;
 
 import android.support.annotation.NonNull;
 
+import info.smemo.nowordschat.appaction.ActionInterface;
 import info.smemo.nowordschat.appaction.controller.FriendController;
 import info.smemo.nowordschat.base.BaseAction;
 
@@ -33,5 +34,9 @@ public class FriendAction extends BaseAction {
 
     public static void getFuture(final FriendController.GetFutureFriendListener listener) {
         FriendController.getFutureFriend(listener);
+    }
+
+    public static void addFriendResponse(String identifer, boolean isAccept, ActionInterface.BaseComplete listener) {
+        FriendController.addFriendResponse(identifer, isAccept, listener);
     }
 }
