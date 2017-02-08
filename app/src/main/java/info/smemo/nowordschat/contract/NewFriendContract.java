@@ -22,6 +22,8 @@ public interface NewFriendContract {
 
         void loadFutureData();
 
+        void addFriendResponse(BookBean bookBean,boolean isAccept);
+
         ArrayList<BookBean> getData();
     }
 

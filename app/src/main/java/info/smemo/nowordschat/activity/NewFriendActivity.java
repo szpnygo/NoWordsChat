@@ -37,11 +37,13 @@ public class NewFriendActivity extends BaseCompatActivity implements NewFriendCo
         bookAdapter.setListener(new NBaseBindingAdapter.OnAdapterClickListener<BookBean>() {
             @Override
             public void onClick(View view, int position, BookBean object) {
-                if (view.getId() == R.id.accept) {
-
-                } else {
-                    startUser(object);
-                }
+                startUser(object);
+            }
+        });
+        bookAdapter.addClickListner(R.id.accept, new NBaseBindingAdapter.OnAdapterClickListener<BookBean>() {
+            @Override
+            public void onClick(View view, int position, BookBean object) {
+                mPresenter.addFriendResponse(object, true);
             }
         });
 

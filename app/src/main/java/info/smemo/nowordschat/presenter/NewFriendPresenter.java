@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 
 import info.smemo.nowordschat.action.FriendAction;
+import info.smemo.nowordschat.appaction.ActionInterface;
 import info.smemo.nowordschat.appaction.bean.BookBean;
 import info.smemo.nowordschat.appaction.controller.FriendController;
 import info.smemo.nowordschat.appaction.enums.IMFutureFriendType;
@@ -12,7 +13,7 @@ import info.smemo.nowordschat.contract.NewFriendContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class NewFriendPresenter implements NewFriendContract.Presenter{
+public class NewFriendPresenter implements NewFriendContract.Presenter {
 
     private NewFriendContract.View mView;
 
@@ -47,6 +48,22 @@ public class NewFriendPresenter implements NewFriendContract.Presenter{
             @Override
             public void error(int code, String message) {
                 mView.notifyDataSetChanged();
+                mView.showSnackbarMessage(message);
+            }
+        });
+    }
+
+    @Override
+    public void addFriendResponse(BookBean bookBean, boolean isAccept) {
+        FriendAction.addFriendResponse(bookBean.identifier, isAccept, new ActionInterface.BaseComplete() {
+            @Override
+            public void success() {
+                mView.showSnackbarMessage("好友添加成功");
+                mView.finishSelf();
+            }
+
+            @Override
+            public void error(int code, String message) {
                 mView.showSnackbarMessage(message);
             }
         });

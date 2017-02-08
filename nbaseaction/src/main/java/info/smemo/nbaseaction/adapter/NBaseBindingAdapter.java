@@ -1,16 +1,21 @@
 package info.smemo.nbaseaction.adapter;
 
+import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import info.smemo.nbaseaction.base.NBaseViewHolder;
 
 public class NBaseBindingAdapter<T> extends RecyclerView.Adapter<NBaseViewHolder> {
 
+    private HashMap<Integer, OnAdapterClickListener> mListenerHashMap = new HashMap<>();
     private ArrayList<T> mList;
     private int variable;
     private int layout;
@@ -55,6 +60,14 @@ public class NBaseBindingAdapter<T> extends RecyclerView.Adapter<NBaseViewHolder
                     listener.onClick(view, p, obj);
             }
         });
+        for (final Map.Entry<Integer, OnAdapterClickListener> entry : mListenerHashMap.entrySet()) {
+            holder.itemView.findViewById(entry.getKey()).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    entry.getValue().onClick(view, p, obj);
+                }
+            });
+        }
     }
 
     @Override
@@ -64,6 +77,10 @@ public class NBaseBindingAdapter<T> extends RecyclerView.Adapter<NBaseViewHolder
 
     public void setListener(OnAdapterClickListener listener) {
         this.listener = listener;
+    }
+
+    public void addClickListner(@IdRes int id, @NonNull OnAdapterClickListener listener) {
+        mListenerHashMap.put(id, listener);
     }
 
     public synchronized void remove(int position) {
