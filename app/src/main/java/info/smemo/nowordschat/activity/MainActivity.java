@@ -27,6 +27,7 @@ import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.action.UserInfoAction;
 import info.smemo.nowordschat.appaction.controller.ImController;
+import info.smemo.nowordschat.appaction.event.MessageEvent;
 import info.smemo.nowordschat.contract.MainContract;
 import info.smemo.nowordschat.databinding.NavHeaderMainBinding;
 import info.smemo.nowordschat.fragment.BookFragment;
@@ -35,6 +36,7 @@ import info.smemo.nowordschat.fragment.IndexFragment;
 import info.smemo.nowordschat.presenter.BookPresenter;
 import info.smemo.nowordschat.presenter.IndexPresenter;
 import info.smemo.nowordschat.presenter.MainPresenter;
+import info.smemo.nowordschat.util.NotificationUtil;
 
 public class MainActivity extends NBaseCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         ViewPager.OnPageChangeListener, TabLayout.OnTabSelectedListener, MainContract.View {
@@ -55,6 +57,8 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ImController.init(this);
+        init();
+
         mPresenter = new MainPresenter(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -81,6 +85,13 @@ public class MainActivity extends NBaseCompatActivity implements NavigationView.
 
         initFragmentAdapter();
         mPresenter.start();
+
+
+    }
+
+    private void init(){
+        MessageEvent.getInstance();
+        NotificationUtil.getInstance();
     }
 
     @Override
