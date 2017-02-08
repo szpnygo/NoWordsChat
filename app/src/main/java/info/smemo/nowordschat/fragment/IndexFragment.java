@@ -9,15 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
 import info.smemo.nbaseaction.adapter.NBaseBindingAdapter;
 import info.smemo.nbaseaction.base.NBaseFragment;
+import info.smemo.nowordschat.BR;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.activity.ChatActivity;
-import info.smemo.nowordschat.bean.MessageBean;
+import info.smemo.nowordschat.appaction.bean.MessageBean;
 import info.smemo.nowordschat.contract.IndexContract;
-import info.smemo.nowordschat.BR;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -26,19 +24,17 @@ public class IndexFragment extends NBaseFragment implements IndexContract.View {
     private IndexContract.Presenter mPresenter;
 
     private NBaseBindingAdapter messageAdapter;
-    private ArrayList<MessageBean> messageBeanArrayList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        messageBeanArrayList = new ArrayList<>();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_index, container, false);
-        messageAdapter = new NBaseBindingAdapter<>(messageBeanArrayList, BR.bean, R.layout.item_message);
+        messageAdapter = new NBaseBindingAdapter<>(mPresenter.getData(), BR.bean, R.layout.item_message);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.message_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -62,15 +58,6 @@ public class IndexFragment extends NBaseFragment implements IndexContract.View {
     public void onResume() {
         super.onResume();
         mPresenter.start();
-    }
-
-    @Override
-    public void showMessageList(ArrayList<MessageBean> list) {
-        messageBeanArrayList.clear();
-        for (MessageBean messageBean : list) {
-            messageBeanArrayList.add(messageBean);
-        }
-        notifyDataSetChanged();
     }
 
     @Override

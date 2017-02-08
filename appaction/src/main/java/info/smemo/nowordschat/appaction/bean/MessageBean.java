@@ -1,19 +1,25 @@
-package info.smemo.nowordschat.bean;
+package info.smemo.nowordschat.appaction.bean;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import info.smemo.nowordschat.BR;
+import com.tencent.TIMConversationType;
+
+import info.smemo.nowordschat.appaction.BR;
+
 
 public class MessageBean extends BaseObservable {
 
+    public String identifier;
     public String username;
     public String userLogo;
+
     public String message;
-    public String time;
-    public String account;
-    public int unRead = 0;
-    public int id;
+    public long time;
+
+    public TIMConversationType type;
+
+    public long unRead = 0;
 
     @Bindable
     public String getUsername() {
@@ -46,21 +52,21 @@ public class MessageBean extends BaseObservable {
     }
 
     @Bindable
-    public String getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(long time) {
         this.time = time;
         notifyPropertyChanged(BR.time);
     }
 
     @Bindable
-    public int getUnRead() {
+    public long getUnRead() {
         return unRead;
     }
 
-    public void setUnRead(int unRead) {
+    public void setUnRead(long unRead) {
         this.unRead = unRead;
         notifyPropertyChanged(BR.unRead);
     }
