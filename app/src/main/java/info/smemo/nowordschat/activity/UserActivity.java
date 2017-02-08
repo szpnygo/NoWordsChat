@@ -1,7 +1,6 @@
 package info.smemo.nowordschat.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,8 +9,8 @@ import android.view.ViewGroup;
 import info.smemo.nbaseaction.adapter.NBaseBindingAdapter;
 import info.smemo.nowordschat.BR;
 import info.smemo.nowordschat.R;
-import info.smemo.nowordschat.action.FriendAction;
 import info.smemo.nowordschat.appaction.bean.UserBean;
+import info.smemo.nowordschat.appaction.controller.FriendController;
 import info.smemo.nowordschat.base.BaseCompatActivity;
 import info.smemo.nowordschat.contract.UserContract;
 import info.smemo.nowordschat.databinding.ActivityUserBinding;
@@ -37,7 +36,7 @@ public class UserActivity extends BaseCompatActivity implements UserContract.Vie
         }
         binding = createContentView(R.layout.activity_user);
         binding.setUserInfo(mUserBean);
-        binding.setIsFriend(FriendAction.isFriend(mUserBean.identifier));
+        binding.setIsFriend(FriendController.isFriend(mUserBean.identifier));
         setSupportActionBar(binding.toolbar);
         setToolbarFinish(binding.toolbar);
 

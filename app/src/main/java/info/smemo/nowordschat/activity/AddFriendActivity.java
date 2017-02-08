@@ -5,7 +5,6 @@ import android.support.v7.widget.SearchView;
 
 import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.R;
-import info.smemo.nowordschat.action.FriendAction;
 import info.smemo.nowordschat.action.UserInfoAction;
 import info.smemo.nowordschat.appaction.bean.FriendBean;
 import info.smemo.nowordschat.appaction.controller.FriendController;
@@ -57,7 +56,7 @@ public class AddFriendActivity extends BaseCompatActivity {
 
     private void search(String query) {
         showProgressDialog("查询中");
-        FriendAction.getUserInfo(query, new FriendController.GetUserListener() {
+        FriendController.getUserInfo(query, new FriendController.GetUserListener() {
             @Override
             public void success(FriendBean friendBean) {
                 dismissProgressDialog();

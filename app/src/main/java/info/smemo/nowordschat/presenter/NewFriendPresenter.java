@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
-import info.smemo.nowordschat.action.FriendAction;
 import info.smemo.nowordschat.appaction.ActionInterface;
 import info.smemo.nowordschat.appaction.bean.BookBean;
 import info.smemo.nowordschat.appaction.controller.FriendController;
@@ -32,7 +31,7 @@ public class NewFriendPresenter implements NewFriendContract.Presenter {
 
     @Override
     public void loadFutureData() {
-        FriendAction.getFuture(new FriendController.GetFutureFriendListener() {
+        FriendController.getFutureFriend(new FriendController.GetFutureFriendListener() {
             @Override
             public void success(ArrayList<BookBean> bookBeanArrayList) {
                 list.clear();
@@ -55,7 +54,7 @@ public class NewFriendPresenter implements NewFriendContract.Presenter {
 
     @Override
     public void addFriendResponse(BookBean bookBean, boolean isAccept) {
-        FriendAction.addFriendResponse(bookBean.identifier, isAccept, new ActionInterface.BaseComplete() {
+        FriendController.addFriendResponse(bookBean.identifier, isAccept, new ActionInterface.BaseComplete() {
             @Override
             public void success() {
                 mView.showSnackbarMessage("好友添加成功");

@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import info.smemo.nowordschat.action.FriendAction;
 import info.smemo.nowordschat.appaction.bean.BookBean;
 import info.smemo.nowordschat.appaction.controller.FriendController;
 import info.smemo.nowordschat.appaction.enums.IMFutureFriendType;
@@ -34,7 +33,7 @@ public class BookPresenter implements BookContract.Presenter {
 
     @Override
     synchronized public void onRefresh() {
-        FriendAction.getFriendList(new FriendController.GetFriendListener() {
+        FriendController.getFriendList(new FriendController.GetFriendListener() {
             @Override
             public void success(ArrayList<BookBean> bookBeanArrayList) {
                 PinyinSortComparator sortComparator = new PinyinSortComparator();
@@ -77,7 +76,7 @@ public class BookPresenter implements BookContract.Presenter {
 
     @Override
     synchronized public void loadFutureData() {
-        FriendAction.getFuture(new FriendController.GetFutureFriendListener() {
+        FriendController.getFutureFriend(new FriendController.GetFutureFriendListener() {
             @Override
             public void success(ArrayList<BookBean> bookBeanArrayList) {
                 for (BookBean bookBean : bookBeanArrayList) {

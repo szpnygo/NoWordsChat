@@ -2,7 +2,6 @@ package info.smemo.nowordschat.presenter;
 
 import java.util.ArrayList;
 
-import info.smemo.nowordschat.action.FriendAction;
 import info.smemo.nowordschat.appaction.bean.FriendBean;
 import info.smemo.nowordschat.appaction.controller.FriendController;
 import info.smemo.nowordschat.contract.SearchContract;
@@ -25,7 +24,7 @@ public class SearchPresenter implements SearchContract.Presenter {
     @Override
     public void search(String nickname) {
         mView.startLoading();
-        FriendAction.searchUser(nickname, indexPage, new FriendController.SearchUserListener() {
+        FriendController.searchUser(nickname, indexPage, new FriendController.SearchUserListener() {
             @Override
             public void error(int code, String message) {
                 mView.stopLoading();
