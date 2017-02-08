@@ -13,6 +13,7 @@ import info.smemo.nbaseaction.adapter.NBaseBindingAdapter;
 import info.smemo.nbaseaction.base.NBaseFragment;
 import info.smemo.nowordschat.BR;
 import info.smemo.nowordschat.R;
+import info.smemo.nowordschat.activity.NewFriendActivity;
 import info.smemo.nowordschat.activity.UserActivity;
 import info.smemo.nowordschat.appaction.bean.BookBean;
 import info.smemo.nowordschat.appaction.enums.IMFutureFriendType;
@@ -90,7 +91,7 @@ public class BookFragment extends NBaseFragment implements BookContract.View {
 
     @Override
     public void startNewFriend() {
-
+        startActivity(new Intent(getActivity(), NewFriendActivity.class));
     }
 
     @Override

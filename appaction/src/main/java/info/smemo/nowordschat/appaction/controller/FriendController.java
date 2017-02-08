@@ -3,8 +3,10 @@ package info.smemo.nowordschat.appaction.controller;
 import android.support.annotation.NonNull;
 
 import com.tencent.TIMAddFriendRequest;
+import com.tencent.TIMFriendAddResponse;
 import com.tencent.TIMFriendFutureItem;
 import com.tencent.TIMFriendFutureMeta;
+import com.tencent.TIMFriendResponseType;
 import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMGetFriendFutureListSucc;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import info.smemo.library.tencetim.IMFriendController;
+import info.smemo.nowordschat.appaction.ActionInterface;
 import info.smemo.nowordschat.appaction.action.DataBeanAction;
 import info.smemo.nowordschat.appaction.bean.BookBean;
 import info.smemo.nowordschat.appaction.bean.FriendBean;
@@ -62,7 +65,6 @@ public class FriendController {
 
         void error(int code, String message);
     }
-
 
     //搜索用户，作废
     public static void searchUser(@NonNull String nickname, int page, @NonNull final SearchUserListener listener) {
@@ -235,4 +237,45 @@ public class FriendController {
         });
     }
 
+    //同意拒绝
+    public static void addFriendResponse(String identifier, boolean isAccept, final ActionInterface.BaseComplete listener) {
+        TIMFriendAddResponse response = new TIMFriendAddResponse();
+        response.setIdentifier(identifier);
+        response.setRemark("");
+        response.setType(isAccept ? TIMFriendResponseType.AgreeAndAdd : TIMFriendResponseType.Reject);
+        TIMFriendshipManager.getInstance().addFriendResponse(response, new TIMValueCallBack<TIMFriendResult>() {
+            @Override
+            public void onError(int i, String s) {
+                listener.error(i, s);
+            }
+
+            @Override
+            public void onSuccess(TIMFriendResult timFriendResult) {
+                if (timFriendResult != null) {
+                    switch (timFriendResult.getStatus()) {
+                        case TIM_FRIEND_STATUS_UNKNOWN:
+                            listener.error(-1, "未知错误");
+                            break;
+                        case TIM_FRIEND_STATUS_SUCC:
+                            listener.success();
+                            break;
+                        case TIM_RESPONSE_FRIEND_STATUS_FRIEND_EXIST:
+                            listener.success();
+                            break;
+                        case TIM_RESPONSE_FRIEND_STATUS_NO_REQ:
+                            listener.error(-1, "对方没有申请过好友");
+                            break;
+                        case TIM_RESPONSE_FRIEND_STATUS_OTHER_SIDE_FRIEND_FULL:
+                            listener.error(-1, "对方好友满");
+                            break;
+                        case TIM_RESPONSE_FRIEND_STATUS_SELF_FRIEND_FULL:
+                            listener.error(-1, "自己的好友满");
+                            break;
+                    }
+                } else {
+                    listener.error(-1, "回复好友异常");
+                }
+            }
+        });
+    }
 }
