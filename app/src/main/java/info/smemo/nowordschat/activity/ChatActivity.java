@@ -1,25 +1,44 @@
 package info.smemo.nowordschat.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.base.BaseCompatActivity;
+import info.smemo.nowordschat.contract.ChatContract;
+import info.smemo.nowordschat.databinding.ActivityChatBinding;
+import info.smemo.nowordschat.presenter.ChatPresenter;
 
-public class ChatActivity extends BaseCompatActivity {
+public class ChatActivity extends BaseCompatActivity implements ChatContract.View {
+
+    private ChatPresenter presenter;
+    private ActivityChatBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("对方正在输入");
-        setSupportActionBar(toolbar);
-        setToolbarFinish(toolbar);
+    protected void onCreateDataBinding() {
+        super.onCreateDataBinding();
+        binding = createContentView(R.layout.activity_chat);
+        String type = getIntent().getExtras().getString("type");
+        String peer = getIntent().getExtras().getString("peer");
+        if (StringUtil.isEmpty(type) || StringUtil.isEmpty(peer)) {
+            finish();
+        }
+        binding.toolbar.setTitle("对方正在输入");
+        setSupportActionBar(binding.toolbar);
+        setToolbarFinish(binding.toolbar);
+
+        presenter = new ChatPresenter(this);
+        presenter.init(type, peer);
+    }
+
+
+    @Override
+    public void showSnackbarMessage(String message) {
+        super.showSnackbarMessage(message);
+        showSnackbar(message, binding.rootView);
     }
 
     public void messageMenuClick(View view) {
@@ -28,6 +47,7 @@ public class ChatActivity extends BaseCompatActivity {
             case R.id.menu_emoji:
                 break;
             case R.id.menu_at:
+                presenter.sendYueMessage();
                 break;
             case R.id.menu_shake:
                 break;
@@ -58,6 +78,11 @@ public class ChatActivity extends BaseCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void setPresenter(ChatContract.Presenter presenter) {
+
     }
 
 }

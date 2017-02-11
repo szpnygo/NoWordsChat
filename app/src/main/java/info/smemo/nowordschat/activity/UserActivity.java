@@ -1,6 +1,7 @@
 package info.smemo.nowordschat.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -105,8 +106,11 @@ public class UserActivity extends BaseCompatActivity implements UserContract.Vie
 
     @Override
     public void startChat() {
+        Bundle bundle = new Bundle();
+        bundle.putString("peer", mUserBean.identifier);
+        bundle.putString("type", "c2c");
         Intent intent = new Intent(this, ChatActivity.class);
-        intent.putExtra("user", mUserBean);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

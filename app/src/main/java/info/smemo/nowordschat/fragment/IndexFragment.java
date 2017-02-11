@@ -67,7 +67,12 @@ public class IndexFragment extends NBaseFragment implements IndexContract.View {
 
     @Override
     public void showChat(MessageBean object) {
-        startActivity(new Intent(getActivity(), ChatActivity.class));
+        Bundle bundle = new Bundle();
+        bundle.putString("peer", object.identifier);
+        bundle.putString("type", "c2c");
+        Intent intent = new Intent(getActivity(), ChatActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override

@@ -71,7 +71,8 @@ public class NotificationUtil implements Observer {
                         message = "系统向你发送一条消息";
                     }
                     Bundle bundle = new Bundle();
-                    bundle.putString("identifier", msg.getConversation().getIdentifer());
+                    bundle.putString("peer", msg.getConversation().getIdentifer());
+                    bundle.putString("type", "c2c");
                     notification(ChatActivity.class, 1, message, message, bundle);
                 }
             }
