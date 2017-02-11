@@ -14,9 +14,9 @@ import info.smemo.nbaseaction.util.LogHelper;
 
 public class IMConversationController {
 
-    private TIMConversation conversation;
-    private TIMConversationType type;
-    private String peer;
+    public TIMConversation conversation;
+    public TIMConversationType type;
+    public String peer;
 
     public IMConversationController(TIMConversation conversation) {
         this.conversation = conversation;

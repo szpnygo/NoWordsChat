@@ -1,5 +1,7 @@
 package info.smemo.nowordschat.contract;
 
+import com.tencent.TIMMessage;
+
 import java.util.ArrayList;
 
 import info.smemo.nbaseaction.base.NBasePresenter;
@@ -26,6 +28,8 @@ public interface ChatContract {
         ArrayList<ElemBean> getData();
 
         void onRefresh();
+
+        void addMessage(TIMMessage message);
 
     }
 }

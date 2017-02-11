@@ -2,20 +2,26 @@ package info.smemo.nowordschat.presenter;
 
 import android.support.annotation.NonNull;
 
+import com.tencent.TIMElem;
 import com.tencent.TIMMessage;
 import com.tencent.TIMValueCallBack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
+import info.smemo.nbaseaction.util.LogHelper;
 import info.smemo.nowordschat.appaction.bean.ElemBean;
 import info.smemo.nowordschat.appaction.controller.IMConversationController;
+import info.smemo.nowordschat.appaction.event.MessageEvent;
 import info.smemo.nowordschat.contract.ChatContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ChatPresenter implements ChatContract.Presenter,
-        IMConversationController.SendMessageListener, TIMValueCallBack<List<TIMMessage>> {
+        IMConversationController.SendMessageListener, TIMValueCallBack<List<TIMMessage>>,
+        Observer {
 
     private static final int ONCE_MESSAGES_NUM = 10;
 
@@ -30,7 +36,7 @@ public class ChatPresenter implements ChatContract.Presenter,
     public ChatPresenter(@NonNull ChatContract.View view) {
         mView = checkNotNull(view, "ChatPresenter.View cannot be null");
         mView.setPresenter(this);
-
+        MessageEvent.getInstance().addObserver(this);
     }
 
     @Override
@@ -68,13 +74,28 @@ public class ChatPresenter implements ChatContract.Presenter,
     }
 
     @Override
+    public void addMessage(TIMMessage msg) {
+        if (null != msg) {
+            if (msg.getConversation().getType() == controller.conversation.getType()
+                    && msg.getConversation().getIdentifer().equals(controller.conversation.getIdentifer())) {
+                for (int i = 0; i < msg.getElementCount(); i++) {
+                    TIMElem elem = msg.getElement(i);
+                    LogHelper.i("Chat", "收到消息:" + elem.toString());
+                    messages.add(new ElemBean(elem));
+                }
+            }
+        }
+    }
+
+    @Override
     public void error(int code, String message) {
         mView.showSnackbarMessage(message);
     }
 
     @Override
-    public void success(TIMMessage timMessage) {
-
+    public void success(TIMMessage msg) {
+        addMessage(msg);
+        mView.notifyDataSetChanged();
     }
 
     @Override
@@ -85,11 +106,17 @@ public class ChatPresenter implements ChatContract.Presenter,
     @Override
     public void onSuccess(List<TIMMessage> timMessages) {
         for (TIMMessage message : timMessages) {
-            for (int i = 0; i < message.getElementCount(); i++) {
-                messages.add(new ElemBean(message.getElement(i)));
-            }
+            addMessage(message);
         }
         mView.notifyDataSetChanged();
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof MessageEvent) {
+            TIMMessage msg = (TIMMessage) arg;
+            addMessage(msg);
+        }
+        mView.notifyDataSetChanged();
+    }
 }
