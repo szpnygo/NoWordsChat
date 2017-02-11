@@ -27,11 +27,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:chatYue="@{elem.timMessage}"
                 android:gravity="center"
                 android:maxLines="1"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:text="对方约了你一下"
                 android:textColor="#aaa"
                 android:textSize="14sp" />
         </android.support.v7.widget.CardView>

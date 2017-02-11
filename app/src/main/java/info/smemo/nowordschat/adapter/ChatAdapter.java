@@ -1,20 +1,25 @@
 package info.smemo.nowordschat.adapter;
 
 import android.content.Context;
+import android.databinding.BindingAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.tencent.TIMMessage;
 
 import java.util.ArrayList;
 
 import info.smemo.nbaseaction.base.NBaseViewHolder;
-import info.smemo.nowordschat.R;
-import info.smemo.nowordschat.appaction.bean.ElemBean;
-
 import info.smemo.nowordschat.BR;
+import info.smemo.nowordschat.R;
+import info.smemo.nowordschat.app.AppConstant;
+import info.smemo.nowordschat.appaction.bean.ElemBean;
+import info.smemo.nowordschat.util.TimeHelper;
 
-public class ChatAdapter extends RecyclerView.Adapter {
+public class ChatAdapter extends RecyclerView.Adapter implements AppConstant {
 
     private static final int TYPE_CUSTOM = 1;
 
@@ -84,6 +89,12 @@ public class ChatAdapter extends RecyclerView.Adapter {
             super(itemView);
         }
     }
+
+    @BindingAdapter({"android:chatYue"})
+    public static void showText(TextView view, TIMMessage message) {
+        view.setText("对方" + TimeHelper.getTimePassStr(message.timestamp() * 1000) + "约了你一下");
+    }
+
 }
 
 

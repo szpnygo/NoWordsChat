@@ -12,6 +12,7 @@ import com.tencent.TIMGroupSystemElem;
 import com.tencent.TIMGroupTipsElem;
 import com.tencent.TIMImageElem;
 import com.tencent.TIMLocationElem;
+import com.tencent.TIMMessage;
 import com.tencent.TIMProfileSystemElem;
 import com.tencent.TIMSNSSystemElem;
 import com.tencent.TIMSoundElem;
@@ -35,8 +36,13 @@ public class ElemBean extends BaseObservable {
 
     private TIMElemType elemType;
 
-    public ElemBean(TIMElem timElem) {
+    private TIMElem timElem;
+    private TIMMessage timMessage;
+
+    public ElemBean(TIMMessage message,TIMElem timElem) {
         this.elemType = timElem.getType();
+        this.timElem = timElem;
+        this.timMessage = message;
         switch (timElem.getType()) {
             case Custom:
                 this.setTimCustomElem((TIMCustomElem) timElem);
@@ -247,5 +253,25 @@ public class ElemBean extends BaseObservable {
     public void setElemType(TIMElemType elemType) {
         this.elemType = elemType;
         notifyPropertyChanged(BR.elemType);
+    }
+
+    @Bindable
+    public TIMElem getTimElem() {
+        return timElem;
+    }
+
+    public void setTimElem(TIMElem timElem) {
+        this.timElem = timElem;
+        notifyPropertyChanged(BR.timElem);
+    }
+
+    @Bindable
+    public TIMMessage getTimMessage() {
+        return timMessage;
+    }
+
+    public void setTimMessage(TIMMessage timMessage) {
+        this.timMessage = timMessage;
+        notifyPropertyChanged(BR.timMessage);
     }
 }

@@ -48,8 +48,7 @@
             android:layout_alignTop="@+id/username"
             android:layout_marginEnd="16dp"
             android:gravity="center"
-            android:timeFormatValue='@{"MM-dd HH:mm"}'
-            android:timeValue="@{String.valueOf(bean.time)}"
+            android:timePass="@{bean.time}"
             android:textColor="@color/mainText"
             android:textSize="12sp" />
 

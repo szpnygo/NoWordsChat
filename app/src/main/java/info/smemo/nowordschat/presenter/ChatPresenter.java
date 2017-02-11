@@ -81,7 +81,7 @@ public class ChatPresenter implements ChatContract.Presenter,
                 for (int i = 0; i < msg.getElementCount(); i++) {
                     TIMElem elem = msg.getElement(i);
                     LogHelper.i("Chat", "收到消息:" + elem.toString());
-                    messages.add(new ElemBean(elem));
+                    messages.add(0, new ElemBean(msg, elem));
                 }
             }
         }

@@ -34,7 +34,7 @@ public class ConversationController {
                     messageBean.unRead = conversation.getUnreadMessageNum();
                     List<TIMMessage> messages = conversation.getLastMsgs(1);
                     if (messages.size() > 0) {
-                        messageBean.time = messages.get(0).timestamp();
+                        messageBean.time = messages.get(0).timestamp() * 1000;
                     } else {
                         messageBean.time = System.currentTimeMillis();
                     }

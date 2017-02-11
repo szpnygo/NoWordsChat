@@ -1,12 +1,15 @@
 package info.smemo.nowordschat.presenter;
 
+import android.databinding.BindingAdapter;
 import android.support.annotation.NonNull;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import info.smemo.nowordschat.appaction.bean.MessageBean;
 import info.smemo.nowordschat.appaction.controller.ConversationController;
 import info.smemo.nowordschat.contract.IndexContract;
+import info.smemo.nowordschat.util.TimeHelper;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -41,5 +44,10 @@ public class IndexPresenter implements IndexContract.Presenter {
     @Override
     public void start() {
         loadData();
+    }
+
+    @BindingAdapter({"android:timePass"})
+    public static void showText(TextView view, long time) {
+        view.setText(TimeHelper.getTimePassStr(time));
     }
 }
