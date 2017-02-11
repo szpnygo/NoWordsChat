@@ -24,7 +24,7 @@ public class ConversationController {
                 List<String> users = new ArrayList<>();
                 users.add(conversation.getPeer());
                 List<TIMUserProfile> profiles = TIMFriendshipProxy.getInstance().getFriendsById(users);
-                if (profiles.size() > 0) {
+                if (profiles != null && profiles.size() > 0) {
                     FriendBean friendBean = DataBeanAction.toFriendBean(profiles.get(0));
                     MessageBean messageBean = new MessageBean();
                     messageBean.username = friendBean.getNickname();

@@ -5,10 +5,10 @@
     <data>
 
         <import type="android.view.View" />
-
+        <import type="java.lang.String"/>
         <variable
             name="bean"
-            type="info.smemo.nowordschat.bean.MessageBean" />
+            type="info.smemo.nowordschat.appaction.bean.MessageBean" />
     </data>
 
     <RelativeLayout
@@ -48,7 +48,8 @@
             android:layout_alignTop="@+id/username"
             android:layout_marginEnd="16dp"
             android:gravity="center"
-            android:text="@{bean.time}"
+            android:timeFormatValue='@{"MM-dd HH:mm"}'
+            android:timeValue="@{String.valueOf(bean.time)}"
             android:textColor="@color/mainText"
             android:textSize="12sp" />
 

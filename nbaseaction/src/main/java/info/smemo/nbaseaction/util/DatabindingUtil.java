@@ -28,7 +28,7 @@ public class DatabindingUtil {
         FrescoUtil.loadLowImage(view, small, high);
     }
 
-    @BindingAdapter({"android:timeFormat", "android:timeValue"})
+    @BindingAdapter(value = {"android:timeFormatValue", "android:timeValue"}, requireAll = false)
     public static void formatTime(TextView view, String format, String time) {
         String timeFormat = StringUtil.isEmpty(format) ? "yyyy-MM-dd" : format;
         SimpleDateFormat dateFormat = new SimpleDateFormat(timeFormat, Locale.CHINA);
