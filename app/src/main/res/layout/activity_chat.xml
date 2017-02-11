@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <variable
+            name="presenter"
+            type="info.smemo.nowordschat.presenter.ChatPresenter"/>
+    </data>
+
     <android.support.design.widget.CoordinatorLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/rootView"
@@ -38,13 +45,20 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/theme_background" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/chat_list"
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/refresh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/bottomPanel"
-                android:layout_margin="8dp"
-                android:scrollbars="none" />
+                android:layout_marginBottom="16dp"
+                android:onRefresh="@{presenter.onRefresh}">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/chat_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:scrollbars="none" />
+            </android.support.v4.widget.SwipeRefreshLayout>
 
             <LinearLayout
                 android:id="@+id/bottomPanel"

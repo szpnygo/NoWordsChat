@@ -1,12 +1,14 @@
 package info.smemo.nowordschat.activity;
 
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.R;
+import info.smemo.nowordschat.adapter.ChatAdapter;
 import info.smemo.nowordschat.base.BaseCompatActivity;
 import info.smemo.nowordschat.contract.ChatContract;
 import info.smemo.nowordschat.databinding.ActivityChatBinding;
@@ -16,6 +18,7 @@ public class ChatActivity extends BaseCompatActivity implements ChatContract.Vie
 
     private ChatPresenter presenter;
     private ActivityChatBinding binding;
+    private ChatAdapter chatAdapter;
 
     @Override
     protected void onCreateDataBinding() {
@@ -32,13 +35,29 @@ public class ChatActivity extends BaseCompatActivity implements ChatContract.Vie
 
         presenter = new ChatPresenter(this);
         presenter.init(type, peer);
+        binding.setPresenter(presenter);
+
+        chatAdapter = new ChatAdapter(this, presenter.getData());
+        binding.chatList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        binding.chatList.setAdapter(chatAdapter);
+
+        presenter.start();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     public void showSnackbarMessage(String message) {
         super.showSnackbarMessage(message);
         showSnackbar(message, binding.rootView);
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        chatAdapter.notifyDataSetChanged();
     }
 
     public void messageMenuClick(View view) {

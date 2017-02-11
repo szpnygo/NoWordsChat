@@ -8,6 +8,8 @@ import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
 import com.tencent.TIMValueCallBack;
 
+import java.util.List;
+
 import info.smemo.nbaseaction.util.LogHelper;
 
 public class IMConversationController {
@@ -36,6 +38,10 @@ public class IMConversationController {
         this.createConversation(type, peer);
     }
 
+    public void getMessage(int num, TIMMessage message, TIMValueCallBack<List<TIMMessage>> callBack) {
+        conversation.getLocalMessage(num, message, callBack);
+    }
+
     public void createConversation(TIMConversationType type, String peer) {
         conversation = getTIMManager().getConversation(type, peer);
     }
@@ -59,12 +65,12 @@ public class IMConversationController {
             @Override
             public void onSuccess(TIMMessage timMessage) {
                 LogHelper.i("Chat", timMessage.toString());
-                listener.success();
+                listener.success(timMessage);
             }
         });
     }
 
-    public TIMMessage getCallMessage() {
+    private TIMMessage getCallMessage() {
         TIMMessage msg = new TIMMessage();
         TIMCustomElem elem = new TIMCustomElem();
         elem.setData("".getBytes());
@@ -83,7 +89,7 @@ public class IMConversationController {
 
         void error(int code, String message);
 
-        void success();
+        void success(TIMMessage timMessage);
 
     }
 }
