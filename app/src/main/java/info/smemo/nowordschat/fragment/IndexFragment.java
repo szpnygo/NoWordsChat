@@ -3,6 +3,7 @@ package info.smemo.nowordschat.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,11 +20,14 @@ import info.smemo.nowordschat.contract.IndexContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+//TODO 改成MVVM
 public class IndexFragment extends NBaseFragment implements IndexContract.View {
 
     private IndexContract.Presenter mPresenter;
 
     private NBaseBindingAdapter messageAdapter;
+
+    private SwipeRefreshLayout refreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,13 @@ public class IndexFragment extends NBaseFragment implements IndexContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_index, container, false);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.onRefresh();
+            }
+        });
         messageAdapter = new NBaseBindingAdapter<>(mPresenter.getData(), BR.bean, R.layout.item_message);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.message_list);
@@ -63,6 +74,7 @@ public class IndexFragment extends NBaseFragment implements IndexContract.View {
     @Override
     public void notifyDataSetChanged() {
         messageAdapter.notifyDataSetChanged();
+        refreshLayout.setRefreshing(false);
     }
 
     @Override

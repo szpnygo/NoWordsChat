@@ -21,6 +21,8 @@ public interface IndexContract {
         void loadData();
 
         ArrayList<MessageBean> getData();
+
+        void onRefresh();
     }
 
 }

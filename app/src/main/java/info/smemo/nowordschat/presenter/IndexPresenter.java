@@ -32,6 +32,11 @@ public class IndexPresenter implements IndexContract.Presenter {
     }
 
     @Override
+    public void onRefresh() {
+        loadData();
+    }
+
+    @Override
     public void loadData() {
         list.clear();
         ArrayList<MessageBean> messages = ConversationController.getConversations();
