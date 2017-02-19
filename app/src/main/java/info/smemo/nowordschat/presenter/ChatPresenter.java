@@ -137,6 +137,7 @@ public class ChatPresenter implements ChatContract.Presenter,
         addMessage(msg, false);
         mView.notifyDataSetChanged();
         mView.moveToBottom();
+        controller.conversation.setReadMessage(this.timMessages.get(this.timMessages.size() - 1));
     }
 
     @Override
@@ -151,6 +152,9 @@ public class ChatPresenter implements ChatContract.Presenter,
             this.timMessages.add(0, message);
         }
         mView.notifyDataSetChanged();
+        if (this.timMessages.size() > 0) {
+            controller.conversation.setReadMessage(this.timMessages.get(this.timMessages.size() - 1));
+        }
     }
 
     @Override
