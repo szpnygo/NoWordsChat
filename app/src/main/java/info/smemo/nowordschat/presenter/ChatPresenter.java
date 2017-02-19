@@ -74,17 +74,27 @@ public class ChatPresenter implements ChatContract.Presenter,
     }
 
     @Override
-    public void addMessage(TIMMessage msg) {
+    public void addMessage(TIMMessage msg, boolean first) {
         if (null != msg) {
             if (msg.getConversation().getType() == controller.conversation.getType()
                     && msg.getConversation().getIdentifer().equals(controller.conversation.getIdentifer())) {
                 for (int i = 0; i < msg.getElementCount(); i++) {
                     TIMElem elem = msg.getElement(i);
                     LogHelper.i("Chat", "收到消息:" + elem.toString());
-                    messages.add(0, new ElemBean(msg, elem));
+                    if (first) {
+                        messages.add(0, new ElemBean(msg, elem));
+                    } else {
+                        messages.add(new ElemBean(msg, elem));
+                    }
+
                 }
             }
         }
+    }
+
+    @Override
+    public void addMessage(TIMMessage msg) {
+        addMessage(msg, true);
     }
 
     @Override
@@ -94,7 +104,7 @@ public class ChatPresenter implements ChatContract.Presenter,
 
     @Override
     public void success(TIMMessage msg) {
-        addMessage(msg);
+        addMessage(msg, false);
         mView.notifyDataSetChanged();
     }
 

@@ -31,5 +31,7 @@ public interface ChatContract {
 
         void addMessage(TIMMessage message);
 
+        void addMessage(TIMMessage message,boolean first);
+
     }
 }
