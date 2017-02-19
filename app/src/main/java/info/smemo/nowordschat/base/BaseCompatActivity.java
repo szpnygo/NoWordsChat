@@ -5,6 +5,7 @@ import android.view.View;
 
 import info.smemo.nbaseaction.base.NBaseCompatActivity;
 import info.smemo.nowordschat.R;
+import info.smemo.nowordschat.app.AppApplication;
 
 public class BaseCompatActivity extends NBaseCompatActivity {
 
@@ -24,10 +25,12 @@ public class BaseCompatActivity extends NBaseCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        AppApplication.appResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        AppApplication.appPause(this);
     }
 }
