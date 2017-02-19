@@ -1,20 +1,24 @@
 package info.smemo.nowordschat.activity;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import info.smemo.nbaseaction.util.LogHelper;
 import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.adapter.ChatAdapter;
-import info.smemo.nowordschat.base.BaseCompatActivity;
+import info.smemo.nowordschat.base.BasePhotoActivity;
 import info.smemo.nowordschat.contract.ChatContract;
 import info.smemo.nowordschat.databinding.ActivityChatBinding;
 import info.smemo.nowordschat.presenter.ChatPresenter;
 
-public class ChatActivity extends BaseCompatActivity implements ChatContract.View {
+public class ChatActivity extends BasePhotoActivity implements ChatContract.View {
 
     private ChatPresenter presenter;
     private ActivityChatBinding binding;
@@ -42,6 +46,12 @@ public class ChatActivity extends BaseCompatActivity implements ChatContract.Vie
         binding.chatList.setAdapter(chatAdapter);
 
         presenter.start();
+    }
+
+    @Override
+    public void takePhotoSuccess(@NonNull Uri imageFile, @Nullable String path) {
+        super.takePhotoSuccess(imageFile, path);
+        LogHelper.i("TakePhoto", "path:" + path);
     }
 
     @Override
@@ -96,8 +106,10 @@ public class ChatActivity extends BaseCompatActivity implements ChatContract.Vie
             case R.id.menu_voice:
                 break;
             case R.id.menu_camera:
+                takePhoto(false);
                 break;
             case R.id.menu_photo:
+                pickPhoto(false);
                 break;
         }
     }

@@ -1,12 +1,20 @@
 package info.smemo.nbaseaction.activity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.view.View;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -57,7 +65,7 @@ public class NPhotoActivity extends NBaseCompatActivity {
             File file = new File(imagePath);
             //是否需要裁剪
             if (!cropPhoto) {
-                takePhotoSuccess("file://" + file.getAbsolutePath());
+                takePhotoSuccess("file://" + file.getAbsolutePath(), file.getAbsolutePath());
                 return;
             }
             // 保存图片大小
@@ -79,7 +87,7 @@ public class NPhotoActivity extends NBaseCompatActivity {
                 //使用ContentProvider通过URI获取原始图片
                 Bitmap photo = ImageUtils.getThumbnail(this, originalUri, 800);
                 if (photo != null) {
-                    takePhotoSuccess(originalUri, null);
+                    takePhotoSuccess(originalUri, getRealFilePath(data.getData()));
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -93,7 +101,7 @@ public class NPhotoActivity extends NBaseCompatActivity {
                 if (cameraFile.length() == 0) {
                     cameraFile.delete();
                 } else {
-                    takePhotoSuccess("file://" + cameraFile.getAbsolutePath());
+                    takePhotoSuccess("file://" + cameraFile.getAbsolutePath(), cameraFile.getAbsolutePath());
                 }
             }
         } else if (requestCode == ACTION_CUT_PHOTO) {
@@ -105,7 +113,7 @@ public class NPhotoActivity extends NBaseCompatActivity {
                 } else {
                     // 如果图片未进行裁剪
                     if (imageSize != cameraFile.length()) {
-                        takePhotoSuccess("file://" + cameraFile.getAbsolutePath());
+                        takePhotoSuccess("file://" + cameraFile.getAbsolutePath(), cameraFile.getAbsolutePath());
                     }
                 }
             }
@@ -114,12 +122,36 @@ public class NPhotoActivity extends NBaseCompatActivity {
         }
     }
 
+    public String getRealFilePath(Uri uri) {
+        if (null == uri)
+            return "";
+        final String scheme = uri.getScheme();
+        String data = null;
+        if (scheme == null)
+            data = uri.getPath();
+        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+            data = uri.getPath();
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            Cursor cursor = getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    if (index > -1) {
+                        data = cursor.getString(index);
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return data;
+    }
+
     public void takePhotoSuccess(@NonNull Uri imageFile, @Nullable String path) {
         isTakingPhoto = false;
     }
 
-    private void takePhotoSuccess(String imageFile) {
-        takePhotoSuccess(Uri.parse(imageFile), imageFile);
+    private void takePhotoSuccess(String imageFile, String imagePath) {
+        takePhotoSuccess(Uri.parse(imageFile), imagePath);
         isTakingPhoto = false;
     }
 
@@ -129,7 +161,7 @@ public class NPhotoActivity extends NBaseCompatActivity {
     protected void pickPhoto(boolean cropPhoto) {
         setCropPhoto(cropPhoto);
         if (!PackageUtil.checkPermission(this, "android.permission.CAMERA", this.getPackageName())) {
-            showMessage("提示", "应用没有调用摄像头的权限");
+            checkPermission();
             return;
         }
         if (cropPhoto) {
@@ -145,10 +177,36 @@ public class NPhotoActivity extends NBaseCompatActivity {
     protected void takePhoto(boolean cropPhoto) {
         setCropPhoto(cropPhoto);
         if (!PackageUtil.checkPermission(this, "android.permission.CAMERA", this.getPackageName())) {
-            showMessage("提示", "应用没有调用摄像头的权限");
+            checkPermission();
             return;
         }
         doTakePhotoAction();
+    }
+
+    protected static final int PERMISSION_CODE = 81;
+
+    @TargetApi(Build.VERSION_CODES.M)
+    protected void checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (PackageManager.PERMISSION_DENIED == checkSelfPermission(Manifest.permission.CAMERA)) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET)) {
+                    showMessage("提示", "授权允许调用摄像头和相册后可发送照片");
+                    return;
+                }
+                showMessage("提示", "授权允许调用摄像头和相册后可发送照片,是否前往授权？", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String list[] = {Manifest.permission.INTERNET};
+                        ActivityCompat.requestPermissions(NPhotoActivity.this, list, PERMISSION_CODE);
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }
+        }
     }
 
 
