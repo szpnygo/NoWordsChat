@@ -11,13 +11,13 @@ import android.support.annotation.Nullable;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import info.smemo.nbaseaction.base.NBaseFragmentActivity;
+import info.smemo.nbaseaction.base.NBaseCompatActivity;
 import info.smemo.nbaseaction.util.ImageUtils;
 import info.smemo.nbaseaction.util.PackageUtil;
 import info.smemo.nbaseaction.util.PhotoUtil;
 
 
-public class NPhotoActivity extends NBaseFragmentActivity {
+public class NPhotoActivity extends NBaseCompatActivity {
 
     //是否正在拍照中
     protected boolean isTakingPhoto = false;
