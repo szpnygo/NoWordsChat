@@ -71,7 +71,7 @@ public class NotificationUtil implements Observer {
                         message = "系统向你发送一条消息";
                     }
                     Bundle bundle = new Bundle();
-                    bundle.putString("peer", msg.getConversation().getIdentifer());
+                    bundle.putString("peer", msg.getConversation().getPeer());
                     bundle.putString("type", "c2c");
                     notification(ChatActivity.class, 1, message, message, bundle);
                 }
@@ -95,10 +95,9 @@ public class NotificationUtil implements Observer {
             NotificationManager notificationManager = (NotificationManager) AppApplication.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(AppApplication.getContext());
             Intent intent = new Intent(AppApplication.getContext(), cls);
-            if (bundle != null)
-                intent.putExtras(bundle);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(AppApplication.getContext(), 0, intent, 0);
+            intent.putExtras(bundle);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(AppApplication.getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentTitle("无语")
                     .setContentText(content)
                     .setContentIntent(pendingIntent)

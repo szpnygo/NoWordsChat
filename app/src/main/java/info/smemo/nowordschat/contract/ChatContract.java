@@ -21,9 +21,14 @@ public interface ChatContract {
         void stopLoading();
 
         void moveToBottom();
+
+        void setTitle(String title);
+
     }
 
     interface Presenter extends NBasePresenter {
+
+        void getUserInfo();
 
         void getLocalMessage();
 

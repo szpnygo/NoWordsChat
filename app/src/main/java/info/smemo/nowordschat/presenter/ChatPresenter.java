@@ -13,6 +13,8 @@ import java.util.Observer;
 
 import info.smemo.nbaseaction.util.LogHelper;
 import info.smemo.nowordschat.appaction.bean.ElemBean;
+import info.smemo.nowordschat.appaction.bean.FriendBean;
+import info.smemo.nowordschat.appaction.controller.FriendController;
 import info.smemo.nowordschat.appaction.controller.IMConversationController;
 import info.smemo.nowordschat.appaction.event.MessageEvent;
 import info.smemo.nowordschat.contract.ChatContract;
@@ -43,6 +45,28 @@ public class ChatPresenter implements ChatContract.Presenter,
     @Override
     public void start() {
         getLocalMessage();
+        getUserInfo();
+    }
+
+    @Override
+    public void getUserInfo() {
+        FriendController.getUserInfo(peer, new FriendController.GetUserListener() {
+            @Override
+            public void success(FriendBean friendBean) {
+                if (friendBean != null) {
+                    mView.setTitle(friendBean.nickname);
+                } else {
+                    mView.showToastMessage("发生异常，获取对方信息失败");
+                    mView.finishSelf();
+                }
+            }
+
+            @Override
+            public void error(int code, String message) {
+                mView.showToastMessage("发生异常，获取对方信息失败");
+                mView.finishSelf();
+            }
+        });
     }
 
     @Override
@@ -73,8 +97,8 @@ public class ChatPresenter implements ChatContract.Presenter,
     public void onRefresh() {
         if (timMessages.size() > 0) {
             controller.getOnlineMessage(ONCE_MESSAGES_NUM, timMessages.get(0), this);
-        }else{
-            mView.stopLoading();
+        } else {
+            getLocalMessage();
         }
     }
 

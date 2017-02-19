@@ -24,12 +24,12 @@ public class ChatActivity extends BaseCompatActivity implements ChatContract.Vie
     protected void onCreateDataBinding() {
         super.onCreateDataBinding();
         binding = createContentView(R.layout.activity_chat);
-        String type = getIntent().getExtras().getString("type");
-        String peer = getIntent().getExtras().getString("peer");
+        String type = getIntent().getStringExtra("type");
+        String peer = getIntent().getStringExtra("peer");
         if (StringUtil.isEmpty(type) || StringUtil.isEmpty(peer)) {
             finish();
         }
-        binding.toolbar.setTitle("对方正在输入");
+        setTitle("无语");
         setSupportActionBar(binding.toolbar);
         setToolbarFinish(binding.toolbar);
 
@@ -74,6 +74,11 @@ public class ChatActivity extends BaseCompatActivity implements ChatContract.Vie
     @Override
     public void moveToBottom() {
         binding.chatList.scrollToPosition(chatAdapter.getItemCount() - 1);
+    }
+
+    @Override
+    public void setTitle(String title) {
+        binding.toolbar.setTitle(title);
     }
 
     public void messageMenuClick(View view) {
