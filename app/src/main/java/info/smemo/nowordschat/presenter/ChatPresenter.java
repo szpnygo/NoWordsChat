@@ -23,12 +23,13 @@ public class ChatPresenter implements ChatContract.Presenter,
         IMConversationController.SendMessageListener, TIMValueCallBack<List<TIMMessage>>,
         Observer {
 
-    private static final int ONCE_MESSAGES_NUM = 10;
+    private static final int ONCE_MESSAGES_NUM = 5;
 
     private IMConversationController controller;
     private ChatContract.View mView;
 
     private ArrayList<ElemBean> messages;
+    private ArrayList<TIMMessage> timMessages = new ArrayList<>();
 
     private String type;
     private String peer;
@@ -70,7 +71,16 @@ public class ChatPresenter implements ChatContract.Presenter,
 
     @Override
     public void onRefresh() {
+        if (timMessages.size() > 0) {
+            controller.getOnlineMessage(ONCE_MESSAGES_NUM, timMessages.get(0), this);
+        }else{
+            mView.stopLoading();
+        }
+    }
 
+    @Override
+    public void addMessage(TIMMessage msg) {
+        addMessage(msg, true);
     }
 
     @Override
@@ -93,19 +103,16 @@ public class ChatPresenter implements ChatContract.Presenter,
     }
 
     @Override
-    public void addMessage(TIMMessage msg) {
-        addMessage(msg, true);
-    }
-
-    @Override
     public void error(int code, String message) {
         mView.showSnackbarMessage(message);
     }
 
     @Override
     public void success(TIMMessage msg) {
+        this.timMessages.add(msg);
         addMessage(msg, false);
         mView.notifyDataSetChanged();
+        mView.moveToBottom();
     }
 
     @Override
@@ -117,6 +124,7 @@ public class ChatPresenter implements ChatContract.Presenter,
     public void onSuccess(List<TIMMessage> timMessages) {
         for (TIMMessage message : timMessages) {
             addMessage(message);
+            this.timMessages.add(0, message);
         }
         mView.notifyDataSetChanged();
     }
@@ -126,6 +134,7 @@ public class ChatPresenter implements ChatContract.Presenter,
         if (o instanceof MessageEvent) {
             TIMMessage msg = (TIMMessage) arg;
             addMessage(msg);
+            this.timMessages.add(msg);
         }
         mView.notifyDataSetChanged();
     }

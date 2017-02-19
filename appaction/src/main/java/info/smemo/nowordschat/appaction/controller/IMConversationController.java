@@ -42,6 +42,10 @@ public class IMConversationController {
         conversation.getLocalMessage(num, message, callBack);
     }
 
+    public void getOnlineMessage(int num, TIMMessage message, TIMValueCallBack<List<TIMMessage>> callBack) {
+        conversation.getMessage(num, message, callBack);
+    }
+
     public void createConversation(TIMConversationType type, String peer) {
         conversation = getTIMManager().getConversation(type, peer);
     }

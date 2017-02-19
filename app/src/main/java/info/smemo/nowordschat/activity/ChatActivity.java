@@ -58,6 +58,22 @@ public class ChatActivity extends BaseCompatActivity implements ChatContract.Vie
     @Override
     public void notifyDataSetChanged() {
         chatAdapter.notifyDataSetChanged();
+        stopLoading();
+    }
+
+    @Override
+    public void startLoading() {
+        binding.refresh.setRefreshing(true);
+    }
+
+    @Override
+    public void stopLoading() {
+        binding.refresh.setRefreshing(false);
+    }
+
+    @Override
+    public void moveToBottom() {
+        binding.chatList.scrollToPosition(chatAdapter.getItemCount() - 1);
     }
 
     public void messageMenuClick(View view) {

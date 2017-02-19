@@ -15,6 +15,12 @@ public interface ChatContract {
         void showSnackbarMessage(String message);
 
         void notifyDataSetChanged();
+
+        void startLoading();
+
+        void stopLoading();
+
+        void moveToBottom();
     }
 
     interface Presenter extends NBasePresenter {

@@ -92,7 +92,8 @@ public class ChatAdapter extends RecyclerView.Adapter implements AppConstant {
 
     @BindingAdapter({"android:chatYue"})
     public static void showText(TextView view, TIMMessage message) {
-        view.setText("对方" + TimeHelper.getTimePassStr(message.timestamp() * 1000) + "约了你一下");
+
+        view.setText((message.isSelf() ? "您" : "对方") + TimeHelper.getTimePassStr(message.timestamp() * 1000) + "约了" + (message.isSelf() ? "对方" : "您") + "一下");
     }
 
 }
