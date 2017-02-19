@@ -3,6 +3,7 @@ package info.smemo.nowordschat.presenter;
 import android.support.annotation.NonNull;
 
 import com.tencent.TIMElem;
+import com.tencent.TIMElemType;
 import com.tencent.TIMMessage;
 import com.tencent.TIMValueCallBack;
 
@@ -12,6 +13,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import info.smemo.nbaseaction.util.LogHelper;
+import info.smemo.nbaseaction.util.StringUtil;
 import info.smemo.nowordschat.appaction.bean.ElemBean;
 import info.smemo.nowordschat.appaction.bean.FriendBean;
 import info.smemo.nowordschat.appaction.controller.FriendController;
@@ -25,7 +27,7 @@ public class ChatPresenter implements ChatContract.Presenter,
         IMConversationController.SendMessageListener, TIMValueCallBack<List<TIMMessage>>,
         Observer {
 
-    private static final int ONCE_MESSAGES_NUM = 5;
+    private static final int ONCE_MESSAGES_NUM = 8;
 
     private IMConversationController controller;
     private ChatContract.View mView;
@@ -47,6 +49,19 @@ public class ChatPresenter implements ChatContract.Presenter,
         getLocalMessage();
         getUserInfo();
     }
+
+    @Override
+    public void sendYueMessage() {
+        controller.sendYueMessage(this);
+    }
+
+    @Override
+    public void sendImageMessage(String path) {
+        if (!StringUtil.isEmpty(path)) {
+            controller.sendImageMessage(path, this);
+        }
+    }
+
 
     @Override
     public void getUserInfo() {
@@ -82,11 +97,6 @@ public class ChatPresenter implements ChatContract.Presenter,
     }
 
     @Override
-    public void sendYueMessage() {
-        controller.sendYueMessage(this);
-    }
-
-    @Override
     public ArrayList<ElemBean> getData() {
         if (messages == null)
             messages = new ArrayList<>();
@@ -114,13 +124,17 @@ public class ChatPresenter implements ChatContract.Presenter,
                     && msg.getConversation().getIdentifer().equals(controller.conversation.getIdentifer())) {
                 for (int i = 0; i < msg.getElementCount(); i++) {
                     TIMElem elem = msg.getElement(i);
-                    LogHelper.i("Chat", "收到消息:" + elem.toString());
-                    if (first) {
-                        messages.add(0, new ElemBean(msg, elem));
-                    } else {
-                        messages.add(new ElemBean(msg, elem));
-                    }
 
+                    if (elem.getType() == TIMElemType.Custom
+                            || elem.getType() == TIMElemType.Image) {
+
+                        LogHelper.i("Chat", "收到消息:" + elem.toString());
+                        if (first) {
+                            messages.add(0, new ElemBean(msg, elem));
+                        } else {
+                            messages.add(new ElemBean(msg, elem));
+                        }
+                    }
                 }
             }
         }

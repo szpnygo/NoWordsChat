@@ -1,7 +1,8 @@
 package info.smemo.nowordschat.appaction.bean;
 
-import android.databinding.Bindable;
 import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import android.view.Gravity;
 
 import com.tencent.TIMCustomElem;
 import com.tencent.TIMElem;
@@ -39,10 +40,16 @@ public class ElemBean extends BaseObservable {
     private TIMElem timElem;
     private TIMMessage timMessage;
 
-    public ElemBean(TIMMessage message,TIMElem timElem) {
+    private int gravity = Gravity.CENTER;
+
+    private boolean sendSelf = true;
+
+    public ElemBean(TIMMessage message, TIMElem timElem) {
         this.elemType = timElem.getType();
         this.timElem = timElem;
         this.timMessage = message;
+        this.gravity = timMessage.isSelf() ? Gravity.END : Gravity.START;
+        this.sendSelf = timMessage.isSelf();
         switch (timElem.getType()) {
             case Custom:
                 this.setTimCustomElem((TIMCustomElem) timElem);
@@ -273,5 +280,25 @@ public class ElemBean extends BaseObservable {
     public void setTimMessage(TIMMessage timMessage) {
         this.timMessage = timMessage;
         notifyPropertyChanged(BR.timMessage);
+    }
+
+    @Bindable
+    public int getGravity() {
+        return gravity;
+    }
+
+    public void setGravity(int gravity) {
+        this.gravity = gravity;
+        notifyPropertyChanged(BR.gravity);
+    }
+
+    @Bindable
+    public boolean getSendSelf() {
+        return sendSelf;
+    }
+
+    public void setsendSelf(boolean self) {
+        sendSelf = self;
+        notifyPropertyChanged(BR.sendSelf);
     }
 }

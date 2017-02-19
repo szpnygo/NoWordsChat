@@ -41,7 +41,7 @@ public class ChatActivity extends BasePhotoActivity implements ChatContract.View
         presenter.init(type, peer);
         binding.setPresenter(presenter);
 
-        chatAdapter = new ChatAdapter(this, presenter.getData());
+        chatAdapter = new ChatAdapter(presenter.getData());
         binding.chatList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         binding.chatList.setAdapter(chatAdapter);
 
@@ -52,6 +52,7 @@ public class ChatActivity extends BasePhotoActivity implements ChatContract.View
     public void takePhotoSuccess(@NonNull Uri imageFile, @Nullable String path) {
         super.takePhotoSuccess(imageFile, path);
         LogHelper.i("TakePhoto", "path:" + path);
+        presenter.sendImageMessage(path);
     }
 
     @Override

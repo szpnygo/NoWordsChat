@@ -4,6 +4,7 @@ import com.android.annotations.NonNull;
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMCustomElem;
+import com.tencent.TIMImageElem;
 import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
 import com.tencent.TIMValueCallBack;
@@ -59,6 +60,15 @@ public class IMConversationController {
         }
     }
 
+    public void sendImageMessage(String path, @NonNull SendMessageListener listener) {
+        TIMMessage msg = getImageMessage(path);
+        if (msg == null) {
+            listener.error(-1, "系统异常，发送失败");
+        } else {
+            sendMessage(msg, listener);
+        }
+    }
+
     public void sendMessage(@NonNull TIMMessage msg, @NonNull final SendMessageListener listener) {
         conversation.sendMessage(msg, new TIMValueCallBack<TIMMessage>() {
             @Override
@@ -68,7 +78,7 @@ public class IMConversationController {
 
             @Override
             public void onSuccess(TIMMessage timMessage) {
-                LogHelper.i("Chat", timMessage.toString());
+                LogHelper.i("Chat", "消息发送成功:" + timMessage.toString());
                 listener.success(timMessage);
             }
         });
@@ -79,6 +89,17 @@ public class IMConversationController {
         TIMCustomElem elem = new TIMCustomElem();
         elem.setData("".getBytes());
         elem.setDesc("Yue");
+        if (msg.addElement(elem) != 0) {
+            return null;
+        }
+        return msg;
+    }
+
+    private TIMMessage getImageMessage(String path) {
+        TIMMessage msg = new TIMMessage();
+        TIMImageElem elem = new TIMImageElem();
+        elem.setPath(path);
+        elem.setLevel(1);
         if (msg.addElement(elem) != 0) {
             return null;
         }

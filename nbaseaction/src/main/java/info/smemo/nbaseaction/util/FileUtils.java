@@ -23,6 +23,21 @@ public class FileUtils {
     public static final long MB = KB * 1024;
     public static final long GB = MB * 1024;
 
+    public static void saveBitmap(String filePath, byte[] bytes) {
+        try {
+            File file = new File(filePath);
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            FileOutputStream fops = new FileOutputStream(file);
+            fops.write(bytes);
+            fops.flush();
+            fops.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 读取文件
      */

@@ -28,13 +28,16 @@ public interface ChatContract {
 
     interface Presenter extends NBasePresenter {
 
+        void sendYueMessage();
+
+        void sendImageMessage(String path);
+
+
         void getUserInfo();
 
         void getLocalMessage();
 
         void init(String type, String peer);
-
-        void sendYueMessage();
 
         ArrayList<ElemBean> getData();
 
