@@ -5,7 +5,9 @@
     <data>
 
         <import type="android.view.View" />
-        <import type="java.lang.String"/>
+
+        <import type="java.lang.String" />
+
         <variable
             name="bean"
             type="info.smemo.nowordschat.appaction.bean.MessageBean" />
@@ -29,17 +31,6 @@
             app:roundAsCircle="true" />
 
         <TextView
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/user_logo"
-            android:layout_marginStart="16dp"
-            android:layout_toEndOf="@+id/user_logo"
-            android:text="@{bean.username}"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-
-        <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,23 +39,9 @@
             android:layout_alignTop="@+id/username"
             android:layout_marginEnd="16dp"
             android:gravity="center"
-            android:timePass="@{bean.time}"
             android:textColor="@color/mainText"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/user_logo"
-            android:layout_alignStart="@+id/username"
-            android:layout_marginEnd="8dp"
-            android:layout_toStartOf="@+id/number"
-            android:gravity="left"
-            android:maxLines="1"
-            android:text="@{bean.message}"
-            android:textColor="@color/mainText"
-            android:textSize="16sp" />
+            android:textSize="12sp"
+            android:timePass="@{bean.time}" />
 
         <TextView
             android:id="@+id/number"
@@ -88,6 +65,20 @@
             android:layout_alignStart="@+id/message"
             android:layout_marginBottom="1dp"
             android:background="@color/listViewLine" />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/user_logo"
+            android:layout_alignTop="@+id/user_logo"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/user_logo"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@{bean.username}"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 </layout>
