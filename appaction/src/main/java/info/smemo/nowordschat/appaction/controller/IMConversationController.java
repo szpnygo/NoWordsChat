@@ -99,7 +99,7 @@ public class IMConversationController {
         TIMMessage msg = new TIMMessage();
         TIMImageElem elem = new TIMImageElem();
         elem.setPath(path);
-        elem.setLevel(1);
+        elem.setLevel(2);
         if (msg.addElement(elem) != 0) {
             return null;
         }

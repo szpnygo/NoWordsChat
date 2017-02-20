@@ -41,7 +41,7 @@ public class ChatActivity extends BasePhotoActivity implements ChatContract.View
         presenter.init(type, peer);
         binding.setPresenter(presenter);
 
-        chatAdapter = new ChatAdapter(presenter.getData());
+        chatAdapter = new ChatAdapter(this, presenter.getData());
         binding.chatList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         binding.chatList.setAdapter(chatAdapter);
 

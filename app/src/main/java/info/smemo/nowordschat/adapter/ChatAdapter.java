@@ -1,5 +1,6 @@
 package info.smemo.nowordschat.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +23,11 @@ public class ChatAdapter extends RecyclerView.Adapter implements AppConstant {
 
     private ArrayList<ElemBean> list;
 
-    public ChatAdapter(ArrayList<ElemBean> list) {
+    private Context context;
+
+    public ChatAdapter(Context context, ArrayList<ElemBean> list) {
         this.list = list;
+        this.context = context;
     }
 
     @Override
@@ -32,11 +36,11 @@ public class ChatAdapter extends RecyclerView.Adapter implements AppConstant {
             case TYPE_CUSTOM:
                 View yueView = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item_yue, null);
                 yueView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                return new YueHolder(yueView);
+                return new YueHolder(this.context, yueView);
             case TYPE_IMAGE:
                 View imageView = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item_image, null);
                 imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                return new ImageHolder(imageView);
+                return new ImageHolder(this.context, imageView);
             default:
                 return null;
         }

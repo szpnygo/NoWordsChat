@@ -88,7 +88,10 @@
             android:name=".activity.NewFriendActivity"
             android:launchMode="standard"
             android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity
+            android:name=".activity.ShowImageActivity"
+            android:launchMode="standard"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

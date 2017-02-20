@@ -38,6 +38,8 @@
                 app:actualImageScaleType="focusCrop"
                 app:roundedCornerRadius="8dp"
                 app:fadeDuration="300"
+                app:failureImage="@drawable/user_logo"
+                app:failureImageScaleType="centerInside"
                 app:progressBarImage="@drawable/icon_progress_bar"
                 app:progressBarImageScaleType="focusCrop"
                 app:progressBarAutoRotateInterval="5000"
