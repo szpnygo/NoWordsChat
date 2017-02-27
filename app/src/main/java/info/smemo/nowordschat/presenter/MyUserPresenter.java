@@ -37,4 +37,9 @@ public class MyUserPresenter implements MyUserContract.Presenter {
     public void editSignature() {
         mView.startEditSignaturePage();
     }
+
+    @Override
+    public void selectImage() {
+        mView.selectImage();
+    }
 }

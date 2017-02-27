@@ -12,6 +12,8 @@ public interface MyUserContract {
 
         void startEditSignaturePage();
 
+        void selectImage();
+
     }
 
     interface Presenter extends NBasePresenter {
@@ -21,6 +23,8 @@ public interface MyUserContract {
         void editNickname();
 
         void editSignature();
+
+        void selectImage();
 
     }
 

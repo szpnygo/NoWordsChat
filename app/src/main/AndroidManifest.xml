@@ -92,6 +92,10 @@
             android:name=".activity.ShowImageActivity"
             android:launchMode="standard"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.SelectImagesActivity"
+            android:launchMode="standard"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

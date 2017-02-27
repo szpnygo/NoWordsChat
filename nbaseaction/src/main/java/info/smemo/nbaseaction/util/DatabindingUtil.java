@@ -3,6 +3,7 @@ package info.smemo.nbaseaction.util;
 import android.databinding.BindingAdapter;
 import android.databinding.BindingMethod;
 import android.databinding.BindingMethods;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.TextView;
@@ -15,6 +16,8 @@ import java.util.Locale;
 @BindingMethods({
         @BindingMethod(type = SwipeRefreshLayout.class, attribute = "android:onRefresh", method = "setOnRefreshListener"),
         @BindingMethod(type = FloatingActionButton.class, attribute = "android:onClick", method = "setOnClickListener"),
+        @BindingMethod(type = SimpleDraweeView.class, attribute = "android:onClick", method = "setOnClickListener"),
+        @BindingMethod(type = CollapsingToolbarLayout.class, attribute = "android:onClick", method = "setOnClickListener")
 })
 public class DatabindingUtil {
 
