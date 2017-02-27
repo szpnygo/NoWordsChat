@@ -3,24 +3,65 @@ package info.smemo.nbaseaction.util;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class SystemUtil {
 
+    public static void sendImageScan(Context context) {
+        context.sendBroadcast(new Intent(
+                Intent.ACTION_MEDIA_MOUNTED,
+                Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+    }
+
+
+    public static HashMap<String, List<String>> getSystemImages(Context context) {
+        HashMap<String, List<String>> mGruopMap = new HashMap<>();
+        Uri mImageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        ContentResolver contentResolver = context.getContentResolver();
+
+        Cursor cursor = contentResolver.query(mImageUri, null,
+                MediaStore.Images.Media.MIME_TYPE + "=? or " +
+                        MediaStore.Images.Media.MIME_TYPE + "=?",
+                new String[]{"image/jpeg", "image/png"}, MediaStore.Images.Media.DATE_MODIFIED);
+        if (cursor == null)
+            return mGruopMap;
+        while (cursor.moveToNext()) {
+            String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            String parentName = new File(path).getParentFile().getName();
+
+            if (mGruopMap.containsKey(parentName)) {
+                mGruopMap.get(parentName).add(path);
+            } else {
+                List<String> list = new ArrayList<>();
+                list.add(path);
+                mGruopMap.put(parentName, list);
+            }
+        }
+        return mGruopMap;
+    }
 
     public static boolean isWifiConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

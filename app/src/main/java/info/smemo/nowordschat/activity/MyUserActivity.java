@@ -2,7 +2,6 @@ package info.smemo.nowordschat.activity;
 
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.base.BaseCompatActivity;
@@ -33,7 +32,6 @@ public class MyUserActivity extends BaseCompatActivity implements MyUserContract
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setToolbarFinish(toolbar);
-
     }
 
     @Override
