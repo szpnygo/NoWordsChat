@@ -3,6 +3,9 @@
 
     <data>
 
+        <variable
+            name="present"
+            type="info.smemo.nowordschat.presenter.SelectImagePresenter" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -34,9 +37,57 @@
                 android:id="@+id/image_list"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:layout_above="@+id/photo_bar"
                 android:layout_below="@+id/toolbar"
                 android:scrollbars="none" />
 
+            <LinearLayout
+                android:id="@+id/photo_select"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/photo_bar"
+                android:layout_below="@+id/toolbar"
+                android:layout_marginTop="48dp"
+                android:background="@android:color/white"
+                android:visibility="gone">
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/photo_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:scrollbars="none" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/photo_bar"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/mainGreenColor">
+
+                <TextView
+                    android:id="@+id/photo_bar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="16dp"
+                    android:text="所有图片"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="22dp"
+                    android:src="@drawable/ic_signal_cellular_4_bar_black_24dp"
+                    android:tint="@android:color/white" />
+
+
+            </LinearLayout>
         </RelativeLayout>
 
     </android.support.design.widget.CoordinatorLayout>

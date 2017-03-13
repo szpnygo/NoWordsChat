@@ -12,11 +12,17 @@ public interface SelectImageContract {
 
         void notifyDataSetChanged();
 
+        void setAlbumListShow();
+
     }
 
     interface Presenter extends NBasePresenter {
 
         void loadData();
+
+        void loadAlbumData();
+
+        void selectAlbum();
 
         ArrayList<String> getData();
 

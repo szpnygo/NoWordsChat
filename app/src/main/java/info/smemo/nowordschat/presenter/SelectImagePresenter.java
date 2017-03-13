@@ -54,6 +54,16 @@ public class SelectImagePresenter implements SelectImageContract.Presenter {
     }
 
     @Override
+    public void loadAlbumData() {
+
+    }
+
+    @Override
+    public void selectAlbum() {
+        mView.setAlbumListShow();
+    }
+
+    @Override
     public ArrayList<String> getData() {
         if (list == null)
             list = new ArrayList<>();

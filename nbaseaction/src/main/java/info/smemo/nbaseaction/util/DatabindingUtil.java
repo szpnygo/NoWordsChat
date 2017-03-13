@@ -17,7 +17,8 @@ import java.util.Locale;
         @BindingMethod(type = SwipeRefreshLayout.class, attribute = "android:onRefresh", method = "setOnRefreshListener"),
         @BindingMethod(type = FloatingActionButton.class, attribute = "android:onClick", method = "setOnClickListener"),
         @BindingMethod(type = SimpleDraweeView.class, attribute = "android:onClick", method = "setOnClickListener"),
-        @BindingMethod(type = CollapsingToolbarLayout.class, attribute = "android:onClick", method = "setOnClickListener")
+        @BindingMethod(type = CollapsingToolbarLayout.class, attribute = "android:onClick", method = "setOnClickListener"),
+        @BindingMethod(type = TextView.class, attribute = "android:onClick", method = "setOnClickListener")
 })
 public class DatabindingUtil {
 

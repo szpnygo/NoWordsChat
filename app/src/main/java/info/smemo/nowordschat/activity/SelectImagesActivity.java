@@ -1,6 +1,7 @@
 package info.smemo.nowordschat.activity;
 
 import android.support.v7.widget.GridLayoutManager;
+import android.view.View;
 
 import info.smemo.nowordschat.R;
 import info.smemo.nowordschat.adapter.SelectImageAdapter;
@@ -29,6 +30,13 @@ public class SelectImagesActivity extends BaseCompatActivity implements SelectIm
         adapter = new SelectImageAdapter(presenter.getData());
         binding.imageList.setLayoutManager(new GridLayoutManager(this, 3));
         binding.imageList.setAdapter(adapter);
+
+        binding.photoBarTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAlbumListShow();
+            }
+        });
     }
 
     @Override
@@ -41,6 +49,11 @@ public class SelectImagesActivity extends BaseCompatActivity implements SelectIm
     public void notifyDataSetChanged() {
         adapter.notifyDataSetChanged();
         this.dismissProgressDialog();
+    }
+
+    @Override
+    public void setAlbumListShow() {
+        binding.photoSelect.setVisibility(binding.photoSelect.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
     }
 
     @Override
