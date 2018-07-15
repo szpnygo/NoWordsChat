@@ -17,4 +17,3 @@ Will make a full function IM app like wechat, use Qcloud IM SDK.
 #About Devloper
 Neo (http://blog.smemo.info) 
 
-QQ：2495710865
